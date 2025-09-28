@@ -303,8 +303,6 @@ Based both on the research and real‑world practices, here’s what I consider 
 
 ---
 
-If you like, I can gather a recent (2025) checklist or even gather *real system prompts* from multiple labs (where public) and compare them side by side, perhaps showing what differs (role, constraints, style). Would that be useful for you?
-
 [1]: https://techcrunch.com/2024/08/26/anthropic-publishes-the-system-prompt-that-makes-claude-tick/?utm_source=chatgpt.com "Anthropic publishes the 'system prompts' that make Claude tick | TechCrunch"
 [2]: https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/system-prompts?utm_source=chatgpt.com "Giving Claude a role with a system prompt - Anthropic"
 [3]: https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/be-clear-and-direct?utm_source=chatgpt.com "Be clear, direct, and detailed - Anthropic"
