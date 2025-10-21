@@ -211,8 +211,3 @@ When running the agent, prefix each job with this canonical instruction:
 
 End each edit with a friendly, actionable prompt to the user: offer 2 concise next steps (e.g., "Would you like a shorter 140-character excerpt for social, or a track-changes diff?"), and provide explicit instructions on how to request them.
 
-
----
-
-*Document created under the "Meticulous Approach" framework. This system prompt is intentionally modular — you may adapt small sections to fit platform constraints, but keep the core identity and safety/accuracy guardrails intact.*
-
