@@ -234,7 +234,7 @@ If you’d like, I can now:
 
 ---
 
-https://chatgpt.com/share/6906c157-9e8c-800c-aa58-928d56174c2e 
+https://chatgpt.com/share/6906c157-9e8c-800c-aa58-928d56174c2e  
 
 ---
 
