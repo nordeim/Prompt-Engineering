@@ -1,0 +1,9 @@
+Now, assume yourself as a deep-thinking Chief AI Scientist and Innovator at OpenAI. Please help me conduct in-depth research into the most effective way to fine-tune the open-source Large Language Model (LLM) shown below. The aim is to assist a busy family doctor in a privately run clinic by enabling the AI to pre-screen patients by checking their medical history, which is stored in the clinic's medical records, and asking about their current symptoms. The AI will then produce a preliminary diagnosis report, which my experienced nurse can use to prioritise patients for my attention. The fine-tuned LLM will power my custom Medical Assistant AI Agent, which has a chat interface through which patients can interact. What fine-tuning techniques would you recommend for this use case? Could you also help me research and design the most appropriate fine-tuning pipeline, providing code examples? Also, could you help me look for the most suitable dataset for this training pipeline? Alternatively, could you help me design a sample template for a suitable dataset? Help me research a reliable training methodology/pipeline.
+
+---
+
+Awesome job on your rigorous and meticulous approach in conducting your research and analysis! Please keep up the good work! Please help me to meticulously and critically review the following research report, and then conduct a thorough and meticulous comparative analysis with your generated report (response). Be impartial in your comparison and critique of the strengths and weaknesses of each. Be factual by validating your assumptions using extensive web searches.
+
+---
+
+Awesome job again in your critical and meticulous comparative analysis of my and your report! Please keep up the good work! Now, please meticulously plan and then create a complete updated report that incorporates the best of both reports as you suggested.
