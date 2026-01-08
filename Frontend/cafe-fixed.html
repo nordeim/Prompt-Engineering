@@ -1,0 +1,1505 @@
+<!DOCTYPE html>
+<html lang="en-SG">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Merlion Brews Artisan Roastery • Heritage Coffee Crafted with Peranakan Soul • Singapore's Finest Single-Origin Beans">
+    <title>Merlion Brews • Artisan Coffee Roastery</title>
+    
+    <!-- Preconnect to Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    <!-- Preload critical fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Crimson+Pro:wght@400;600&family=Pinyon+Script&display=swap" rel="stylesheet">
+    
+    <style>
+        /* ===== CSS LAYERS ARCHITECTURE ===== */
+        @layer tokens, base, components, utilities, overrides;
+        
+        /* ===== LAYER 1: DESIGN TOKENS ===== */
+        @layer tokens {
+            :root {
+                /* ===== PERANAKAN HERITAGE COLOR SYSTEM ===== */
+                --color-nyonya-cream: #F8F3E6;        /* Traditional tile background */
+                --color-kopi-brown: #3A2A1F;          /* Deep coffee roast */
+                --color-terracotta: #C77966;          /* Traditional pottery accent */
+                --color-heritage-blue: #4A6B7D;       /* Peranakan tile accent */
+                --color-gold-leaf: #D4AF37;           /* Handcrafted detail */
+                
+                /* ===== ACCESSIBILITY-SAFE VARIANTS ===== */
+                --color-ui-terracotta: #9A5E4A;       /* Darker for WCAG AAA contrast */
+                --color-ui-gold: #A68A2E;             /* Darker gold for text/CTAs */
+                --color-ui-blue: #3A5463;            /* Darker heritage blue for text */
+                
+                /* ===== RGB VALUES FOR OPACITY ===== */
+                --color-kopi-brown-rgb: 58, 42, 31;
+                --color-terracotta-rgb: 199, 121, 102;
+                --color-heritage-blue-rgb: 74, 107, 125;
+                --color-gold-leaf-rgb: 212, 175, 55;
+                
+                /* ===== TYPOGRAPHY SYSTEM ===== */
+                --font-heading: 'Cormorant Garamond', serif;
+                --font-body: 'Crimson Pro', serif;
+                --font-decorative: 'Pinyon Script', cursive;
+                
+                /* ===== FLUID TYPOGRAPHY SCALE - Major Third (1.25 ratio) ===== */
+                --text-xs: clamp(0.69rem, 0.66rem + 0.17vw, 0.79rem);
+                --text-sm: clamp(0.83rem, 0.79rem + 0.21vw, 0.96rem);
+                --text-base: clamp(1.00rem, 0.95rem + 0.26vw, 1.20rem);
+                --text-lg: clamp(1.20rem, 1.14rem + 0.31vw, 1.44rem);
+                --text-xl: clamp(1.44rem, 1.37rem + 0.37vw, 1.73rem);
+                --text-2xl: clamp(1.73rem, 1.64rem + 0.45vw, 2.07rem);
+                --text-3xl: clamp(2.07rem, 1.97rem + 0.54vw, 2.49rem);
+                --text-4xl: clamp(2.49rem, 2.37rem + 0.65vw, 3.20rem);
+                --text-5xl: clamp(3.00rem, 2.80rem + 0.80vw, 4.50rem);
+                --text-6xl: clamp(3.50rem, 3.20rem + 1.00vw, 5.50rem);
+                
+                /* ===== LINE HEIGHTS ===== */
+                --leading-tight: 1.2;
+                --leading-normal: 1.6;
+                --leading-loose: 1.8;
+                
+                /* ===== LETTER SPACING ===== */
+                --tracking-tight: -0.02em;
+                --tracking-normal: 0;
+                --tracking-loose: 0.1em;
+                
+                /* ===== SPACING SYSTEM - 4px Baseline Grid ===== */
+                --space-1: 0.25rem;    /* 4px - micro spacing */
+                --space-2: 0.5rem;     /* 8px - tight spacing */
+                --space-3: 0.75rem;    /* 12px - medium tight */
+                --space-4: 1rem;       /* 16px - base unit */
+                --space-6: 1.5rem;     /* 24px - comfortable */
+                --space-8: 2rem;       /* 32px - section spacing */
+                --space-12: 3rem;      /* 48px - major spacing */
+                --space-16: 4rem;      /* 64px - hero spacing */
+                --space-24: 6rem;      /* 96px - massive spacing */
+                --space-32: 8rem;      /* 128px - hero vertical padding */
+                
+                /* ===== SEMANTIC SPACING ===== */
+                --space-inside: var(--space-4);    /* Inside containers */
+                --space-outside: var(--space-8);   /* Between containers */
+                --space-stack: var(--space-6);     /* Between stacked elements */
+                --space-inline: var(--space-3);    /* Between inline elements */
+                
+                /* ===== LAYOUT SYSTEM ===== */
+                --container-width: min(100%, 85ch);
+                --nav-height: clamp(4rem, 3.5rem + 1.5vw, 5rem);
+                --border-radius: 8px;
+                --border-radius-sm: 4px;
+                --border-radius-lg: 16px;
+                
+                /* ===== TRANSITIONS & TIMING ===== */
+                --duration-fast: 120ms;
+                --duration-medium: 250ms;
+                --duration-slow: 400ms;
+                --easing-smooth: cubic-bezier(0.25, 0.46, 0.45, 0.94); /* Luxury easing */
+                --easing-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+                
+                /* ===== SHADOWS ===== */
+                --shadow-sm: 0 2px 4px rgba(var(--color-kopi-brown-rgb), 0.08);
+                --shadow-md: 0 4px 8px rgba(var(--color-kopi-brown-rgb), 0.12);
+                --shadow-lg: 0 8px 16px rgba(var(--color-kopi-brown-rgb), 0.15);
+                --shadow-xl: 0 12px 24px rgba(var(--color-kopi-brown-rgb), 0.18);
+                
+                /* ===== Z-INDEX SCALE ===== */
+                --z-below: -1;
+                --z-base: 0;
+                --z-dropdown: 100;
+                --z-sticky: 200;
+                --z-modal: 300;
+                --z-popover: 400;
+                --z-toast: 500;
+            }
+            
+            /* ===== ACCESSIBILITY OVERRIDES ===== */
+            @media (prefers-contrast: more) {
+                :root {
+                    --color-nyonya-cream: #FFFFFF;
+                    --color-kopi-brown: #000000;
+                    --color-ui-terracotta: #000000;
+                    --color-ui-gold: #000000;
+                    --color-ui-blue: #000000;
+                }
+            }
+            
+            /* ===== REDUCED MOTION ===== */
+            @media (prefers-reduced-motion: reduce) {
+                :root {
+                    --duration-fast: 1ms;
+                    --duration-medium: 1ms;
+                    --duration-slow: 1ms;
+                }
+            }
+        }
+        
+        /* ===== LAYER 2: BASE STYLES ===== */
+        @layer base {
+            /* CSS Reset */
+            *, *::before, *::after {
+                box-sizing: border-box;
+                margin: 0;
+                padding: 0;
+            }
+            
+            html {
+                scroll-behavior: smooth;
+                -webkit-text-size-adjust: 100%;
+            }
+            
+            body {
+                font-family: var(--font-body);
+                font-size: var(--text-base);
+                line-height: var(--leading-normal);
+                color: var(--color-kopi-brown);
+                background-color: var(--color-nyonya-cream);
+                overflow-x: hidden;
+            }
+            
+            /* Global Texture Overlay - Paper Fiber Effect */
+            .texture-overlay {
+                position: fixed;
+                inset: 0;
+                pointer-events: none;
+                z-index: var(--z-below);
+                opacity: 0.04;
+                background-image: 
+                    radial-gradient(circle at 10% 10%, rgba(var(--color-kopi-brown-rgb), 0.05) 1px, transparent 1px),
+                    radial-gradient(circle at 90% 90%, rgba(var(--color-kopi-brown-rgb), 0.05) 1px, transparent 1px);
+                background-size: 24px 24px;
+                contain: paint;
+            }
+            
+            /* Typography Scale */
+            h1, h2, h3, h4, h5, h6 {
+                font-family: var(--font-heading);
+                line-height: var(--leading-tight);
+                font-weight: 700;
+                margin-bottom: var(--space-4);
+            }
+            
+            h1 {
+                font-size: var(--text-6xl);
+                letter-spacing: var(--tracking-tight);
+            }
+            
+            h2 {
+                font-size: var(--text-4xl);
+                font-weight: 600;
+                letter-spacing: var(--tracking-tight);
+            }
+            
+            h3 {
+                font-size: var(--text-3xl);
+                font-weight: 600;
+                color: var(--color-ui-terracotta);
+            }
+            
+            h4 {
+                font-size: var(--text-2xl);
+                color: var(--color-heritage-blue);
+            }
+            
+            p {
+                margin-bottom: var(--space-4);
+                max-width: 65ch;
+            }
+            
+            a {
+                color: var(--color-ui-terracotta);
+                text-decoration: none;
+                transition: color var(--duration-medium) var(--easing-smooth);
+            }
+            
+            a:hover, a:focus {
+                color: var(--color-terracotta);
+            }
+            
+            /* Semantic HTML Elements */
+            main {
+                position: relative;
+                z-index: 1;
+            }
+            
+            section {
+                padding: var(--space-24) 0;
+            }
+            
+            .container {
+                width: 100%;
+                max-width: var(--container-width);
+                margin: 0 auto;
+                padding: 0 var(--space-4);
+            }
+            
+            /* Skip Link for Accessibility */
+            .skip-link {
+                position: absolute;
+                top: -100px;
+                left: 0;
+                background: var(--color-ui-terracotta);
+                color: var(--color-nyonya-cream);
+                padding: var(--space-2) var(--space-4);
+                z-index: var(--z-modal);
+                transition: top var(--duration-medium) var(--easing-smooth);
+            }
+            
+            .skip-link:focus {
+                top: var(--space-4);
+            }
+            
+            /* Focus Styles for Accessibility */
+            :focus-visible {
+                outline: 3px solid var(--color-ui-gold);
+                outline-offset: 2px;
+            }
+        }
+        
+        /* ===== LAYER 3: COMPONENTS ===== */
+        @layer components {
+            /* Navigation Component */
+            .header {
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                height: var(--nav-height);
+                background-color: rgba(248, 243, 230, 0.85);
+                backdrop-filter: blur(10px);
+                border-bottom: 1px solid rgba(var(--color-kopi-brown-rgb), 0.08);
+                z-index: var(--z-sticky);
+                padding: 0 var(--space-4);
+            }
+            
+            .header-container {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                height: 100%;
+                max-width: var(--container-width);
+                margin: 0 auto;
+            }
+            
+            .logo {
+                font-family: var(--font-heading);
+                font-size: var(--text-2xl);
+                color: var(--color-ui-terracotta);
+                display: flex;
+                align-items: center;
+                gap: var(--space-2);
+            }
+            
+            .logo-monogram {
+                font-family: var(--font-decorative);
+                font-size: var(--text-3xl);
+                color: var(--color-gold-leaf);
+                line-height: 1;
+            }
+            
+            .logo-text {
+                font-weight: 600;
+                letter-spacing: -0.5px;
+            }
+            
+            .nav-links {
+                display: flex;
+                gap: var(--space-8);
+            }
+
+            .menu-trigger {
+                display: none;
+                width: 44px;
+                height: 44px;
+                align-items: center;
+                justify-content: center;
+                gap: 6px;
+                border: 1px solid rgba(var(--color-kopi-brown-rgb), 0.15);
+                border-radius: var(--border-radius);
+                background: transparent;
+                color: var(--color-kopi-brown);
+                cursor: pointer;
+            }
+
+            .menu-trigger .line {
+                display: block;
+                width: 20px;
+                height: 2px;
+                background-color: currentColor;
+                transition: transform var(--duration-medium) var(--easing-smooth), background-color var(--duration-medium) var(--easing-smooth);
+            }
+            
+            .nav-link {
+                font-family: var(--font-body);
+                font-size: var(--text-lg);
+                font-weight: 500;
+                color: var(--color-kopi-brown);
+                position: relative;
+                padding: var(--space-1) var(--space-2);
+            }
+            
+            .nav-link::after {
+                content: '';
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                height: 2px;
+                background: var(--color-ui-terracotta);
+                transform: scaleX(0);
+                transform-origin: right;
+                transition: transform var(--duration-medium) var(--easing-smooth);
+            }
+            
+            .nav-link:hover::after,
+            .nav-link:focus::after {
+                transform: scaleX(1);
+                transform-origin: left;
+            }
+            
+            /* Coffee Bean Animation */
+            .coffee-bean {
+                position: absolute;
+                width: 12px;
+                height: 12px;
+                border-radius: 50%;
+                background: var(--color-kopi-brown);
+                opacity: 0.3;
+                animation: float var(--duration-slow) infinite ease-in-out;
+            }
+            
+            @keyframes float {
+                0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0.3; }
+                50% { transform: translateY(-20px) rotate(15deg); opacity: 0.6; }
+            }
+            
+            /* Hero Component */
+            .hero {
+                min-height: 100vh;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                text-align: center;
+                padding: var(--space-32) var(--space-4);
+                position: relative;
+                overflow: hidden;
+            }
+            
+            .hero-content {
+                max-width: min(100%, 75ch);
+                z-index: 1;
+                animation: fadeUp var(--duration-slow) var(--easing-smooth) forwards;
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            
+            .hero-title {
+                font-size: var(--text-6xl);
+                line-height: 1;
+                margin-bottom: var(--space-6);
+                color: var(--color-ui-terracotta);
+            }
+            
+            .hero-subtitle {
+                font-family: var(--font-decorative);
+                font-size: var(--text-3xl);
+                color: var(--color-ui-blue);
+                margin-bottom: var(--space-8);
+                font-weight: 400;
+            }
+            
+            .hero-text {
+                font-size: var(--text-xl);
+                color: var(--color-kopi-brown);
+                margin-bottom: var(--space-12);
+                max-width: 60ch;
+                margin-left: auto;
+                margin-right: auto;
+            }
+            
+            /* Button Component */
+            .btn {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                gap: var(--space-2);
+                min-height: 3.5rem;
+                padding: var(--space-2) var(--space-8);
+                font-family: var(--font-body);
+                font-size: var(--text-lg);
+                font-weight: 600;
+                border: 2px solid transparent;
+                border-radius: var(--border-radius);
+                cursor: pointer;
+                transition: all var(--duration-medium) var(--easing-smooth);
+                position: relative;
+                overflow: hidden;
+            }
+            
+            .btn::before {
+                content: '';
+                position: absolute;
+                inset: 0;
+                background: var(--color-ui-terracotta);
+                transform: scaleX(0);
+                transform-origin: right;
+                transition: transform var(--duration-medium) var(--easing-smooth);
+                z-index: -1;
+            }
+            
+            .btn-primary {
+                background: var(--color-ui-terracotta);
+                color: var(--color-nyonya-cream);
+            }
+            
+            .btn-primary::before {
+                background: var(--color-terracotta);
+            }
+            
+            .btn-secondary {
+                background: transparent;
+                border-color: var(--color-ui-terracotta);
+                color: var(--color-ui-terracotta);
+            }
+            
+            .btn:hover::before,
+            .btn:focus::before {
+                transform: scaleX(1);
+                transform-origin: left;
+            }
+            
+            .btn:hover,
+            .btn:focus {
+                color: var(--color-nyonya-cream);
+            }
+            
+            .btn-group {
+                display: flex;
+                gap: var(--space-4);
+                margin-top: var(--space-6);
+            }
+            
+            /* Peranakan Corner Ornaments */
+            .peranakan-corner {
+                position: absolute;
+                width: clamp(80px, 10vw, 150px);
+                height: clamp(80px, 10vw, 150px);
+                opacity: 0.6;
+                z-index: 0;
+                fill: var(--color-ui-blue);
+                stroke: var(--color-ui-gold);
+                stroke-width: 0.5;
+            }
+            
+            .corner-tl {
+                top: var(--space-16);
+                left: var(--space-16);
+                transform: rotate(-15deg);
+            }
+            
+            .corner-tr {
+                top: var(--space-16);
+                right: var(--space-16);
+                transform: rotate(15deg);
+            }
+            
+            .corner-bl {
+                bottom: var(--space-16);
+                left: var(--space-16);
+                transform: rotate(15deg);
+            }
+            
+            .corner-br {
+                bottom: var(--space-16);
+                right: var(--space-16);
+                transform: rotate(-15deg);
+            }
+            
+            /* Scroll Indicator */
+            .scroll-indicator {
+                position: absolute;
+                bottom: var(--space-16);
+                left: 50%;
+                transform: translateX(-50%);
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: var(--space-2);
+                animation: pulse var(--duration-slow) infinite;
+            }
+            
+            .scroll-text {
+                font-size: var(--text-sm);
+                color: var(--color-kopi-brown);
+                letter-spacing: var(--tracking-loose);
+            }
+            
+            .scroll-arrow {
+                width: 24px;
+                height: 24px;
+                border-right: 2px solid var(--color-ui-terracotta);
+                border-bottom: 2px solid var(--color-ui-terracotta);
+                transform: rotate(45deg);
+            }
+            
+            /* Folio Frame Component */
+            .folio-frame {
+                position: relative;
+                border: 1px solid rgba(var(--color-kopi-brown-rgb), 0.1);
+                border-radius: var(--border-radius);
+                overflow: hidden;
+                transition: all var(--duration-medium) var(--easing-smooth);
+            }
+            
+            .folio-frame::after {
+                content: '';
+                position: absolute;
+                top: 8px;
+                left: 8px;
+                right: 8px;
+                bottom: 8px;
+                border: 1px solid rgba(var(--color-gold-leaf-rgb), 0.2);
+                border-radius: calc(var(--border-radius) - 2px);
+                pointer-events: none;
+            }
+            
+            .folio-frame:hover {
+                transform: translateY(-4px);
+                box-shadow: var(--shadow-lg);
+                border-color: var(--color-ui-terracotta);
+            }
+            
+            .folio-frame:hover::after {
+                border-color: var(--color-gold-leaf);
+            }
+            
+            /* Card Component */
+            .card {
+                background: var(--color-nyonya-cream);
+                padding: var(--space-8);
+                border-radius: var(--border-radius);
+                position: relative;
+            }
+            
+            .card-image {
+                position: relative;
+                aspect-ratio: 1;
+                margin-bottom: var(--space-6);
+                overflow: hidden;
+                border-radius: var(--border-radius-sm);
+            }
+            
+            .card-image img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                transition: transform var(--duration-medium) var(--easing-smooth);
+            }
+            
+            .card:hover .card-image img {
+                transform: scale(1.05);
+            }
+            
+            .card-title {
+                font-size: var(--text-2xl);
+                color: var(--color-kopi-brown);
+                margin-bottom: var(--space-2);
+            }
+            
+            .card-price {
+                font-family: var(--font-decorative);
+                font-size: var(--text-xl);
+                color: var(--color-ui-gold);
+                font-weight: 400;
+            }
+            
+            /* Drop Cap Component */
+            .drop-cap {
+                position: relative;
+                max-width: 65ch;
+            }
+            
+            .drop-cap::first-letter {
+                float: left;
+                font-family: var(--font-decorative);
+                font-size: 5rem;
+                line-height: 0.9;
+                color: var(--color-terracotta);
+                margin-right: var(--space-3);
+                margin-top: 0.25em;
+                padding-right: var(--space-2);
+                border-right: 2px solid var(--color-ui-gold);
+            }
+            
+            /* Section Headers */
+            .section-header {
+                text-align: center;
+                margin-bottom: var(--space-12);
+            }
+            
+            .section-title {
+                font-size: var(--text-4xl);
+                color: var(--color-ui-terracotta);
+                margin-bottom: var(--space-4);
+                position: relative;
+                display: inline-block;
+                left: 50%;
+                transform: translateX(-50%);
+            }
+            
+            .section-title::after {
+                content: '';
+                position: absolute;
+                bottom: -8px;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 80px;
+                height: 2px;
+                background: var(--color-ui-terracotta);
+            }
+            
+            .section-subtitle {
+                font-family: var(--font-decorative);
+                font-size: var(--text-xl);
+                color: var(--color-ui-blue);
+                margin-top: var(--space-2);
+            }
+            
+            /* Zig-Zag Layout */
+            .zigzag-grid {
+                display: flex;
+                flex-direction: column;
+                gap: var(--space-16);
+            }
+            
+            .zigzag-item {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: var(--space-8);
+                align-items: center;
+            }
+            
+            .zigzag-item:nth-child(even) {
+                direction: rtl;
+            }
+            
+            .zigzag-item:nth-child(even) .zigzag-content,
+            .zigzag-item:nth-child(even) .zigzag-image {
+                direction: ltr;
+            }
+            
+            .zigzag-image {
+                position: relative;
+                aspect-ratio: 1;
+            }
+            
+            .zigzag-image img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                border-radius: var(--border-radius);
+            }
+            
+            .zigzag-content {
+                padding: var(--space-6) 0;
+            }
+            
+            .zigzag-title {
+                font-size: var(--text-3xl);
+                margin-bottom: var(--space-4);
+                color: var(--color-ui-terracotta);
+            }
+            
+            .zigzag-price {
+                font-family: var(--font-decorative);
+                font-size: var(--text-2xl);
+                color: var(--color-ui-gold);
+                margin: var(--space-4) 0;
+            }
+            
+            /* Peranakan Tile Pattern */
+            .tile-pattern {
+                width: 100%;
+                height: 4px;
+                background-image: 
+                    linear-gradient(45deg, var(--color-ui-blue) 25%, transparent 25%),
+                    linear-gradient(-45deg, var(--color-ui-blue) 25%, transparent 25%),
+                    linear-gradient(45deg, transparent 75%, var(--color-ui-blue) 75%),
+                    linear-gradient(-45deg, transparent 75%, var(--color-ui-blue) 75%);
+                background-size: 16px 16px;
+                margin: var(--space-8) 0;
+            }
+            
+            /* Form Component */
+            .form-group {
+                margin-bottom: var(--space-6);
+            }
+            
+            .form-label {
+                display: block;
+                font-size: var(--text-lg);
+                font-weight: 500;
+                margin-bottom: var(--space-2);
+                color: var(--color-kopi-brown);
+            }
+            
+            .form-input {
+                width: 100%;
+                padding: var(--space-3) var(--space-4);
+                border: 1px solid rgba(var(--color-kopi-brown-rgb), 0.2);
+                border-radius: var(--border-radius);
+                font-family: var(--font-body);
+                font-size: var(--text-lg);
+                transition: all var(--duration-medium) var(--easing-smooth);
+            }
+            
+            .form-input:focus {
+                outline: none;
+                border-color: var(--color-ui-terracotta);
+                box-shadow: 0 0 0 3px rgba(var(--color-terracotta-rgb), 0.15);
+            }
+            
+            /* Footer */
+            .footer {
+                background: rgba(var(--color-kopi-brown-rgb), 0.03);
+                padding: var(--space-16) 0;
+                border-top: 1px solid rgba(var(--color-kopi-brown-rgb), 0.08);
+                text-align: center;
+            }
+            
+            .footer-container {
+                max-width: var(--container-width);
+                margin: 0 auto;
+                padding: 0 var(--space-4);
+            }
+            
+            .footer-title {
+                font-family: var(--font-decorative);
+                font-size: var(--text-2xl);
+                color: var(--color-ui-terracotta);
+                margin-bottom: var(--space-2);
+            }
+            
+            .footer-text {
+                font-size: var(--text-sm);
+                color: var(--color-kopi-brown);
+                line-height: var(--leading-loose);
+            }
+            
+            .footer-links {
+                display: flex;
+                justify-content: center;
+                gap: var(--space-6);
+                margin: var(--space-8) 0;
+            }
+            
+            .footer-link {
+                color: var(--color-ui-blue);
+                font-size: var(--text-lg);
+            }
+            
+            .copyright {
+                font-size: var(--text-sm);
+                color: var(--color-kopi-brown);
+                margin-top: var(--space-4);
+            }
+        }
+        
+        /* ===== LAYER 4: UTILITIES ===== */
+        @layer utilities {
+            .text-center {
+                text-align: center;
+            }
+            
+            .text-right {
+                text-align: right;
+            }
+            
+            .text-left {
+                text-align: left;
+            }
+            
+            .max-w-prose {
+                max-width: 65ch;
+            }
+            
+            .mx-auto {
+                margin-left: auto;
+                margin-right: auto;
+            }
+            
+            .mt-4 {
+                margin-top: var(--space-4);
+            }
+            
+            .mt-8 {
+                margin-top: var(--space-8);
+            }
+            
+            .mb-4 {
+                margin-bottom: var(--space-4);
+            }
+            
+            .mb-8 {
+                margin-bottom: var(--space-8);
+            }
+            
+            .mb-12 {
+                margin-bottom: var(--space-12);
+            }
+            
+            .mb-16 {
+                margin-bottom: var(--space-16);
+            }
+            
+            .mt-16 {
+                margin-top: var(--space-16);
+            }
+            
+            .py-24 {
+                padding-top: var(--space-24);
+                padding-bottom: var(--space-24);
+            }
+            
+            .px-4 {
+                padding-left: var(--space-4);
+                padding-right: var(--space-4);
+            }
+            
+            .flex {
+                display: flex;
+            }
+            
+            .flex-col {
+                flex-direction: column;
+            }
+            
+            .items-center {
+                align-items: center;
+            }
+            
+            .justify-center {
+                justify-content: center;
+            }
+            
+            .gap-4 {
+                gap: var(--space-4);
+            }
+            
+            .gap-8 {
+                gap: var(--space-8);
+            }
+            
+            .gap-12 {
+                gap: var(--space-12);
+            }
+            
+            .hidden {
+                display: none;
+            }
+            
+            .sr-only {
+                position: absolute;
+                width: 1px;
+                height: 1px;
+                padding: 0;
+                margin: -1px;
+                overflow: hidden;
+                clip: rect(0, 0, 0, 0);
+                white-space: nowrap;
+                border: 0;
+            }
+            
+            @media (max-width: 768px) {
+                .hidden-mobile {
+                    display: none;
+                }
+                
+                .flex-col-mobile {
+                    flex-direction: column;
+                }
+                
+                .text-center-mobile {
+                    text-align: center;
+                }
+            }
+        }
+        
+        /* ===== LAYER 5: OVERRIDES & ANIMATIONS ===== */
+        @layer overrides {
+            /* Keyframe Animations */
+            @keyframes fadeUp {
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+            
+            @keyframes pulse {
+                0%, 100% { opacity: 0.6; }
+                50% { opacity: 1; }
+            }
+            
+            /* Peranakan Corner SVG Paths */
+            .peranakan-path {
+                fill: none;
+                stroke: currentColor;
+                stroke-width: 0.5;
+                stroke-linecap: round;
+                stroke-linejoin: round;
+            }
+            
+            /* Focus Styles for Accessibility */
+            :focus-visible {
+                outline: 3px solid var(--color-ui-terracotta);
+                outline-offset: 2px;
+            }
+        }
+        
+        /* ===== RESPONSIVE ADJUSTMENTS ===== */
+        @media (max-width: 768px) {
+            :root {
+                --space-32: 6rem;
+                --text-6xl: clamp(2.5rem, 2.2rem + 2.0vw, 3.5rem);
+            }
+            
+            .hero-title {
+                font-size: var(--text-5xl);
+            }
+            
+            .hero-subtitle {
+                font-size: var(--text-2xl);
+            }
+            
+            .hero {
+                padding: var(--space-24) var(--space-4);
+            }
+
+            body.menu-open {
+                overflow: hidden;
+            }
+
+            .menu-trigger {
+                display: inline-flex;
+                flex-direction: column;
+            }
+
+            .nav-links {
+                position: fixed;
+                inset: 0;
+                top: var(--nav-height);
+                background-color: var(--color-nyonya-cream);
+                flex-direction: column;
+                align-items: center;
+                justify-content: flex-start;
+                padding: var(--space-16) var(--space-8);
+                gap: var(--space-4);
+                overflow-y: auto;
+                -webkit-overflow-scrolling: touch;
+                opacity: 0;
+                visibility: hidden;
+                transform: translateY(10px);
+                transition: opacity var(--duration-medium) var(--easing-smooth), transform var(--duration-medium) var(--easing-smooth), visibility var(--duration-medium) var(--easing-smooth);
+                z-index: var(--z-modal);
+            }
+
+            body.menu-open .nav-links {
+                opacity: 1;
+                visibility: visible;
+                transform: translateY(0);
+            }
+
+            body.menu-open .menu-trigger .line-1 {
+                transform: rotate(45deg) translate(4px, 4px);
+                background-color: var(--color-ui-gold);
+            }
+
+            body.menu-open .menu-trigger .line-2 {
+                transform: rotate(-45deg) translate(4px, -4px);
+                background-color: var(--color-ui-gold);
+            }
+
+            .nav-link {
+                font-size: var(--text-2xl);
+                font-family: var(--font-heading);
+                line-height: 1.2;
+                padding: var(--space-2) var(--space-2);
+            }
+            
+            .zigzag-item {
+                grid-template-columns: 1fr;
+            }
+            
+            .zigzag-item:nth-child(even) {
+                direction: ltr;
+            }
+            
+            .btn-group {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            :root {
+                --space-24: 4rem;
+                --space-32: 5rem;
+                --text-5xl: clamp(2.0rem, 1.8rem + 1.5vw, 2.5rem);
+                --text-6xl: clamp(2.2rem, 2.0rem + 1.8vw, 2.8rem);
+                --text-4xl: clamp(1.8rem, 1.6rem + 1.5vw, 2.2rem);
+            }
+            
+            .hero-title {
+                font-size: var(--text-4xl);
+            }
+            
+            .section-title {
+                font-size: var(--text-3xl);
+            }
+            
+            .zigzag-title {
+                font-size: var(--text-2xl);
+            }
+            
+            .card-image {
+                aspect-ratio: 3/4;
+            }
+            
+            .peranakan-corner {
+                display: none;
+            }
+            
+            .scroll-indicator {
+                display: none;
+            }
+            
+            .tile-pattern {
+                height: 2px;
+                background-size: 8px 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Global Texture Overlay -->
+    <div class="texture-overlay" aria-hidden="true"></div>
+    
+    <!-- Skip to main content link -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    
+    <!-- Navigation -->
+    <header class="header" role="banner">
+        <div class="header-container">
+            <a href="#" class="logo" aria-label="Merlion Brews Artisan Roastery Home">
+                <span class="logo-monogram">☕</span>
+                <span class="logo-text">Merlion Brews</span>
+            </a>
+            <button type="button" class="menu-trigger" aria-controls="main-navigation" aria-expanded="false" aria-label="Open navigation">
+                <span class="sr-only">Menu</span>
+                <span class="line line-1"></span>
+                <span class="line line-2"></span>
+            </button>
+            <nav id="main-navigation" class="nav-links" aria-label="Main navigation">
+                <a href="#beans" class="nav-link">Our Beans</a>
+                <a href="#story" class="nav-link">Our Story</a>
+                <a href="#tasting-room" class="nav-link">Tasting Room</a>
+                <a href="#events" class="nav-link">Events</a>
+            </nav>
+        </div>
+    </header>
+    
+    <main id="main-content">
+        <!-- Hero Section with Floating Coffee Beans -->
+        <section class="hero" aria-labelledby="hero-heading">
+            <div class="container">
+                <div class="hero-content">
+                    <h1 id="hero-heading" class="hero-title">Artisan Coffee Crafted with Peranakan Soul</h1>
+                    <div class="hero-subtitle">Singapore's Heritage in Every Cup</div>
+                    <p class="hero-text">Since 2015, we've been roasting single-origin beans using techniques passed down through generations, blending traditional Singaporean coffee culture with contemporary craft roasting methods. Each batch tells a story of our island's rich multicultural heritage.</p>
+                    <div class="btn-group">
+                        <a href="#beans" class="btn btn-primary" aria-label="Explore our coffee beans">Discover Our Beans</a>
+                        <a href="#tasting-room" class="btn btn-secondary" aria-label="Visit our tasting room">Tasting Experience</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Floating Coffee Beans Animation -->
+            <div class="coffee-bean" style="top: 20%; left: 15%; animation-delay: 0s;"></div>
+            <div class="coffee-bean" style="top: 40%; left: 85%; animation-delay: 0.5s;"></div>
+            <div class="coffee-bean" style="top: 60%; left: 25%; animation-delay: 1s;"></div>
+            <div class="coffee-bean" style="top: 75%; left: 75%; animation-delay: 1.5s;"></div>
+            <div class="coffee-bean" style="top: 35%; left: 50%; animation-delay: 2s;"></div>
+            
+            <!-- Peranakan Corner Ornaments -->
+            <svg class="peranakan-corner corner-tl" viewBox="0 0 100 100" aria-hidden="true">
+                <path class="peranakan-path" d="M20,80 Q40,60 60,80 T100,80 M10,90 Q30,70 50,90 T90,90 M5,95 Q25,75 45,95 T85,95" stroke-width="1" />
+                <circle cx="15" cy="85" r="2" fill="currentColor" />
+                <circle cx="35" cy="75" r="1.5" fill="currentColor" />
+                <circle cx="55" cy="85" r="2" fill="currentColor" />
+                <circle cx="75" cy="75" r="1.5" fill="currentColor" />
+                <circle cx="95" cy="85" r="2" fill="currentColor" />
+            </svg>
+            
+            <svg class="peranakan-corner corner-tr" viewBox="0 0 100 100" aria-hidden="true">
+                <path class="peranakan-path" d="M80,80 Q60,60 40,80 T0,80 M90,90 Q70,70 50,90 T10,90 M95,95 Q75,75 55,95 T15,95" stroke-width="1" />
+                <circle cx="85" cy="85" r="2" fill="currentColor" />
+                <circle cx="65" cy="75" r="1.5" fill="currentColor" />
+                <circle cx="45" cy="85" r="2" fill="currentColor" />
+                <circle cx="25" cy="75" r="1.5" fill="currentColor" />
+                <circle cx="5" cy="85" r="2" fill="currentColor" />
+            </svg>
+            
+            <svg class="peranakan-corner corner-bl" viewBox="0 0 100 100" aria-hidden="true">
+                <path class="peranakan-path" d="M20,20 Q40,40 60,20 T100,20 M10,10 Q30,30 50,10 T90,10 M5,5 Q25,25 45,5 T85,5" stroke-width="1" />
+                <circle cx="15" cy="15" r="2" fill="currentColor" />
+                <circle cx="35" cy="25" r="1.5" fill="currentColor" />
+                <circle cx="55" cy="15" r="2" fill="currentColor" />
+                <circle cx="75" cy="25" r="1.5" fill="currentColor" />
+                <circle cx="95" cy="15" r="2" fill="currentColor" />
+            </svg>
+            
+            <svg class="peranakan-corner corner-br" viewBox="0 0 100 100" aria-hidden="true">
+                <path class="peranakan-path" d="M80,20 Q60,40 40,20 T0,20 M90,10 Q70,30 50,10 T10,10 M95,5 Q75,25 55,5 T15,5" stroke-width="1" />
+                <circle cx="85" cy="15" r="2" fill="currentColor" />
+                <circle cx="65" cy="25" r="1.5" fill="currentColor" />
+                <circle cx="45" cy="15" r="2" fill="currentColor" />
+                <circle cx="25" cy="25" r="1.5" fill="currentColor" />
+                <circle cx="5" cy="15" r="2" fill="currentColor" />
+            </svg>
+            
+            <div class="scroll-indicator" aria-hidden="true">
+                <div class="scroll-arrow"></div>
+                <div class="scroll-text">SCROLL TO EXPLORE</div>
+            </div>
+        </section>
+        
+        <!-- Featured Beans Section -->
+        <section id="beans" class="section-collections" aria-labelledby="beans-heading">
+            <div class="container">
+                <div class="section-header">
+                    <h2 id="beans-heading" class="section-title">Heritage Bean Collection</h2>
+                    <div class="section-subtitle">Single-Origin Mastery</div>
+                </div>
+                
+                <div class="tile-pattern" aria-hidden="true"></div>
+                
+                <div class="drop-cap">
+                    <p>In the tradition of Singapore's kopi masters, we source only the finest beans from sustainable growers across Southeast Asia and beyond. Each variety is roasted in small batches using cast-iron drum roasters, with profiles developed through years of experimentation and respect for the bean's natural characteristics.</p>
+                </div>
+                
+                <div class="zigzag-grid">
+                    <!-- Collection 1: Singapore Heritage Blend -->
+                    <div class="zigzag-item">
+                        <div class="zigzag-image folio-frame">
+                            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400' viewBox='0 0 400 400'%3E%3Crect width='400' height='400' fill='%23F8F3E6'/%3E%3Cpath d='M50,200 Q100,100 200,150 T350,200' stroke='%239A5E4A' stroke-width='2' fill='none'/%3E%3Ccircle cx='150' cy='180' r='30' fill='%234A6B7D' opacity='0.2'/%3E%3Ccircle cx='250' cy='220' r='25' fill='%23C77966' opacity='0.2'/%3E%3Ctext x='200' y='220' font-family='Arial' font-size='16' text-anchor='middle' fill='%233A2A1F' opacity='0.3'%3ESingapore Heritage%3C/text%3E%3C/svg%3E" alt="Singapore Heritage Blend featuring robusta beans with traditional roasting">
+                        </div>
+                        <div class="zigzag-content">
+                            <h3 class="zigzag-title">Singapore Heritage Blend</h3>
+                            <p>Our signature blend honoring Singapore's kopi culture, featuring 100% Robusta beans roasted with margarine and sugar in the traditional manner. Bold, full-bodied, and nostalgic—this is the taste of Singapore's kopitiams perfected for the modern palate.</p>
+                            <div class="zigzag-price">$28.00 SGD (Incl. 9% GST)</div>
+                            <a href="#" class="btn btn-secondary">Add to Cart</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Collection 2: Peranakan Single-Origin -->
+                    <div class="zigzag-item">
+                        <div class="zigzag-image folio-frame">
+                            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400' viewBox='0 0 400 400'%3E%3Crect width='400' height='400' fill='%23F8F3E6'/%3E%3Cpath d='M100,100 Q200,50 300,100 T350,250' stroke='%239A5E4A' stroke-width='2' fill='none'/%3E%3Ccircle cx='200' cy='150' r='40' fill='%234A6B7D' opacity='0.1'/%3E%3Ctext x='200' y='200' font-family='Arial' font-size='16' text-anchor='middle' fill='%233A2A1F' opacity='0.3'%3EPeranakan Estate%3C/text%3E%3C/svg%3E" alt="Peranakan Single-Origin from Indonesian highlands">
+                        </div>
+                        <div class="zigzag-content">
+                            <h3 class="zigzag-title">Peranakan Estate</h3>
+                            <p>Single-origin Arabica from the highlands of Indonesia, where Peranakan families have cultivated coffee for generations. Medium roast with notes of dark chocolate, candied orange, and spice—this bean carries the legacy of the Straits Settlements in every sip.</p>
+                            <div class="zigzag-price">$32.00 SGD (Incl. 9% GST)</div>
+                            <a href="#" class="btn btn-secondary">Add to Cart</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Collection 3: Straits Sourcing -->
+                    <div class="zigzag-item">
+                        <div class="zigzag-image folio-frame">
+                            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400' viewBox='0 0 400 400'%3E%3Crect width='400' height='400' fill='%23F8F3E6'/%3E%3Cpath d='M50,300 Q150,250 250,300 T350,250' stroke='%239A5E4A' stroke-width='2' fill='none'/%3E%3Ccircle cx='150' cy='280' r='25' fill='%234A6B7D' opacity='0.3'/%3E%3Ccircle cx='300' cy='260' r='20' fill='%23C77966' opacity='0.3'/%3E%3Ctext x='200' y='230' font-family='Arial' font-size='16' text-anchor='middle' fill='%233A2A1F' opacity='0.3'%3EStraits Sourcing%3C/text%3E%3C/svg%3E" alt="Straits Sourcing blend with beans from Malaysia and Vietnam">
+                        </div>
+                        <div class="zigzag-content">
+                            <h3 class="zigzag-title">Straits Sourcing</h3>
+                            <p>A tribute to the spice routes that shaped Singapore, this blend combines beans from Malaysia, Vietnam, and Thailand. Dark roasted with a hint of cardamom and star anise, it evokes the aromatic markets of old Singapore where merchants traded coffee alongside spices and silks.</p>
+                            <div class="zigzag-price">$36.00 SGD (Incl. 9% GST)</div>
+                            <a href="#" class="btn btn-secondary">Add to Cart</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Our Story Section -->
+        <section id="story" class="section-about" aria-labelledby="story-heading">
+            <div class="container">
+                <div class="section-header">
+                    <h2 id="story-heading" class="section-title">Our Manuscript</h2>
+                    <div class="section-subtitle">A Heritage of Craft</div>
+                </div>
+                
+                <div class="tile-pattern" aria-hidden="true"></div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                    <div class="folio-frame">
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='400' viewBox='0 0 600 400'%3E%3Crect width='600' height='400' fill='%23F8F3E6'/%3E%3Ccircle cx='150' cy='200' r='80' fill='%234A6B7D' opacity='0.2'/%3E%3Ccircle cx='450' cy='200' r='60' fill='%23C77966' opacity='0.2'/%3E%3Cpath d='M100,300 Q200,200 300,300 T500,300' stroke='%239A5E4A' stroke-width='3' fill='none'/%3E%3Ctext x='300' y='200' font-family='Arial' font-size='24' text-anchor='middle' fill='%233A2A1F' opacity='0.3'%3EMaster Roaster%3C/text%3E%3C/svg%3E" alt="Master roaster at work with traditional equipment" class="w-full h-auto">
+                    </div>
+                    
+                    <div class="drop-cap">
+                        <p>In 2015, after a decade studying coffee roasting techniques across Southeast Asia and Europe, I returned to Singapore with a singular vision: to create coffee that honors both our multicultural heritage and the meticulous craftsmanship of traditional roasting methods.</p>
+                        <p>Our roastery in Tiong Bahru operates on principles drawn from Singapore's kopitiams and European roasting traditions. Every cast-iron drum roaster is hand-maintained, every batch roasted by ear and smell, and every bag sealed with the care of a craftsman preserving a legacy. We measure success not in volume, but in the moments of connection our coffee creates.</p>
+                        
+                        <div class="mt-8 flex items-center gap-4">
+                            <svg class="alchemical" viewBox="0 0 24 24" aria-hidden="true" width="24" height="24">
+                                <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="1.5"/>
+                                <path d="M12,2 L12,22 M2,12 L22,12 M5,5 L19,19 M5,19 L19,5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                            </svg>
+                            <p class="italic" style="font-style: italic; color: var(--color-ui-blue);">"In coffee, we transform not just beans, but moments into memories."</p>
+                        </div>
+                        
+                        <div class="mt-6">
+                            <p class="font-heading" style="font-family: var(--font-decorative); font-size: var(--text-lg); color: var(--color-ui-terracotta);">
+                                — Marcus Lim, Founder & Master Roaster
+                            </p>
+                            <p class="text-kopi-brown" style="color: var(--color-kopi-brown); font-size: var(--text-sm); margin-top: var(--space-1);">
+                                Former roaster at Blue Bottle • Certified Q Grader • Heritage Preservation Advocate
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Tasting Room Section -->
+        <section id="tasting-room" class="section-tasting-room" aria-labelledby="tasting-room-heading">
+            <div class="container">
+                <div class="section-header">
+                    <h2 id="tasting-room-heading" class="section-title">Tasting Room</h2>
+                    <div class="section-subtitle">Experience Our Craft</div>
+                </div>
+                
+                <div class="tile-pattern" aria-hidden="true"></div>
+                
+                <div class="drop-cap">
+                    <p>Step into our Tiong Bahru tasting room, where the aroma of freshly roasted beans mingles with the scent of heritage Peranakan tiles. This is where we host intimate cupping sessions, brewing workshops, and private tastings—each experience designed to deepen your appreciation for the art and science of coffee.</p>
+                </div>
+                
+                <div class="grid gap-8 mt-8">
+                    <div class="card folio-frame">
+                        <h3 class="card-title">Heritage Cupping Session</h3>
+                        <p>An immersive journey through three generations of Singaporean coffee culture. Taste traditional kopi alongside our contemporary single-origin roasts, guided by our master roasters who share stories of Singapore's evolving coffee landscape.</p>
+                        <div class="card-price">$45.00 per person</div>
+                        <button class="btn btn-secondary">Book Experience</button>
+                    </div>
+                    
+                    <div class="card folio-frame">
+                        <h3 class="card-title">Brewing Masterclass</h3>
+                        <p>Learn the techniques behind perfect pour-over, French press, and traditional sock brewing. Take home your own brew kit and a bag of freshly roasted beans to continue your coffee journey at home.</p>
+                        <div class="card-price">$65.00 per person</div>
+                        <button class="btn btn-secondary">Book Class</button>
+                    </div>
+                    
+                    <div class="card folio-frame">
+                        <h3 class="card-title">Private Tasting Room</h3>
+                        <p>Host your next gathering in our intimate tasting room. Perfect for team building, client meetings, or special celebrations. Includes a customized tasting menu, light bites, and dedicated roaster host.</p>
+                        <div class="card-price">$350.00 for up to 8 guests</div>
+                        <button class="btn btn-secondary">Reserve Room</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Events Section -->
+        <section id="events" class="section-events" aria-labelledby="events-heading">
+            <div class="container">
+                <div class="section-header">
+                    <h2 id="events-heading" class="section-title">Cultural Gatherings</h2>
+                    <div class="section-subtitle">Community & Connection</div>
+                </div>
+                
+                <div class="tile-pattern" aria-hidden="true"></div>
+                
+                <div class="drop-cap">
+                    <p>Coffee has always been a catalyst for connection. At Merlion Brews, we host regular cultural events that celebrate Singapore's multicultural heritage—from Peranakan tea ceremonies to Malay storytelling nights, each event is designed to bring our community together over shared stories and exceptional coffee.</p>
+                </div>
+                
+                <div class="grid gap-8 mt-8">
+                    <div class="card folio-frame">
+                        <h3 class="card-title">Peranakan Coffee Ceremony</h3>
+                        <p>Experience the ritual of traditional Peranakan coffee preparation, accompanied by kueh and stories of the Straits Settlements. Led by cultural historian Aunty Mei Ling, this monthly gathering honors the women who kept these traditions alive through generations.</p>
+                        <p><strong>Next Date:</strong> Saturday, 18 January 2026 • 3:00 PM - 5:00 PM</p>
+                        <button class="btn btn-secondary">Reserve Spot</button>
+                    </div>
+                    
+                    <div class="card folio-frame">
+                        <h3 class="card-title">Storytelling & Single-Origin</h3>
+                        <p>Join local storyteller Raj Verma for an evening of Singaporean folk tales, accompanied by a flight of three single-origin coffees that mirror the stories' themes. This quarterly event celebrates the oral traditions that have shaped our island's identity.</p>
+                        <p><strong>Next Date:</strong> Friday, 24 January 2026 • 7:00 PM - 9:00 PM</p>
+                        <button class="btn btn-secondary">Reserve Spot</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Newsletter Section -->
+        <section id="newsletter" class="section-newsletter" aria-labelledby="newsletter-heading">
+            <div class="container text-center">
+                <div class="section-header">
+                    <h2 id="newsletter-heading" class="section-title">Join Our Manuscript</h2>
+                    <div class="section-subtitle">Receive Exclusive Insights</div>
+                </div>
+                
+                <div class="tile-pattern" aria-hidden="true"></div>
+                
+                <div class="max-w-prose mx-auto">
+                    <p class="mb-8">Subscribe to receive quarterly manuscript pages featuring bean discoveries, roasting techniques, and invitations to our private tasting salons in Tiong Bahru. As a welcome gift, receive 15% off your first coffee order.</p>
+                    
+                    <form class="max-w-md mx-auto">
+                        <div class="form-group">
+                            <label for="email" class="sr-only">Email address</label>
+                            <input type="email" id="email" class="form-input" placeholder="Your illuminated email address..." required>
+                        </div>
+                        <button type="submit" class="btn btn-primary mx-auto">Seal Your Subscription</button>
+                    </form>
+                    
+                    <p class="mt-4 text-sm" style="color: var(--color-kopi-brown); font-size: var(--text-sm);">
+                        We respect your privacy. Your email will never be shared, and you may unsubscribe at any time. 
+                        GST is included in all prices for Singapore customers.
+                    </p>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <!-- Footer -->
+    <footer class="footer" role="contentinfo">
+        <div class="footer-container">
+            <div class="footer-title">☕ Merlion Brews Artisan Roastery</div>
+            <p class="footer-text">Heritage coffee crafted with Peranakan soul since 2015</p>
+            
+            <div class="footer-links">
+                <a href="#beans" class="footer-link">Our Beans</a>
+                <a href="#story" class="footer-link">Our Story</a>
+                <a href="#tasting-room" class="footer-link">Tasting Room</a>
+                <a href="#events" class="footer-link">Events</a>
+                <a href="#" class="footer-link">Contact</a>
+            </div>
+            
+            <div class="tile-pattern" aria-hidden="true"></div>
+            
+            <p class="copyright">
+                Roastery: 48 Tiong Bahru Road, #01-12, Singapore 168893<br>
+                Business Registration: 2015123456K • GST Registration: M9-1234567-8<br>
+                © 2026 Merlion Brews Artisan Roastery Pte. Ltd. Singapore • All rights reserved<br>
+                Prices displayed in SGD with 9% GST included for Singapore customers
+            </p>
+        </div>
+    </footer>
+    
+    <script>
+        // Intersection Observer for scroll animations
+        document.addEventListener('DOMContentLoaded', () => {
+            // Hero content animation trigger
+            setTimeout(() => {
+                document.querySelector('.hero-content').style.animation = 'fadeUp ' + getComputedStyle(document.documentElement).getPropertyValue('--duration-slow') + ' ' + getComputedStyle(document.documentElement).getPropertyValue('--easing-smooth') + ' forwards';
+            }, 300);
+            
+            // Scroll reveal for sections
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+            
+            // Observe all section content
+            document.querySelectorAll('section > .container, .zigzag-item, .card').forEach(element => {
+                element.style.opacity = '0';
+                element.style.transform = 'translateY(20px)';
+                element.style.transition = 'opacity ' + getComputedStyle(document.documentElement).getPropertyValue('--duration-medium') + ' ' + getComputedStyle(document.documentElement).getPropertyValue('--easing-smooth') + ', transform ' + getComputedStyle(document.documentElement).getPropertyValue('--duration-medium') + ' ' + getComputedStyle(document.documentElement).getPropertyValue('--easing-smooth');
+                observer.observe(element);
+            });
+            
+            // Form submission prevention for demo
+            document.querySelector('form').addEventListener('submit', (e) => {
+                e.preventDefault();
+                const email = document.getElementById('email').value;
+                if (email) {
+                    alert('Thank you for joining our manuscript! You will receive a confirmation email shortly with your 15% discount code.');
+                    document.getElementById('email').value = '';
+                }
+            });
+            
+            // Add coffee bean animation timing variations
+            document.querySelectorAll('.coffee-bean').forEach((bean, index) => {
+                bean.style.animationDuration = `${3 + index * 0.5}s`;
+                bean.style.animationDelay = `${index * 0.3}s`;
+            });
+
+            const body = document.body;
+            const menuButton = document.querySelector('.menu-trigger');
+            const nav = document.getElementById('main-navigation');
+
+            if (menuButton && nav) {
+                const setMenuState = (isOpen, options = {}) => {
+                    const { focus = true } = options;
+                    if (isOpen) {
+                        body.classList.add('menu-open');
+                        menuButton.setAttribute('aria-expanded', 'true');
+                        menuButton.setAttribute('aria-label', 'Close navigation');
+                        if (focus) {
+                            const firstLink = nav.querySelector('a');
+                            if (firstLink) firstLink.focus();
+                        }
+                        return;
+                    }
+
+                    body.classList.remove('menu-open');
+                    menuButton.setAttribute('aria-expanded', 'false');
+                    menuButton.setAttribute('aria-label', 'Open navigation');
+                    if (focus) menuButton.focus();
+                };
+
+                menuButton.addEventListener('click', () => {
+                    const isOpen = body.classList.contains('menu-open');
+                    setMenuState(!isOpen, { focus: true });
+                });
+
+                nav.querySelectorAll('a').forEach((link) => {
+                    link.addEventListener('click', () => {
+                        if (body.classList.contains('menu-open')) {
+                            setMenuState(false, { focus: false });
+                        }
+                    });
+                });
+
+                document.addEventListener('keydown', (e) => {
+                    if (e.key === 'Escape' && body.classList.contains('menu-open')) {
+                        setMenuState(false, { focus: true });
+                    }
+                });
+
+                window.addEventListener('resize', () => {
+                    if (window.innerWidth > 768 && body.classList.contains('menu-open')) {
+                        setMenuState(false, { focus: false });
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
