@@ -107,13 +107,47 @@ Include the exact DevTools actions:
 - **Success criteria**
   - A new developer can fix the bug without asking you.
 
-# Validation Checkpoint (before I write the handbook)
-Answer these so the guide is calibrated:
+---
 
-1) **Target stack(s):** plain HTML/CSS/JS only, or also Tailwind/React/etc.?  
-2) **Accessibility target:** AA or AAA? (AAA implies stronger focus management, semantics, and documentation.)  
-3) **Output format/location:** a `docs/` Markdown file in the repo, or a standalone `NAVIGATION_TROUBLESHOOTING.md` at root?  
-4) **Your agent:** is it primarily failing by generating `display:none` on mobile, or other patterns too?
+- **Preventative discipline**
+  - Explicit “non-negotiable” guardrails (viewport meta, no destructive hiding without substitution, z-index scale, overflow rules).
+- **Fast diagnosis**
+  - A decision tree that starts with DOM presence → computed styles → layout box → stacking contexts → JS state.
+- **Repeatable fixes**
+  - A canonical, accessible implementation pattern (semantic button + `aria-*` + minimal JS) plus anti-patterns.
+- **Agent-trainable**
+  - Copy/paste checklists, worksheets, and “agent prompts” that force verification before claiming completion.
+- **QA closure**
+  - A concrete test matrix and keyboard/a11y verification steps.
 
-## Status
-- **Planning complete and ready for your confirmation** on the 4 decisions above. Once you confirm, I’ll proceed to execute Phase 2–5 and produce the handbook content.
+**Decision lock for execution:**
+- **Primary stack:** plain HTML/CSS/JS (framework-agnostic principles)
+- **A11y target:** strong baseline aligned with WCAG AA+ behaviors (semantic trigger, Escape close, focus return; no full focus-trap unless required)
+- **Output:** single Markdown file at repo root (since there is no `docs/` folder yet)
+
+## Requirements coverage
+- **Prevent the bug in new mockups**
+  - Enforced guardrails: viewport meta, “no destructive hiding without substitution,” semantic trigger, overlay non-clipping rules, z-index scale discipline.
+- **Troubleshoot + fix in existing HTML**
+  - Included taxonomy (A–G) + a DevTools-first decision tree (DOM → computed styles → clipping → stacking context → JS → keyboard).
+- **Teach a coding agent**
+  - Included an “Agent Instruction Block” plus a copy/paste “Troubleshooting Worksheet.”
+- **Maintainability**
+  - Canonical reference implementation separates responsibilities (HTML semantics, CSS overlay behavior, JS state machine).
+- **Accessibility baseline**
+  - Requires `<button>` trigger, `aria-controls`, `aria-expanded`, Escape-to-close, focus return, keyboard checklist.
+
+## Risk check
+- **Most common failure mode addressed:** `display:none` at mobile breakpoint without replacement.
+- **Second-most common addressed:** clipping/centering/overflow causing “first item missing.”
+- **Third-most common addressed:** z-index / stacking-context invisibility.
+
+## What’s inside (structure)
+- **Guardrails (prevention rules)**
+- **Root-cause taxonomy (A–G)**
+- **5-minute diagnostic decision tree**
+- **Canonical implementation (HTML/CSS/JS)**
+- **Anti-patterns**
+- **Verification protocol + test matrix**
+- **Troubleshooting worksheet**
+- **Agent instruction block (prompt-ready)**
