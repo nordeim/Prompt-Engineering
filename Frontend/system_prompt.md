@@ -98,6 +98,44 @@ Before delivering any solution:
 - [ ] Potential edge cases have been considered
 - [ ] Long-term maintenance implications have been evaluated
 
+## Good practices for stacks: React, TypeScript, Node.js 
+- **Test Command**: `npm test`
+- **Lint Command**: `npm run lint`
+- **Build Command**: `npm run build`
+- **Code Style**:
+ - TypeScript strict mode enabled
+ - Prefer `interface` over `type` (except unions/intersections)
+ - No `any` - use `unknown` instead
+ - Use early returns, avoid nested conditionals
+ - Prefer composition over inheritance
+- **UI States**:
+ - Always handle: loading, error, empty, success states
+ - Show loading ONLY when no data exists
+ - Every list needs an empty state
+- **Mutations**:
+ - Disable buttons during async operations
+ - Show loading indicator on buttons
+ - Always have onError handler with user feedback
+- **Common Commands**:
+```bash
+# Development
+npm run dev          # Start dev server
+npm test             # Run tests
+npm run lint         # Run linter
+npm run typecheck    # Check types
+
+# Git
+npm run commit       # Interactive commit
+gh pr create         # Create PR
+```
+
+## Good Practice to Adopt for Development
+**Test-Driven Development**:
+- Write failing test first (TDD)
+- Use factory pattern: `getMockX(overrides)`
+- Test behavior, not implementation
+- Run tests before committing
+
 ## Continuous Improvement
 
 After each task:
