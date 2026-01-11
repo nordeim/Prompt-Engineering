@@ -349,3 +349,85 @@ Once you answer these two, I will proceed to draft the finalized `Project_Archit
 - **Completed**: Tailwind v4 research with primary citations.
 - **Pending**: Your 2-item validation checkpoint above.
 - **Next**: Draft `Project_Architecture_Document.md` immediately after your confirmation.
+
+---
+
+I’ll create a **phase-by-phase Master Execution Plan** that an AI coding agent can follow with minimal supervision. I’ll structure it as:\n\n- A small set of **independent phases** with clear “entry/exit criteria”\n- For each phase: **exact files to create**, each file’s **purpose**, **interfaces** (imports/exports, endpoints, env vars, DB tables), and a **per-file checklist** the agent must satisfy before moving on\n- A final **self-review section** to validate the generated `Master_Execution_Plan.md` against completeness criteria\n\nFirst I’ll check whether `Master_Execution_Plan.md` already exists, then create it, then re-open it for a verification pass.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# Delivered: [Master_Execution_Plan.md](cci:7://file:///h:/project/cafe-new/Master_Execution_Plan.md:0:0-0:0) (complete, phase-gated, self-validating)
+
+I created and refined the master plan here:
+
+- [h:\project\cafe-new\Master_Execution_Plan.md](cci:7://file:///h:/project/cafe-new/Master_Execution_Plan.md:0:0-0:0)
+
+It’s structured so an AI coding agent can execute **phase-by-phase with minimal supervision**, and it includes:
+
+- **Independent phases** (1 → 13) with outcomes + validations
+- For each phase: **explicit file list**
+- For each file: **Purpose**, **Interfaces**, and a **Checklist**
+- A final **Global Interfaces Contract** and **self-validation checklist**
+
+---
+
+# Key Improvements Included (deep execution readiness)
+- **Day‑1 backend** is reflected: Laravel + Postgres + Redis are foundational from Phase 1–2.
+- **Tailwind v4 + cafe.html authority** is locked into the plan (Phase 3 focuses on CSS layers/tokens and `folio-frame` fidelity).
+- **Stripe + PayNow** is explicitly required (Phase 7).
+- **InvoiceNow via provider API** is fully represented with retry/audit job design (Phase 8).
+- Expanded beyond commerce into “complete codebase” needs:
+  - **Newsletter + explicit consent + transactional messaging** (Phase 10)
+  - **Experiences/events booking with capacity management** (Phase 11)
+  - **Admin dashboard + inventory adjustments + invoice transmission visibility** (Phase 12)
+  - **CI/deployment runbooks** (Phase 13)
+
+---
+
+# Validation Review (the “review and validate after generation” you requested)
+
+## Pass: Structural completeness
+- **All phases** have:
+  - Outcome
+  - Files to create
+  - Phase validations
+- **All listed files** include:
+  - Purpose
+  - Interfaces
+  - Checklist  
+  (I patched gaps where needed, especially around route “additions” and Phase 9 interfaces.)
+
+## Pass: Interface coverage
+- **Global Interfaces Contract** (`Section 14`) includes:
+  - Backend APIs for catalog, reservations, checkout, webhook, newsletter, bookings, and admin
+  - Frontend BFF routes for catalog/reservations/checkout/newsletter/bookings
+- **Scope lock** is restated at the top and reinforced via ADR/runbook expectations.
+
+## Minor note (intentional)
+- Some items are phrased as “`routes/api.php additions`” rather than a standalone file (since it’s an edit). The plan still treats them like an artifact with its own checklist, which matches your requirement (“validated after generation”).
+
+---
+
+# Status
+- **Completed**: Created and validated [Master_Execution_Plan.md](cci:7://file:///h:/project/cafe-new/Master_Execution_Plan.md:0:0-0:0).
