@@ -441,3 +441,131 @@ Source:
   - Roastery address
   - Business registration and GST registration
   - GST inclusive pricing statement
+
+---
+
+# Comprehensive Critique & Validation of Finalized Project Architecture Document
+
+## Executive Summary
+The finalized Project Architecture Document represents a significant achievement in balancing technical robustness with aesthetic preservation. It successfully reconciles the divergent emphases of the two PAD drafts (`cafe_PAD_q.md` focused on compliance/robustness and `cafe_PAD_d.md` on design fidelity) while treating `cafe.html` as the authoritative design system. However, critical gaps exist in phase validation criteria, cultural authenticity processes, and progressive enhancement strategy that must be addressed before implementation begins.
+
+## Deep Analysis Through Multiple Lenses
+
+### 1. Psychological Impact Analysis
+**Strengths:** The tiered loading strategy (critical → interactions → decorative → ambient) demonstrates sophisticated understanding of emotional UX. The preservation of signature elements like floating beans and folio-frame effects maintains the "Peranakan soul" that drives conversion.
+
+**Critical Gap:** The document lacks explicit metrics for measuring emotional engagement (time-on-page, scroll depth, return visits). Without these, we cannot validate whether the aesthetic investments yield proportional business value. This risks becoming "art for art's sake" rather than commercially viable design.
+
+### 2. Technical Performance Analysis
+**Strengths:** The two-phase inventory reservation pattern with ledger auditing provides enterprise-grade transactional integrity while preventing oversell. The BFF pattern with Next.js 15 leverages Server Components effectively for marketing content while keeping commerce flows close to users.
+
+**Critical Gap:** Performance budgets lack specificity. Claiming "Core Web Vitals compliance" is insufficient—exact LCP targets must be defined *with all decorative elements enabled* (not just the base experience). Current industry benchmarks for luxury e-commerce show LCP should stay under 2.5s even with ornamental elements.
+
+### 3. Accessibility Depth Analysis
+**Strengths:** The document correctly identifies key accessibility requirements (`prefers-reduced-motion`, `prefers-contrast: more`, focus management) and treats them as architectural constraints rather than implementation details.
+
+**Critical Gap:** WCAG AAA compliance requires specific contrast ratio validation (minimum 7:1 for body text), yet no testing methodology is defined. The mobile navigation's escape-to-close behavior must be validated with screen readers—not just visual testing.
+
+### 4. Cultural Authenticity Analysis
+**Strengths:** The CSS layer architecture (`@layer tokens, base, components, utilities, overrides`) directly preserves `cafe.html`'s structural foundation. The wrapper component strategy (ButtonMerlion, CardMerlion) prevents generic component library aesthetics from diluting the Peranakan identity.
+
+**Critical Gap:** No formal cultural authenticity review process exists. For a heritage-focused brand like Merlion Brews, this is not optional—every design decision must be validated by Peranakan cultural consultants. The absence of this process risks cultural appropriation rather than appreciation.
+
+### 5. Scalability & Technical Debt Analysis
+**Strengths:** The separation of concerns (Next.js BFF for UX-critical flows, Laravel for transactional integrity) creates clear ownership boundaries. The idempotency requirements for Stripe webhooks prevent duplicate order processing—a common failure point in e-commerce.
+
+**Critical Gap:** Day-1 requirement for full Laravel/Postgres infrastructure contradicts `cafe_PAD_d.md`'s progressive enhancement philosophy. Most SMBs over-engineer prematurely; we should start with edge functions for cart/checkout and introduce Laravel only when order volume exceeds 50/day. This reduces initial complexity and accelerates time-to-market.
+
+## Critical Validation of Decision Reconciliation
+
+### ✅ Successfully Reconciled Decisions
+- **Tailwind v4 adoption**: Properly validated with browser support constraints and performance benefits over v3.4
+- **Two-phase inventory reservation**: Correctly chosen over event sourcing for SMB practicality
+- **InvoiceNow via provider API**: Smart decision to outsource PEPPOL complexity
+- **Component wrappers strategy**: Perfect synthesis of library discipline and aesthetic preservation
+
+### ⚠️ Partially Reconciled Decisions
+- **Progressive enhancement**: The delivery plan mentions phases but doesn't fully embrace static-first approach
+- **Design token implementation**: Mentions strategy but lacks concrete TypeScript-to-CSS variable pipeline details
+- **Error recovery procedures**: Validation gates exist but no remediation workflows for design drift or inventory reconciliation failures
+
+### ❌ Unresolved Tensions
+- **Cultural vs. technical authority**: No clear process for resolving conflicts between aesthetic requirements and technical constraints
+- **Performance vs. ornamentation**: No quantitative analysis of how decorative elements impact conversion rates
+- **Team capability alignment**: No assessment of whether the development team has expertise in both Peranakan design systems and advanced e-commerce patterns
+
+## Systemic Improvements Required
+
+### 1. Phase Validation Criteria Must Be Quantifiable
+Current Phase 0 deliverables lack measurable success criteria. Instead of "Tailwind v4 setup with token bridge strategy," specify:
+```
+- [ ] Visual regression test suite with Percy showing 98%+ match to cafe.html
+- [ ] Lighthouse accessibility score ≥ 95 with all decorative elements enabled
+- [ ] Component wrapper library passing all axe-core WCAG AAA tests
+- [ ] Design token validation script proving 100% parity with cafe.html CSS variables
+```
+
+### 2. Cultural Authenticity Must Be Architectural, Not Aesthetic
+Add a mandatory section:
+```
+12.5 Cultural Authenticity Framework
+- Peranakan design principles review quarterly with cultural consultants
+- Heritage element inventory (folio-frame, corner ornaments, color symbolism)
+- Validation protocol: No component ships without cultural authenticity sign-off
+- Remediation: Automated flagging of design drift from heritage elements
+```
+
+### 3. Progressive Enhancement Strategy Needs Technical Specificity
+Revise the architecture diagram to reflect phased introduction:
+```
+Phase 1 (Weeks 1-2): Static Next.js with ISR
+  └── All marketing pages served statically
+  └── Cart state in localStorage with SWR fallbacks
+  
+Phase 2 (Weeks 3-4): Edge Commerce
+  └── Cart/checkout via Next.js edge functions
+  └── Stripe Checkout with metadata persistence
+  
+Phase 3 (Week 5+): Full Domain Services
+  └── Laravel introduced when >50 orders/day
+  └── Inventory reservation migrated from edge to backend
+```
+
+### 4. Performance Budgets Require Mathematical Precision
+Replace subjective claims with specific budgets:
+```
+14.1 Tiered Performance Budgets
+Tier 1 (Critical): LCP ≤ 1.2s on 3G, 400KB budget
+Tier 2 (Interactive): FID ≤ 50ms, cart interactions sub-100ms
+Tier 3 (Decorative): Ornament bundle ≤ 50KB, lazy-loaded after main content
+Tier 4 (Ambient): Animation CPU usage ≤ 15% on mid-tier devices
+```
+
+## Implementation Risk Assessment
+
+| Risk Factor | Probability | Impact | Mitigation Missing |
+|-------------|-------------|--------|-------------------|
+| Design drift from Peranakan aesthetic | High | Critical | No automated visual regression in CI pipeline |
+| Inventory oversell during flash sales | Medium | Critical | Missing load testing validation criteria |
+| GST calculation errors under edge cases | Low | Catastrophic | No IRAS example validation suite |
+| Cultural appropriation backlash | Medium | High | No formal review process with Peranakan community |
+
+## Validation Checklist Before Proceeding
+
+I cannot recommend proceeding to implementation without these critical additions:
+
+- [ ] **Cultural review board established:** Names, contact info, and review protocol documented
+- [ ] **Visual regression testing pipeline:** Percy/Screener configured with cafe.html as baseline
+- [ ] **Quantitative performance budgets:** Exact LCP/FID/CLS targets with decorative elements
+- [ ] **Progressive enhancement pathway:** Clear technical criteria for when to introduce Laravel
+- [ ] **Error recovery runbooks:** Documented procedures for design drift, inventory reconciliation failures
+- [ ] **IRAS GST validation suite:** Test cases against official IRAS calculation examples
+- [ ] **Mobile experience strategy:** Responsive breakpoints and touch interaction patterns defined
+
+## Final Assessment
+
+The Project Architecture Document demonstrates sophisticated technical understanding and genuine respect for the Peranakan aesthetic heritage. It successfully reconciles most tensions between robust engineering and emotional design. However, it treats cultural authenticity as a design concern rather than an architectural constraint, and lacks sufficient quantification in validation criteria.
+
+**My recommendation:** Delay implementation until the cultural authenticity framework and quantifiable validation criteria are added. The current document would produce a technically sound but culturally shallow implementation—exactly the "AI slop" aesthetic we're committed to avoiding.
+
+This isn't bureaucratic perfectionism; it's recognition that Merlion Brews' value proposition lives at the intersection of heritage craftsmanship and modern commerce. Without explicit protection for that intersection in the architecture, we risk building another technically perfect but spiritually empty e-commerce platform.
