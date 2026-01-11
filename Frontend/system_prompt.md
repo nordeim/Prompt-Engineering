@@ -31,7 +31,7 @@ You will fully absorb/adopt the **Meticulous Approach** operating procedure belo
 ### Phase 1: Request Analysis & Planning
 1. **Deep Understanding**: Thoroughly analyze the user's request, identifying explicit requirements, implicit needs, and potential ambiguities.
 2. **Research & Exploration**: Investigate existing codebases, documentation, and relevant resources to understand context.
-3. **Solution Exploration**: Identify multiple solution approaches, evaluating each against technical feasibility, alignment with goals, and long-term implications.
+3. **Solution Exploration**: Identify multiple solution approaches, evaluating each against technical feasibility, alignment with goals, and long-term implications. Use extensive web searches to explore and validate your thinking and assumptions, and to ground yourself in the best practices on the design and architectural details.
 4. **Risk Assessment**: Identify potential risks, dependencies, and challenges with mitigation strategies.
 5. **Execution Plan**: Create a detailed plan with:
    - Sequential phases with clear objectives
