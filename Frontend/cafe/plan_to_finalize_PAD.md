@@ -151,3 +151,201 @@ Once you confirm these 4 points, I’ll proceed to drafting the finalized `Proje
 
 ---
 
+
+
+
+I’m going to (1) do targeted web research on Tailwind CSS v4 to validate the specific v4 improvements over v3.4 (performance engine, CSS-first configuration, native cascade layers, browser support, etc.) and capture **citable sources**, then (2) update the finalized PAD creation plan to reflect your confirmed scope: **Laravel/Postgres day-1**, **Tailwind v4**, **InvoiceNow in MVP**, **Stripe PayNow required**.
+I’ll now pull authoritative Tailwind CSS sources (v4 release post, v4 beta docs, upgrade guide, and v3.4 release post) so we can cite **specific v4 improvements over v3.4** inside the finalized PAD. Then I’ll update the finalized PAD creation plan to reflect your locked scope: **Laravel/Postgres day-1**, **Tailwind v4**, **InvoiceNow in MVP**, and **Stripe PayNow required**—and present that plan for a final confirmation checkpoint before drafting `Project_Architecture_Document.md`.
+
+
+
+
+
+
+
+# Tailwind v4 Validation (web-researched, citable)
+These are the **Tailwind v4** improvements over **v3.4** that directly benefit our [cafe.html](cci:7://file:///h:/project/cafe-new/cafe.html:0:0-0:0) → Next.js migration (tokens, CSS layers, performance, and modern CSS primitives):
+
+- **Performance engine rewrite**
+  - Tailwind v4 is a “ground-up rewrite” with **full rebuilds over 3.5x faster** and **incremental builds over 8x faster**; incremental builds that don’t generate new CSS are stated to be **over 100x faster and complete in microseconds**.
+  - Source: Tailwind v4 release post  
+    https://tailwindcss.com/blog/tailwindcss-v4 (see sections “New high-performance engine”)
+
+- **Designed for modern CSS (aligns with your CSS-layers architecture)**
+  - Tailwind v4 leans on **native cascade layers**, **registered custom properties (`@property`)**, **`color-mix()`**, and **logical properties**.
+  - Source: Tailwind v4 release post  
+    https://tailwindcss.com/blog/tailwindcss-v4 (see “Designed for the modern web”)
+
+- **CSS-first configuration**
+  - v4 shifts configuration from `tailwind.config.js` to CSS via `@theme` and other CSS directives; this fits perfectly with your `@layer tokens...` model and reduces “config split-brain”.
+  - Source: Tailwind v4 release post  
+    https://tailwindcss.com/blog/tailwindcss-v4 (see “CSS-first configuration”)
+
+- **Theme tokens become CSS variables by default**
+  - v4 exposes design tokens as CSS variables out of the box, making runtime usage (e.g. Motion animations, CSS layering) straightforward.
+  - Source: Tailwind v4 release post  
+    https://tailwindcss.com/blog/tailwindcss-v4 (see “CSS theme variables”)
+
+- **Key v4 upgrade constraints we must document in the PAD**
+  - **Modern browser requirements**: v4 targets Safari 16.4 / Chrome 111 / Firefox 128 and depends on `@property` + `color-mix()`. If older browsers are required, Tailwind itself recommends v3.4.
+  - Source: Tailwind upgrade guide  
+    https://tailwindcss.com/docs/upgrade-guide (see “Browser requirements”)
+
+- **v3.4 scope baseline (for comparison)**
+  - v3.4 added utilities/variants like `dvh` units, `:has()` variant, subgrid, etc. v4 goes beyond this with engine rewrite + CSS-first config + modern-CSS-first approach.
+  - Source: Tailwind v3.4 release post  
+    https://tailwindcss.com/blog/tailwindcss-v3-4
+
+**One last clarification to lock** (because Tailwind v4 makes this a hard constraint):  
+Do you accept the v4 browser baseline (**Safari 16.4+**) as your support floor? If yes, we proceed exactly as planned.
+
+---
+
+# Finalized Implementation Plan (to create the finalized PAD artifact)
+You’ve confirmed these hard requirements, and I’m incorporating them as **non-negotiable constraints** in the PAD:
+
+- **Laravel 12 + Postgres 16 from day 1**
+- **Tailwind v4**
+- **InvoiceNow in MVP**
+- **Stripe PayNow required**
+
+Below is the plan to produce the finalized `Project_Architecture_Document.md` (PAD). This is the “last plan checkpoint” before drafting.
+
+## Phase 1 — Canonicalize the “Sources of Truth”
+**Objective**: remove contradictions by defining authority boundaries.
+
+- **Deliverable**: “Source of Truth Map” section in PAD:
+  - **UI/UX + tokens + CSS layers + interaction behaviors** → [cafe.html](cci:7://file:///h:/project/cafe-new/cafe.html:0:0-0:0) is authoritative
+  - **Domain + transactions + compliance enforcement** → Laravel/Postgres is authoritative (day-1)
+  - **Payments** → Stripe is authoritative for processing; Laravel authoritative for bookkeeping and reconciliation
+  - **InvoiceNow** → Laravel authoritative for invoice generation + transmission orchestration
+
+**Exit criteria**
+- No duplicate executive summaries
+- No competing architecture topologies
+- [cafe.html](cci:7://file:///h:/project/cafe-new/cafe.html:0:0-0:0) behaviors are explicitly captured as requirements (menu, scroll reveal, reduced motion, contrast mode, etc.)
+
+## Phase 2 — Architecture Decisions (ADR-style, explicit)
+**Objective**: turn “suggestions” into committed decisions with rationale.
+
+- **Deliverable**: ADR section (short, decisioned bullets) covering:
+  - **Next.js 15 as BFF + App Router** (committed)
+  - **Laravel 12 day-1** (committed)
+  - **Postgres 16 day-1** (committed)
+  - **Tailwind v4 adoption** + implications:
+    - CSS-first configuration (`@theme`)
+    - Native cascade layers + how we map to `@layer tokens, base, components, utilities, overrides`
+    - Replacement of v3 “custom utilities via @layer” with v4 `@utility` (per upgrade guide)
+    - Browser support floor
+  - **Inventory**: two-phase reservation + ledger (committed)
+  - **Payments**: Stripe PaymentIntents + webhook signature verification + idempotency (committed)
+  - **PayNow**: supported via Stripe payment method type (committed requirement)
+  - **InvoiceNow MVP scope**: define integration boundary (committed, with implementation options)
+
+**Exit criteria**
+- Every major decision has:
+  - Context
+  - Decision
+  - Alternatives considered
+  - Consequences / follow-ups
+
+## Phase 3 — System Architecture Sections + Diagrams
+**Objective**: make the PAD implementable (engineers can build from it).
+
+- **Deliverable**: Core diagrams embedded in PAD:
+  - **Container diagram** (Browser → Next.js/Vercel → Laravel API → Postgres/Redis → Stripe → InvoiceNow)
+  - **Sequence diagram**:
+    - Add-to-cart → reservation created
+    - Checkout initiated → PaymentIntent created (PayNow/card)
+    - Webhook received (signed) → idempotent processing → inventory confirm → invoice generate → InvoiceNow transmit
+  - **Data model appendix**:
+    - `inventory`, `inventory_reservations`, `inventory_ledger`
+    - `orders` (with GST fields) + `payments` + `webhook_events` (idempotency)
+    - `invoices` + `invoice_transmissions` (InvoiceNow audit trail)
+
+**Exit criteria**
+- Diagrams and tables align (no missing fields, no conflicting flows)
+
+## Phase 4 — UI Architecture: Design Token Bridge + CSS Layer Strategy (from [cafe.html](cci:7://file:///h:/project/cafe-new/cafe.html:0:0-0:0))
+**Objective**: preserve the Peranakan “soul” as an architectural constraint.
+
+- **Deliverable**: Sections specifying:
+  - Token extraction list (colors, typography, spacing, easing, shadows, z-index)
+  - Mapping strategy into Tailwind v4:
+    - `@import "tailwindcss";`
+    - `@layer theme` / `@theme` for tokens
+    - Use **native cascade layers** to preserve the existing `@layer tokens/base/components/utilities/overrides` intent
+  - Component strategy:
+    - Shadcn primitives (unstyled)
+    - Merlion wrappers (folio-frame, ornaments, zigzag, texture overlay, nav behaviors)
+  - Accessibility behaviors:
+    - `prefers-contrast: more`
+    - `prefers-reduced-motion`
+    - skip link, focus-visible, keyboardable mobile nav, escape-to-close
+
+**Exit criteria**
+- PAD explicitly states which [cafe.html](cci:7://file:///h:/project/cafe-new/cafe.html:0:0-0:0) components/classes must exist in the React system
+
+## Phase 5 — Compliance & Operations (MVP scope includes InvoiceNow)
+**Objective**: make MVP legally/shipping-ready for SG context.
+
+- **Deliverable**:
+  - **GST**:
+    - inclusive display requirement (matches [cafe.html](cci:7://file:///h:/project/cafe-new/cafe.html:0:0-0:0))
+    - invoice fields: GST registration number, GST amount, totals, unique invoice number
+  - **InvoiceNow MVP**:
+    - integration approach documented as *pluggable*:
+      - Direct integration via InvoiceNow/PEPPOL access point **or**
+      - Through an InvoiceNow-ready vendor/solution provider
+    - transmission audit logging + retries + reconciliation
+  - **PDPA**:
+    - explicit consent logging for newsletter
+    - retention window for invoices (PAD will state “≥ 5 years” as requirement, consistent with the draft PAD)
+  - **Security**:
+    - webhook signature verification + idempotency
+    - rate limiting for checkout/webhook endpoints
+    - audit trails for inventory + invoice transmissions
+
+**Exit criteria**
+- Compliance requirements are listed as testable acceptance criteria (not prose-only)
+
+---
+
+# Final PAD Document Outline (what I will produce next)
+I will draft `Project_Architecture_Document.md` with this structure (already aligned with the plan above):
+
+1. Executive Summary (single paragraph)
+2. Goals / Non-goals / Assumptions (includes Tailwind v4 browser floor)
+3. Source of Truth Map (cafe.html vs PADs)
+4. Architecture Overview (BFF + day-1 backend)
+5. Frontend Architecture (Next.js 15 App Router)
+6. Design System Architecture (CSS layers + token bridge + Tailwind v4 `@theme`)
+7. Component Architecture (Shadcn primitives → Merlion wrappers)
+8. Backend Architecture (Laravel 12 services/bounded contexts)
+9. Data Architecture (Postgres 16 schemas)
+10. Checkout & Payments (Stripe + PayNow, webhooks, idempotency)
+11. Compliance (GST + InvoiceNow MVP + PDPA)
+12. Observability & Operations (queues, retries, reconciliation)
+13. Security Model
+14. Performance + Emotional Performance budgets
+15. Delivery Roadmap (MVP milestones + validation gates)
+16. Appendices (diagrams, glossary)
+
+---
+
+# Validation Checkpoint (required before I draft)
+Reply with:
+
+1. **Browser floor confirmation**: Accept Tailwind v4 modern browser requirements (Safari 16.4+), yes/no?
+2. **InvoiceNow approach** (pick one for MVP):
+   - A) Direct integration (we build + maintain the access point integration)
+   - B) Via an InvoiceNow-ready vendor/provider (we integrate their API)
+
+Once you answer these two, I will proceed to draft the finalized `Project_Architecture_Document.md`.
+
+---
+
+# Status
+- **Completed**: Tailwind v4 research with primary citations.
+- **Pending**: Your 2-item validation checkpoint above.
+- **Next**: Draft `Project_Architecture_Document.md` immediately after your confirmation.
