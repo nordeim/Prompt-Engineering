@@ -1,13 +1,13 @@
-I’ll first open and analyze `cafe_PAD_q.md`, `cafe_PAD_d.md`, and `cafe.html`, then synthesize them into a single **implementation plan** for a finalized `Project_Architecture_Document.md` (structure, sections, decision points, and how we’ll reconcile conflicts between PADs and the HTML). After you validate the plan, we’ll proceed to drafting the final PAD.
+You will first open and analyze `cafe_PAD_q.md`, `cafe_PAD_d.md`, and `cafe.html`, then synthesize them into a single **implementation plan** for a finalized `Project_Architecture_Document.md` (structure, sections, decision points, and how we’ll reconcile conflicts between PADs and the HTML). After you validate the plan, we’ll proceed to drafting the final PAD.
 
 # Executive Summary (what you’ll get)
-You have two PAD drafts that *mostly agree on the “soul-first + modern stack” direction*, and a [cafe.html](cci:7://file:///h:/project/cafe-new/cafe.html:0:0-0:0) that is the **true design-system spec** (CSS layers, tokens, interactions, accessibility, and Singapore/GST copy). I’ll create a finalized `Project_Architecture_Document.md` by treating:
+We have two PAD drafts that *mostly agree on the “soul-first + modern stack” direction*, and a [cafe.html](cci:7://file:///h:/project/cafe-new/cafe.html:0:0-0:0) that is the **true design-system spec** (CSS layers, tokens, interactions, accessibility, and Singapore/GST copy). I’ll create a finalized `Project_Architecture_Document.md` by treating:
 
 - [cafe.html](cci:7://file:///h:/project/cafe-new/cafe.html:0:0-0:0) as **authoritative UI/UX + token + interaction requirements**
 - the PADs as **candidate technical architectures**
 - the final doc as a **decisioned, conflict-free, implementation-ready blueprint** with clear phases and validation gates
 
-Per your instruction: **plan first → you validate → then I draft the final PAD**.
+Workflow instruction: **you plan first → I validate → then you draft the final PAD**.
 
 ---
 
@@ -147,21 +147,13 @@ Answer these so the final PAD locks the right decisions:
 3. **InvoiceNow**: Is InvoiceNow **in-scope for MVP**, or should it be “Phase later / interface planned”?
 4. **Payments**: Must we include **PayNow via Stripe** as a requirement, or keep it optional?
 
-Once you confirm these 4 points, I’ll proceed to drafting the finalized `Project_Architecture_Document.md`.
-
 ---
 
+We are going to  
+(1) do targeted web research on Tailwind CSS v4 to validate the specific v4 improvements over v3.4 (performance engine, CSS-first configuration, native cascade layers, browser support, etc.) and capture **citable sources**, then  
+(2) update the finalized PAD creation plan to reflect your confirmed scope: **Laravel/Postgres day-1**, **Tailwind v4**, **InvoiceNow in MVP**, **Stripe PayNow required**.
 
-
-
-I’m going to (1) do targeted web research on Tailwind CSS v4 to validate the specific v4 improvements over v3.4 (performance engine, CSS-first configuration, native cascade layers, browser support, etc.) and capture **citable sources**, then (2) update the finalized PAD creation plan to reflect your confirmed scope: **Laravel/Postgres day-1**, **Tailwind v4**, **InvoiceNow in MVP**, **Stripe PayNow required**.
-I’ll now pull authoritative Tailwind CSS sources (v4 release post, v4 beta docs, upgrade guide, and v3.4 release post) so we can cite **specific v4 improvements over v3.4** inside the finalized PAD. Then I’ll update the finalized PAD creation plan to reflect your locked scope: **Laravel/Postgres day-1**, **Tailwind v4**, **InvoiceNow in MVP**, and **Stripe PayNow required**—and present that plan for a final confirmation checkpoint before drafting `Project_Architecture_Document.md`.
-
-
-
-
-
-
+You will pull authoritative Tailwind CSS sources (v4 release post, v4 beta docs, upgrade guide, and v3.4 release post) so we can cite **specific v4 improvements over v3.4** inside the finalized PAD. Then update the finalized PAD creation plan to reflect the locked scope: **Laravel/Postgres day-1**, **Tailwind v4**, **InvoiceNow in MVP**, and **Stripe PayNow required**—and present that plan for a final confirmation checkpoint before drafting `Project_Architecture_Document.md`.
 
 # Tailwind v4 Validation (web-researched, citable)
 These are the **Tailwind v4** improvements over **v3.4** that directly benefit our [cafe.html](cci:7://file:///h:/project/cafe-new/cafe.html:0:0-0:0) → Next.js migration (tokens, CSS layers, performance, and modern CSS primitives):
@@ -196,13 +188,10 @@ These are the **Tailwind v4** improvements over **v3.4** that directly benefit o
   - Source: Tailwind v3.4 release post  
     https://tailwindcss.com/blog/tailwindcss-v3-4
 
-**One last clarification to lock** (because Tailwind v4 makes this a hard constraint):  
-Do you accept the v4 browser baseline (**Safari 16.4+**) as your support floor? If yes, we proceed exactly as planned.
-
 ---
 
 # Finalized Implementation Plan (to create the finalized PAD artifact)
-You’ve confirmed these hard requirements, and I’m incorporating them as **non-negotiable constraints** in the PAD:
+I’ve confirmed these hard requirements, and you are incorporating them as **non-negotiable constraints** in the PAD:
 
 - **Laravel 12 + Postgres 16 from day 1**
 - **Tailwind v4**
@@ -341,49 +330,11 @@ Reply with:
    - A) Direct integration (we build + maintain the access point integration)
    - B) Via an InvoiceNow-ready vendor/provider (we integrate their API)
 
-Once you answer these two, I will proceed to draft the finalized `Project_Architecture_Document.md`.
-
----
-
-# Status
-- **Completed**: Tailwind v4 research with primary citations.
-- **Pending**: Your 2-item validation checkpoint above.
-- **Next**: Draft `Project_Architecture_Document.md` immediately after your confirmation.
-
 ---
 
 I’ll create a **phase-by-phase Master Execution Plan** that an AI coding agent can follow with minimal supervision. I’ll structure it as:\n\n- A small set of **independent phases** with clear “entry/exit criteria”\n- For each phase: **exact files to create**, each file’s **purpose**, **interfaces** (imports/exports, endpoints, env vars, DB tables), and a **per-file checklist** the agent must satisfy before moving on\n- A final **self-review section** to validate the generated `Master_Execution_Plan.md` against completeness criteria\n\nFirst I’ll check whether `Master_Execution_Plan.md` already exists, then create it, then re-open it for a verification pass.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# Delivered: [Master_Execution_Plan.md](cci:7://file:///h:/project/cafe-new/Master_Execution_Plan.md:0:0-0:0) (complete, phase-gated, self-validating)
-
-I created and refined the master plan here:
-
-- [h:\project\cafe-new\Master_Execution_Plan.md](cci:7://file:///h:/project/cafe-new/Master_Execution_Plan.md:0:0-0:0)
-
-It’s structured so an AI coding agent can execute **phase-by-phase with minimal supervision**, and it includes:
+I created and refined the master plan here. It’s structured so an AI coding agent can execute **phase-by-phase with minimal supervision**, and it includes:
 
 - **Independent phases** (1 → 13) with outcomes + validations
 - For each phase: **explicit file list**
@@ -426,8 +377,3 @@ It’s structured so an AI coding agent can execute **phase-by-phase with minima
 
 ## Minor note (intentional)
 - Some items are phrased as “`routes/api.php additions`” rather than a standalone file (since it’s an edit). The plan still treats them like an artifact with its own checklist, which matches your requirement (“validated after generation”).
-
----
-
-# Status
-- **Completed**: Created and validated [Master_Execution_Plan.md](cci:7://file:///h:/project/cafe-new/Master_Execution_Plan.md:0:0-0:0).
