@@ -19,6 +19,18 @@ Now, please meticulously review and analyze the attached static landing page HTM
 
 The site should invoke nostalgia of the 1970s (use some styles from the static-html.txt file shared earlier) . Use a more refreshing and cheerful color scheme and contrast, as cheerful and warming like an aromatic fresh coffee brew in the morning.
 
+I want you to act as an elite web designer with 15+ years of experience to re-imagine this page with specific improvements:
+
+1. Horizontal navigation bar on desktop, collapsed menu on mobile
+2. Better color graduation across sections (currently uniform light brown)
+3. Add animations and hover effects
+4. Better color gradients and framing of items
+5. More detailed footer bar
+6. Natural flow of sections when scrolling
+7. Maintain 1970s nostalgia but with more cheerful, warming colors like fresh coffee
+8. Apply "Anti-Generic" design philosophy - no template aesthetics, no "safe" defaults
+9. Follow the meticulous approach with planning before implementation
+
 ## PHASE 1: REQUEST ANALYSIS & PLANNING
 
 ### **1.1 DEEP UNDERSTANDING**
