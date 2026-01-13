@@ -64,3 +64,57 @@ The layout approach emphasizes playfulness over rigid structure—asymmetrical a
 Implementation starts with restructuring the header with retro logo treatment, building a sunburst hero section, styling menu cards with rounded corners, adding vintage photo frames to the heritage section, creating retro map styling for locations, and designing a patterned footer. Next comes visual polish through SVG sunburst patterns, wavy dividers, retro badge designs, and decorative borders. Finally, animations including restyled coffee steam effects and interactive hover states bring everything to life.
 
 The design should authentically capture 1970s kopitiam culture—blending Singapore's multicultural influences from that era with Western retro aesthetics. This means incorporating tile patterns from traditional shophouses, bamboo and rattan textures, and tropical elements rather than simply applying a surface-level retro filter. Distinctive features like sunburst backgrounds, scalloped section edges, and period-appropriate typography create something genuinely memorable and rooted in the specific time and place.
+
+---
+
+🌅 Morning Brew Collective — 1970s Retro Reimagination
+
+## Executive Summary
+You will deliver a complete re-imagination of the Morning Brew Collective landing page, invoking authentic 1970s Singapore kopitiam nostalgia with a refreshing, cheerful color palette reminiscent of the first aromatic coffee brew at sunrise.
+
+## Phase 1: Deep Design Analysis & Conceptual Direction
+
+### 1.1 Multi-Dimensional Requirement Mining
+Lens	, Analysis
+**Psychological**:	1970s nostalgia triggers warmth, familiarity, and trust. Cheerful colors reduce cognitive load and increase dwell time. The "morning ritual" concept creates emotional anchoring.  
+**Technical**:	SVG patterns over images for performance. CSS custom properties for consistent theming. Minimal JS dependencies for fast LCP.  
+**Accessibility**:	High contrast ratios (WCAG AAA target: 7:1). Focus indicators styled in-theme. Reduced motion support.  
+**Scalability**:	CSS layer architecture. Modular component structure. Easy color palette swaps via CSS variables.
+
+### 1.2 Conceptual Direction: "Sunrise at the Kopitiam"
+The "Why" Factor: Visitors will remember the warmth that radiates from every element—not generic retro kitsch, but an authentic re-creation of the optimistic 1970s Singapore morning where hawkers opened their stalls at dawn, ceramic cups clinked, and the aroma of freshly roasted kopi filled the humid air.
+
+**Aesthetic Pillars:**
+
+1. Sunburst Motifs — The rising sun as a recurring visual metaphor
+2. Rounded Geometry — Soft, approachable forms that reject sharp modernity
+3. Bold Color Blocking — Confident sections with distinct personalities
+4. Handcrafted Textures — Subtle grain, coffee stains, tile patterns
+5. Groovy Typography — Playful yet legible retro letterforms
+
+## Phase 2: Color System — "Morning Brew Sunrise"
+
+### 2.1 Primary Palette (Cheerful & Warming)
+Token	, Hex ,	Role
+--sunrise-coral	#FF6B4A	Primary action, warmth
+--golden-hour	#FFBE4F	Secondary, optimism
+--latte-cream	#FFF5E6	Base background
+--espresso-dark	#3D2317	Text, grounding
+--coffee-medium	#6B4423	Supporting brown
+--mint-fresh	#B8E6D4	Refreshing accent
+--ceramic-white	#FDFCF9	Cards, elevation
+
+### 2.2 Color Psychology Rationale
+- Coral + Golden Hour: Mimics dawn light—energizing yet gentle
+- Mint Fresh: Cuts warmth with refreshing coolness (like morning breeze)
+- Espresso Dark: Grounds the cheerfulness with authority
+- Latte Cream: Non-fatiguing base that feels like aged paper
+
+## Phase 3: Typography System
+Font Selection:
+- Display: Righteous — Captures 1970s geometric grooviness
+- Body: Nunito — Friendly, rounded, highly legible
+- Accent: Custom CSS for decorative elements
+
+## Phase 4: Complete Implementation
+Now create a production-ready reimagined landing page with all assets inlined.
