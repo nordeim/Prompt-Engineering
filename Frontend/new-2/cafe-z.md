@@ -1,0 +1,2570 @@
+
+
+┌─────────────────────────────────────────────────────────────────┐
+│                                                                 │
+│   ANALYZE         Deconstruct "Morning Brew Collective"        │
+│        ↓          Target: 1970s Singapore Kopitiam Nostalgia   │
+│                                                                 │
+│   PLAN            "Sunrise at the Kopitiam" Concept            │
+│        ↓          Palette: Coral/Gold/Mint/Cream/Espresso      │
+│                                                                 │
+│   VALIDATE        High Contrast (WCAG AAA), No External Libs    │
+│        ↓          Single File Architecture                      │
+│                                                                 │
+│   IMPLEMENT       CSS Variables, SVG Patterns, Vanilla JS       │
+│        ↓          Modular Components (Cards, Modals)            │
+│                                                                 │
+│   VERIFY          Mobile Responsive, Accessible, Performant     │
+│        ↓          Check: Does it feel warm/cheerful?            │
+│                                                                 │
+│   DELIVER         Single index.html with embedded assets       │
+│                   Knowledge transfer via detailed comments       │
+│                                                                 │
+└─────────────────────────────────────────────────────────────────┘
+
+## Phase 1: Request Analysis & Planning
+
+### 1.1 Deep Understanding & Direction
+**The Anti-Generic Analysis:** The provided mock-up is functional but aesthetically sterile (corporate brown/terracotta). The `opus-html.txt` attempts 70s styling but lacks the *warmth* and *cheer* required. To avoid "AI slop," we must move away from flat design and embrace **Texture, Depth, and Groovy Geometry**.
+
+**Conceptual Direction: "Sunrise at the Kopitiam"**
+We are not just building a website; we are constructing a memory.
+*   **Psychological:** The user should feel the *optimism* of 1970s Singapore—a time of growth, community, and distinct local identity. The colors must trigger a dopamine response (Coral/Gold).
+*   **Technical:** We will use CSS `radial-gradient` and `mask-image` to create organic shapes (sunbursts, scallops) without loading heavy images. We will use SVG patterns for texture to keep load times instant (LCP < 1s).
+*   **Visual Language:**
+    *   **Typography:** `Righteous` (Google Font) for headers—geometric, retro, confident. `Nunito` for body—round, friendly, high legibility.
+    *   **Color:** High contrast. No muddy browns. We use **Sunrise Coral** (#FF6B4A) as the primary call-to-action because it stimulates appetite and energy.
+    *   **Layout:** Asymmetrical hero, "Bento-box" grids for menus (modular but interesting), and heavily rounded corners (friendliness).
+
+### 1.2 Execution Plan
+1.  **Architecture:** Single HTML file containing CSS and JS.
+2.  **Styling:** CSS Variables for the "Morning Brew Sunrise" palette.
+3.  **Components:**
+    *   *Retro Header:* Sticky, with a distinct logo badge.
+    *   *Hero:* Split layout. Text left, Animated CSS Coffee Cup right.
+    *   *Menu:* Card-based with "Recipe Card" aesthetics (paper texture, hand-written prices).
+    *   *Heritage:* Editorial style with "Drop Cap" typography and vintage photo frames.
+    *   *Cart:* Slide-over drawer with "receipt" styling.
+4.  **Interactivity:** Vanilla JS for cart logic, mobile menu, and scroll-triggered fade-ins.
+
+---
+
+## Phase 2: Implementation (The Code)
+
+Here is the complete, self-contained `index.html`.
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Morning Brew Collective - Singapore's authentic kopitiam experience since 1973. Traditional coffee, breakfast, and pastries with a modern touch.">
+  <meta name="theme-color" content="#FF6B4A">
+  <title>Morning Brew Collective — Where Every Morning Shines Since 1973</title>
+
+  <!-- Preconnect for Performance -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  
+  <!-- 1970s Inspired Typography -->
+  <link href="https://fonts.googleapis.com/css2?family=Righteous&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    /* ═══════════════════════════════════════════════════════════════
+       LAYER 1: CSS CUSTOM PROPERTIES — "SUNRISE AT THE KOPITIAM"
+       ═══════════════════════════════════════════════════════════════ */
+    :root {
+      /* PRIMARY PALETTE — CHEERFUL MORNING WARMTH */
+      --sunrise-coral: #FF6B4A;
+      --sunrise-coral-light: #FF8A70;
+      --sunrise-coral-dark: #E55A3A;
+      --golden-hour: #FFBE4F;
+      --golden-hour-light: #FFD080;
+      --golden-hour-dark: #E5A030;
+      
+      /* SUPPORTING BROWNS — COFFEE ESSENCE */
+      --espresso-dark: #3D2317;
+      --coffee-medium: #6B4423;
+      --coffee-light: #8B6344;
+      --mocha-cream: #C4A484;
+      
+      /* BACKGROUNDS & SURFACES */
+      --latte-cream: #FFF5E6;
+      --latte-cream-warm: #FFF0D9;
+      --ceramic-white: #FDFCF9;
+      --paper-aged: #F9F3E8;
+      
+      /* REFRESHING ACCENT */
+      --mint-fresh: #B8E6D4;
+      --mint-deep: #7ECDB0;
+      --teal-retro: #4ECDC4;
+      
+      /* SEMANTIC COLORS */
+      --success-green: #7CB342;
+      --error-red: #E53935;
+      
+      /* DECORATIVE */
+      --tile-pattern-1: #FFE4CC;
+      --tile-pattern-2: #FFD4B8;
+      --shadow-warm: rgba(107, 68, 35, 0.15);
+      --shadow-coral: rgba(255, 107, 74, 0.2);
+      
+      /* TYPOGRAPHY */
+      --font-display: 'Righteous', cursive;
+      --font-body: 'Nunito', -apple-system, BlinkMacSystemFont, sans-serif;
+      
+      /* SPACING — 8pt GRID */
+      --space-1: 0.25rem;
+      --space-2: 0.5rem;
+      --space-3: 0.75rem;
+      --space-4: 1rem;
+      --space-5: 1.25rem;
+      --space-6: 1.5rem;
+      --space-8: 2rem;
+      --space-10: 2.5rem;
+      --space-12: 3rem;
+      --space-16: 4rem;
+      --space-20: 5rem;
+      --space-24: 6rem;
+      --space-32: 8rem;
+      
+      /* BORDER RADIUS — SOFT & ROUNDED (70s STYLE) */
+      --radius-sm: 8px;
+      --radius-md: 16px;
+      --radius-lg: 24px;
+      --radius-xl: 32px;
+      --radius-2xl: 48px;
+      --radius-full: 9999px;
+      
+      /* SHADOWS — WARM & INVITING */
+      --shadow-sm: 0 2px 8px var(--shadow-warm);
+      --shadow-md: 0 4px 16px var(--shadow-warm);
+      --shadow-lg: 0 8px 32px var(--shadow-warm);
+      --shadow-glow: 0 0 40px var(--shadow-coral);
+      
+      /* ANIMATION */
+      --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+      --ease-smooth: cubic-bezier(0.23, 1, 0.32, 1);
+      --duration-fast: 0.15s;
+      --duration-normal: 0.3s;
+      --duration-slow: 0.5s;
+      
+      /* Z-INDEX SCALE */
+      --z-base: 0;
+      --z-dropdown: 100;
+      --z-sticky: 200;
+      --z-overlay: 300;
+      --z-modal: 400;
+      --z-toast: 500;
+      
+      /* LAYOUT */
+      --container-max: 1200px;
+      --nav-height: 72px;
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+       LAYER 2: CSS RESET & BASE STYLES
+       ═══════════════════════════════════════════════════════════════ */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      font-family: var(--font-body);
+      font-size: 1rem;
+      line-height: 1.6;
+      color: var(--espresso-dark);
+      background: var(--latte-cream);
+      overflow-x: hidden;
+    }
+
+    img, svg {
+      display: block;
+      max-width: 100%;
+      height: auto;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+      transition: color var(--duration-normal) var(--ease-smooth);
+    }
+
+    button {
+      font-family: inherit;
+      cursor: pointer;
+      border: none;
+      background: none;
+    }
+
+    ul, ol {
+      list-style: none;
+    }
+
+    /* Focus Visible — Accessibility */
+    :focus-visible {
+      outline: 3px solid var(--sunrise-coral);
+      outline-offset: 3px;
+    }
+
+    /* Skip Link */
+    .skip-link {
+      position: absolute;
+      top: -100%;
+      left: var(--space-4);
+      background: var(--espresso-dark);
+      color: var(--ceramic-white);
+      padding: var(--space-3) var(--space-6);
+      border-radius: var(--radius-md);
+      font-weight: 700;
+      z-index: var(--z-toast);
+      transition: top var(--duration-normal) var(--ease-smooth);
+    }
+
+    .skip-link:focus {
+      top: var(--space-4);
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+       LAYER 3: UTILITY CLASSES
+       ═══════════════════════════════════════════════════════════════ */
+    .container {
+      width: 100%;
+      max-width: var(--container-max);
+      margin: 0 auto;
+      padding: 0 var(--space-6);
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+       LAYER 4: DECORATIVE SVG PATTERNS — 1970s AESTHETIC
+       ═══════════════════════════════════════════════════════════════ */
+    
+    /* Sunburst Pattern */
+    .sunburst-bg {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .sunburst-bg::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 200%;
+      height: 200%;
+      background: repeating-conic-gradient(
+        from 0deg,
+        var(--golden-hour) 0deg 10deg,
+        var(--latte-cream-warm) 10deg 20deg
+      );
+      opacity: 0.15;
+      transform: translate(-50%, -50%);
+      animation: sunburst-rotate 120s linear infinite;
+    }
+
+    @keyframes sunburst-rotate {
+      to { transform: translate(-50%, -50%) rotate(360deg); }
+    }
+
+    /* Wavy Section Divider */
+    .wave-divider {
+      position: absolute;
+      bottom: -1px;
+      left: 0;
+      right: 0;
+      height: 60px;
+      overflow: hidden;
+    }
+
+    .wave-divider svg {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    /* Scalloped Edge */
+    .scallop-top {
+      position: absolute;
+      top: -30px;
+      left: 0;
+      right: 0;
+      height: 30px;
+      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 30'%3E%3Cpath d='M0 30 Q25 0 50 30 Q75 0 100 30 L100 30 L0 30Z' fill='%23FFF5E6'/%3E%3C/svg%3E") repeat-x;
+      background-size: 100px 30px;
+    }
+
+    /* Coffee Ring Stain Decoration */
+    .coffee-ring {
+      position: absolute;
+      width: 120px;
+      height: 120px;
+      border: 8px solid var(--mocha-cream);
+      border-radius: 50%;
+      opacity: 0.3;
+      pointer-events: none;
+    }
+
+    /* Tile Pattern Background */
+    .tile-pattern {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60' viewBox='0 0 60 60'%3E%3Crect width='60' height='60' fill='%23FFFFFF'/%3E%3Crect x='5' y='5' width='50' height='50' rx='8' fill='none' stroke='%23FFE4CC' stroke-width='2'/%3E%3Ccircle cx='30' cy='30' r='12' fill='none' stroke='%23FFD4B8' stroke-width='2'/%3E%3C/svg%3E");
+      background-size: 60px 60px;
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+       LAYER 5: NAVIGATION — RETRO HEADER
+       ═══════════════════════════════════════════════════════════════ */
+    .header {
+      position: sticky;
+      top: 0;
+      z-index: var(--z-sticky);
+      background: var(--ceramic-white);
+      border-bottom: 4px solid var(--golden-hour);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: var(--nav-height);
+      gap: var(--space-8);
+    }
+
+    /* Logo — Retro Badge Style */
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+    }
+
+    .logo-badge {
+      width: 56px;
+      height: 56px;
+      background: var(--sunrise-coral);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      box-shadow: 
+        0 0 0 3px var(--ceramic-white),
+        0 0 0 6px var(--golden-hour);
+    }
+
+    .logo-badge::before {
+      content: '☕';
+      font-size: 1.75rem;
+      filter: brightness(0) invert(1);
+    }
+
+    .logo-text {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.1;
+    }
+
+    .logo-title {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      color: var(--espresso-dark);
+      letter-spacing: 0.02em;
+    }
+
+    .logo-subtitle {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--sunrise-coral);
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+    }
+
+    /* Navigation Links */
+    .nav-main {
+      display: none;
+    }
+
+    @media (min-width: 768px) {
+      .nav-main {
+        display: flex;
+        align-items: center;
+        gap: var(--space-2);
+      }
+    }
+
+    .nav-link {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      color: var(--coffee-medium);
+      padding: var(--space-2) var(--space-4);
+      border-radius: var(--radius-full);
+      position: relative;
+      transition: all var(--duration-normal) var(--ease-smooth);
+    }
+
+    .nav-link:hover,
+    .nav-link:focus {
+      color: var(--sunrise-coral);
+      background: var(--latte-cream);
+    }
+
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: 4px;
+      left: 50%;
+      transform: translateX(-50%) scaleX(0);
+      width: 20px;
+      height: 3px;
+      background: var(--golden-hour);
+      border-radius: var(--radius-full);
+      transition: transform var(--duration-normal) var(--ease-bounce);
+    }
+
+    .nav-link:hover::after {
+      transform: translateX(-50%) scaleX(1);
+    }
+
+    /* Header Actions */
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: var(--space-4);
+    }
+
+    .cart-btn {
+      position: relative;
+      width: 44px;
+      height: 44px;
+      background: var(--latte-cream);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all var(--duration-normal) var(--ease-smooth);
+      border: 2px solid transparent;
+    }
+
+    .cart-btn:hover {
+      background: var(--golden-hour-light);
+      border-color: var(--golden-hour);
+      transform: scale(1.05);
+    }
+
+    .cart-btn svg {
+      width: 22px;
+      height: 22px;
+      stroke: var(--coffee-medium);
+      stroke-width: 2;
+      fill: none;
+    }
+
+    .cart-count {
+      position: absolute;
+      top: -4px;
+      right: -4px;
+      min-width: 20px;
+      height: 20px;
+      background: var(--sunrise-coral);
+      color: white;
+      font-size: 0.7rem;
+      font-weight: 800;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid var(--ceramic-white);
+    }
+
+    /* Mobile Menu Toggle */
+    .menu-toggle {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      padding: var(--space-2);
+      border-radius: var(--radius-sm);
+      transition: background var(--duration-normal) var(--ease-smooth);
+    }
+
+    .menu-toggle:hover {
+      background: var(--latte-cream);
+    }
+
+    .menu-toggle span {
+      display: block;
+      width: 24px;
+      height: 3px;
+      background: var(--coffee-medium);
+      border-radius: var(--radius-full);
+      transition: all var(--duration-normal) var(--ease-smooth);
+    }
+
+    @media (min-width: 768px) {
+      .menu-toggle {
+        display: none;
+      }
+    }
+
+    /* Mobile Menu Overlay */
+    .mobile-menu {
+      position: fixed;
+      inset: 0;
+      background: var(--ceramic-white);
+      z-index: var(--z-modal);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-8);
+      transform: translateY(-100%);
+      transition: transform var(--duration-slow) var(--ease-smooth);
+    }
+
+    .mobile-menu.active {
+      transform: translateY(0);
+    }
+
+    .mobile-menu-close {
+      position: absolute;
+      top: var(--space-6);
+      right: var(--space-6);
+      width: 48px;
+      height: 48px;
+      background: var(--latte-cream);
+      border-radius: 50%;
+      font-size: 1.5rem;
+      color: var(--coffee-medium);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .mobile-nav-link {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      color: var(--espresso-dark);
+      padding: var(--space-3) var(--space-8);
+      border-radius: var(--radius-full);
+      transition: all var(--duration-normal) var(--ease-smooth);
+    }
+
+    .mobile-nav-link:hover {
+      background: var(--golden-hour-light);
+      color: var(--sunrise-coral);
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+       LAYER 6: HERO SECTION — SUNRISE GLORY
+       ═══════════════════════════════════════════════════════════════ */
+    .hero {
+      position: relative;
+      min-height: calc(100vh - var(--nav-height));
+      display: flex;
+      align-items: center;
+      padding: var(--space-16) 0;
+      overflow: hidden;
+      background: linear-gradient(
+        180deg,
+        var(--latte-cream) 0%,
+        var(--latte-cream-warm) 50%,
+        var(--tile-pattern-1) 100%
+      );
+    }
+
+    .hero .sunburst-bg::before {
+      background: repeating-conic-gradient(
+        from 0deg,
+        var(--golden-hour) 0deg 8deg,
+        transparent 8deg 16deg
+      );
+      opacity: 0.2;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--space-12);
+      align-items: center;
+    }
+
+    @media (min-width: 1024px) {
+      .hero-content {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .hero-text {
+      max-width: 560px;
+    }
+
+    /* Retro Badge — EST. 1973 */
+    .retro-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      background: var(--sunrise-coral);
+      color: white;
+      padding: var(--space-2) var(--space-5);
+      border-radius: var(--radius-full);
+      font-family: var(--font-display);
+      font-size: 0.875rem;
+      letter-spacing: 0.05em;
+      margin-bottom: var(--space-6);
+      box-shadow: 
+        4px 4px 0 var(--golden-hour),
+        8px 8px 0 var(--espresso-dark);
+      animation: badge-float 3s ease-in-out infinite;
+    }
+
+    @keyframes badge-float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+
+    .retro-badge svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    /* Hero Title — Groovy Typography */
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(2.5rem, 8vw, 4.5rem);
+      line-height: 1.1;
+      color: var(--espresso-dark);
+      margin-bottom: var(--space-6);
+    }
+
+    .hero-title .highlight {
+      display: block;
+      color: var(--sunrise-coral);
+      position: relative;
+    }
+
+    .hero-title .highlight::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 8px;
+      background: var(--golden-hour);
+      border-radius: var(--radius-full);
+      transform: scaleX(0.9);
+      z-index: -1;
+    }
+
+    .hero-subtitle {
+      font-size: 1.25rem;
+      line-height: 1.7;
+      color: var(--coffee-medium);
+      margin-bottom: var(--space-8);
+    }
+
+    /* CTA Buttons — Retro Style */
+    .cta-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-4);
+      margin-bottom: var(--space-10);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      padding: var(--space-4) var(--space-8);
+      border-radius: var(--radius-full);
+      font-family: var(--font-display);
+      font-size: 1.125rem;
+      transition: all var(--duration-normal) var(--ease-bounce);
+    }
+
+    .btn-primary {
+      background: var(--sunrise-coral);
+      color: white;
+      box-shadow: 
+        0 4px 0 var(--sunrise-coral-dark),
+        0 8px 20px var(--shadow-coral);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 
+        0 6px 0 var(--sunrise-coral-dark),
+        0 12px 30px var(--shadow-coral);
+    }
+
+    .btn-primary:active {
+      transform: translateY(2px);
+      box-shadow: 
+        0 2px 0 var(--sunrise-coral-dark),
+        0 4px 10px var(--shadow-coral);
+    }
+
+    .btn-secondary {
+      background: var(--ceramic-white);
+      color: var(--espresso-dark);
+      border: 3px solid var(--golden-hour);
+      box-shadow: 0 4px 0 var(--golden-hour-dark);
+    }
+
+    .btn-secondary:hover {
+      background: var(--golden-hour-light);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 0 var(--golden-hour-dark);
+    }
+
+    /* Hero Stats — Vintage Counter Style */
+    .hero-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-6);
+    }
+
+    .stat-item {
+      text-align: center;
+      padding: var(--space-4);
+      background: var(--ceramic-white);
+      border-radius: var(--radius-lg);
+      border: 2px solid var(--tile-pattern-1);
+      transition: all var(--duration-normal) var(--ease-smooth);
+    }
+
+    .stat-item:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
+      border-color: var(--golden-hour);
+    }
+
+    .stat-number {
+      display: block;
+      font-family: var(--font-display);
+      font-size: 2.5rem;
+      color: var(--sunrise-coral);
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--coffee-medium);
+      margin-top: var(--space-1);
+    }
+
+    /* Hero Visual — Coffee Cup Illustration */
+    .hero-visual {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .coffee-cup-wrapper {
+      position: relative;
+      width: 100%;
+      max-width: 400px;
+      aspect-ratio: 1;
+    }
+
+    .coffee-cup-bg {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(
+        circle at center,
+        var(--golden-hour-light) 0%,
+        transparent 70%
+      );
+      border-radius: 50%;
+      animation: pulse-glow 4s ease-in-out infinite;
+    }
+
+    @keyframes pulse-glow {
+      0%, 100% { transform: scale(1); opacity: 0.6; }
+      50% { transform: scale(1.1); opacity: 0.4; }
+    }
+
+    .coffee-cup-illustration {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      height: 100%;
+    }
+
+    /* Steam Animation */
+    .steam-container {
+      position: absolute;
+      top: 15%;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 8px;
+    }
+
+    .steam {
+      width: 8px;
+      height: 40px;
+      background: linear-gradient(
+        to top,
+        transparent,
+        rgba(255, 255, 255, 0.6)
+      );
+      border-radius: var(--radius-full);
+      animation: steam-rise 2s ease-in-out infinite;
+    }
+
+    .steam:nth-child(2) {
+      height: 50px;
+      animation-delay: 0.3s;
+    }
+
+    .steam:nth-child(3) {
+      height: 35px;
+      animation-delay: 0.6s;
+    }
+
+    @keyframes steam-rise {
+      0%, 100% {
+        opacity: 0;
+        transform: translateY(0) scaleY(0.5);
+      }
+      50% {
+        opacity: 1;
+        transform: translateY(-20px) scaleY(1);
+      }
+    }
+
+    /* Hero Wave Divider */
+    .hero .wave-divider svg {
+      fill: var(--sunrise-coral);
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+       LAYER 7: MENU SECTION — TERRACOTTA WARMTH
+       ═══════════════════════════════════════════════════════════════ */
+    .menu-section {
+      position: relative;
+      background: var(--sunrise-coral);
+      padding: var(--space-24) 0 var(--space-20);
+      color: white;
+    }
+
+    .menu-section::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'%3E%3Ccircle cx='40' cy='40' r='30' fill='none' stroke='%23ffffff' stroke-width='1' opacity='0.1'/%3E%3Ccircle cx='40' cy='40' r='15' fill='none' stroke='%23ffffff' stroke-width='1' opacity='0.1'/%3E%3C/svg%3E");
+      background-size: 80px 80px;
+      pointer-events: none;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: var(--space-12);
+      position: relative;
+      z-index: 1;
+    }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 5vw, 3rem);
+      margin-bottom: var(--space-4);
+      display: inline-block;
+      position: relative;
+    }
+
+    .section-title::before,
+    .section-title::after {
+      content: '✦';
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 1.5rem;
+      color: var(--golden-hour);
+    }
+
+    .section-title::before {
+      left: -3rem;
+    }
+
+    .section-title::after {
+      right: -3rem;
+    }
+
+    .section-subtitle {
+      font-size: 1.125rem;
+      opacity: 0.9;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    /* Filter Buttons — Retro Tabs */
+    .menu-filters {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: var(--space-3);
+      margin-bottom: var(--space-10);
+      position: relative;
+      z-index: 1;
+    }
+
+    .filter-btn {
+      padding: var(--space-3) var(--space-6);
+      border-radius: var(--radius-full);
+      font-family: var(--font-display);
+      font-size: 1rem;
+      background: rgba(255, 255, 255, 0.15);
+      color: white;
+      border: 2px solid transparent;
+      transition: all var(--duration-normal) var(--ease-bounce);
+    }
+
+    .filter-btn:hover {
+      background: rgba(255, 255, 255, 0.25);
+      transform: translateY(-2px);
+    }
+
+    .filter-btn.active {
+      background: var(--golden-hour);
+      color: var(--espresso-dark);
+      border-color: var(--golden-hour-dark);
+      box-shadow: 0 4px 0 var(--golden-hour-dark);
+    }
+
+    /* Menu Grid */
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: var(--space-8);
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Menu Card — Vintage Recipe Card Style */
+    .menu-card {
+      background: var(--ceramic-white);
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      transition: all var(--duration-normal) var(--ease-smooth);
+      box-shadow: 
+        0 8px 0 rgba(0, 0, 0, 0.1),
+        var(--shadow-md);
+      color: var(--espresso-dark);
+    }
+
+    .menu-card:hover {
+      transform: translateY(-8px) rotate(-1deg);
+      box-shadow: 
+        0 12px 0 rgba(0, 0, 0, 0.1),
+        var(--shadow-lg);
+    }
+
+    .menu-card-image {
+      height: 160px;
+      background: linear-gradient(
+        135deg,
+        var(--latte-cream) 0%,
+        var(--tile-pattern-1) 100%
+      );
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .menu-card-image::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--tile-pattern-2);
+      opacity: 0.3;
+    }
+
+    .menu-card-icon {
+      font-size: 4rem;
+      position: relative;
+      z-index: 1;
+      filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.1));
+    }
+
+    .menu-card-body {
+      padding: var(--space-6);
+    }
+
+    .menu-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: var(--space-4);
+      margin-bottom: var(--space-3);
+    }
+
+    .menu-card-title {
+      font-family: var(--font-display);
+      font-size: 1.375rem;
+      color: var(--espresso-dark);
+    }
+
+    .menu-card-price {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      color: var(--sunrise-coral);
+      white-space: nowrap;
+    }
+
+    .menu-card-desc {
+      font-size: 0.9375rem;
+      color: var(--coffee-medium);
+      line-height: 1.6;
+      margin-bottom: var(--space-4);
+    }
+
+    .menu-card-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-2);
+      margin-bottom: var(--space-4);
+    }
+
+    .tag {
+      padding: var(--space-1) var(--space-3);
+      background: var(--golden-hour-light);
+      color: var(--coffee-medium);
+      border-radius: var(--radius-full);
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .add-to-cart {
+      width: 100%;
+      padding: var(--space-3) var(--space-6);
+      background: var(--espresso-dark);
+      color: white;
+      border-radius: var(--radius-lg);
+      font-family: var(--font-display);
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-2);
+      transition: all var(--duration-normal) var(--ease-bounce);
+    }
+
+    .add-to-cart:hover {
+      background: var(--coffee-medium);
+      transform: scale(1.02);
+    }
+
+    /* Menu Section Wave Divider */
+    .menu-section .wave-divider svg {
+      fill: var(--golden-hour);
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+       LAYER 8: HERITAGE SECTION — GOLDEN HOUR STORYTELLING
+       ═══════════════════════════════════════════════════════════════ */
+    .heritage-section {
+      position: relative;
+      background: var(--golden-hour);
+      padding: var(--space-24) 0;
+      color: var(--espresso-dark);
+    }
+
+    .heritage-section::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cpath d='M0 50 L50 0 L100 50 L50 100 Z' fill='none' stroke='%23ffffff' stroke-width='1' opacity='0.15'/%3E%3C/svg%3E");
+      background-size: 50px 50px;
+      pointer-events: none;
+    }
+
+    .heritage-content {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--space-12);
+      position: relative;
+      z-index: 1;
+    }
+
+    @media (min-width: 1024px) {
+      .heritage-content {
+        grid-template-columns: 1.2fr 1fr;
+        align-items: center;
+      }
+    }
+
+    .heritage-text {
+      max-width: 600px;
+    }
+
+    /* Drop Cap — Editorial Style */
+    .drop-cap {
+      float: left;
+      font-family: var(--font-display);
+      font-size: 5rem;
+      line-height: 0.8;
+      margin-right: var(--space-4);
+      margin-top: var(--space-2);
+      color: var(--sunrise-coral);
+      text-shadow: 3px 3px 0 var(--ceramic-white);
+    }
+
+    .heritage-paragraph {
+      font-size: 1.125rem;
+      line-height: 1.8;
+      margin-bottom: var(--space-6);
+    }
+
+    /* Blockquote — Vintage Style */
+    .heritage-quote {
+      background: var(--ceramic-white);
+      padding: var(--space-8);
+      border-radius: var(--radius-xl);
+      margin: var(--space-8) 0;
+      position: relative;
+      box-shadow: 
+        8px 8px 0 var(--sunrise-coral),
+        var(--shadow-md);
+    }
+
+    .heritage-quote::before {
+      content: '"';
+      position: absolute;
+      top: -20px;
+      left: var(--space-6);
+      font-family: var(--font-display);
+      font-size: 5rem;
+      color: var(--sunrise-coral);
+      line-height: 1;
+    }
+
+    .heritage-quote blockquote {
+      font-size: 1.25rem;
+      font-style: italic;
+      line-height: 1.6;
+      margin-bottom: var(--space-4);
+    }
+
+    .heritage-quote footer {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      color: var(--sunrise-coral);
+    }
+
+    /* Values Grid */
+    .heritage-values {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: var(--space-6);
+      margin-top: var(--space-10);
+    }
+
+    .value-card {
+      text-align: center;
+      padding: var(--space-6);
+      background: rgba(255, 255, 255, 0.5);
+      border-radius: var(--radius-xl);
+      transition: all var(--duration-normal) var(--ease-smooth);
+    }
+
+    .value-card:hover {
+      background: var(--ceramic-white);
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .value-icon {
+      font-size: 2.5rem;
+      margin-bottom: var(--space-3);
+    }
+
+    .value-title {
+      font-family: var(--font-display);
+      font-size: 1.125rem;
+      margin-bottom: var(--space-2);
+    }
+
+    .value-desc {
+      font-size: 0.875rem;
+      color: var(--coffee-medium);
+    }
+
+    /* Heritage Gallery */
+    .heritage-gallery {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-4);
+    }
+
+    .gallery-item {
+      background: var(--ceramic-white);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-md);
+      transition: all var(--duration-normal) var(--ease-smooth);
+    }
+
+    .gallery-item:first-child {
+      grid-column: span 2;
+    }
+
+    .gallery-item:hover {
+      transform: scale(1.02);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .gallery-image {
+      aspect-ratio: 4/3;
+      background: linear-gradient(
+        135deg,
+        var(--mocha-cream) 0%,
+        var(--coffee-light) 100%
+      );
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      color: var(--ceramic-white);
+    }
+
+    .gallery-caption {
+      padding: var(--space-4);
+      font-size: 0.875rem;
+      text-align: center;
+      color: var(--coffee-medium);
+    }
+
+    /* Heritage Wave Divider */
+    .heritage-section .wave-divider svg {
+      fill: var(--mint-fresh);
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+       LAYER 9: LOCATIONS SECTION — MINT FRESH GARDEN CITY
+       ═══════════════════════════════════════════════════════════════ */
+    .locations-section {
+      position: relative;
+      background: var(--mint-fresh);
+      padding: var(--space-24) 0;
+      color: var(--espresso-dark);
+    }
+
+    .locations-section::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60' viewBox='0 0 60 60'%3E%3Cpath d='M30 5 Q45 15 45 30 Q45 45 30 55 Q15 45 15 30 Q15 15 30 5Z' fill='none' stroke='%23ffffff' stroke-width='2' opacity='0.3'/%3E%3C/svg%3E");
+      background-size: 60px 60px;
+      pointer-events: none;
+    }
+
+    .locations-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: var(--space-8);
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Location Card */
+    .location-card {
+      background: var(--ceramic-white);
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      box-shadow: var(--shadow-md);
+      transition: all var(--duration-normal) var(--ease-smooth);
+    }
+
+    .location-card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .location-header {
+      background: var(--espresso-dark);
+      color: white;
+      padding: var(--space-5) var(--space-6);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .location-name {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+    }
+
+    .location-badge {
+      background: var(--golden-hour);
+      color: var(--espresso-dark);
+      padding: var(--space-1) var(--space-3);
+      border-radius: var(--radius-full);
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .location-image {
+      height: 180px;
+      background: linear-gradient(
+        135deg,
+        var(--mint-deep) 0%,
+        var(--teal-retro) 100%
+      );
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 4rem;
+    }
+
+    .location-details {
+      padding: var(--space-6);
+    }
+
+    .location-address {
+      font-weight: 700;
+      margin-bottom: var(--space-2);
+    }
+
+    .location-hours {
+      font-size: 0.9375rem;
+      color: var(--coffee-medium);
+      margin-bottom: var(--space-4);
+    }
+
+    .location-features {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-2);
+      margin-bottom: var(--space-4);
+    }
+
+    .feature {
+      font-size: 0.8125rem;
+      padding: var(--space-1) var(--space-2);
+      background: var(--latte-cream);
+      border-radius: var(--radius-sm);
+    }
+
+    .location-actions {
+      display: flex;
+      gap: var(--space-3);
+    }
+
+    .location-btn {
+      flex: 1;
+      padding: var(--space-3);
+      border-radius: var(--radius-lg);
+      font-family: var(--font-display);
+      font-size: 0.9375rem;
+      text-align: center;
+      transition: all var(--duration-normal) var(--ease-bounce);
+    }
+
+    .location-btn-primary {
+      background: var(--sunrise-coral);
+      color: white;
+    }
+
+    .location-btn-primary:hover {
+      background: var(--sunrise-coral-dark);
+      transform: translateY(-2px);
+    }
+
+    .location-btn-secondary {
+      background: var(--latte-cream);
+      color: var(--espresso-dark);
+      border: 2px solid var(--golden-hour);
+    }
+
+    .location-btn-secondary:hover {
+      background: var(--golden-hour-light);
+    }
+
+    /* Map Placeholder */
+    .map-container {
+      margin-top: var(--space-12);
+      position: relative;
+      z-index: 1;
+    }
+
+    .map-placeholder {
+      height: 400px;
+      background: var(--espresso-dark);
+      border-radius: var(--radius-xl);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      text-align: center;
+      padding: var(--space-8);
+    }
+
+    .map-title {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      margin-bottom: var(--space-4);
+    }
+
+    .map-desc {
+      opacity: 0.8;
+      max-width: 400px;
+    }
+
+    .map-markers {
+      display: flex;
+      gap: var(--space-8);
+      margin-top: var(--space-6);
+    }
+
+    .map-marker {
+      width: 24px;
+      height: 24px;
+      background: var(--sunrise-coral);
+      border-radius: 50%;
+      box-shadow: 0 0 0 4px rgba(255, 107, 74, 0.3);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 0 4px rgba(255, 107, 74, 0.3); }
+      50% { box-shadow: 0 0 0 12px rgba(255, 107, 74, 0.1); }
+    }
+
+    /* Locations Wave Divider */
+    .locations-section .wave-divider svg {
+      fill: var(--espresso-dark);
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+       LAYER 10: FOOTER — ESPRESSO GROUNDING
+       ═══════════════════════════════════════════════════════════════ */
+    .footer {
+      background: var(--espresso-dark);
+      color: white;
+      padding: var(--space-16) 0 var(--space-8);
+    }
+
+    .footer-content {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: var(--space-12);
+      margin-bottom: var(--space-12);
+    }
+
+    .footer-section h3 {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      color: var(--golden-hour);
+      margin-bottom: var(--space-5);
+    }
+
+    .footer-text {
+      font-size: 0.9375rem;
+      line-height: 1.7;
+      opacity: 0.9;
+    }
+
+    .footer-links {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);
+    }
+
+    .footer-link {
+      font-size: 0.9375rem;
+      opacity: 0.9;
+      transition: all var(--duration-normal) var(--ease-smooth);
+    }
+
+    .footer-link:hover {
+      opacity: 1;
+      color: var(--golden-hour);
+      transform: translateX(4px);
+    }
+
+    .footer-contact li {
+      font-size: 0.9375rem;
+      opacity: 0.9;
+      margin-bottom: var(--space-2);
+    }
+
+    .social-links {
+      display: flex;
+      gap: var(--space-3);
+    }
+
+    .social-link {
+      width: 44px;
+      height: 44px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.875rem;
+      transition: all var(--duration-normal) var(--ease-bounce);
+    }
+
+    .social-link:hover {
+      background: var(--sunrise-coral);
+      transform: translateY(-4px);
+    }
+
+    .footer-bottom {
+      text-align: center;
+      padding-top: var(--space-8);
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .footer-bottom p {
+      font-size: 0.875rem;
+      opacity: 0.7;
+      margin-bottom: var(--space-1);
+    }
+
+    .footer-badges {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: var(--space-4);
+      margin-top: var(--space-4);
+    }
+
+    .footer-badge {
+      padding: var(--space-2) var(--space-4);
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: var(--radius-full);
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+       LAYER 11: CART OVERLAY — RETRO MODAL
+       ═══════════════════════════════════════════════════════════════ */
+    .cart-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(61, 35, 23, 0.8);
+      z-index: var(--z-modal);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      visibility: hidden;
+      transition: all var(--duration-normal) var(--ease-smooth);
+    }
+
+    .cart-overlay[aria-hidden="false"] {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .cart-container {
+      background: var(--ceramic-white);
+      border-radius: var(--radius-xl);
+      width: 95%;
+      max-width: 480px;
+      max-height: 90vh;
+      overflow: hidden;
+      box-shadow: var(--shadow-lg);
+      transform: translateY(20px);
+      transition: transform var(--duration-normal) var(--ease-smooth);
+    }
+
+    .cart-overlay[aria-hidden="false"] .cart-container {
+      transform: translateY(0);
+    }
+
+    .cart-header {
+      background: var(--espresso-dark);
+      color: white;
+      padding: var(--space-5) var(--space-6);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .cart-title {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+    }
+
+    .cart-count-badge {
+      background: var(--sunrise-coral);
+      padding: var(--space-1) var(--space-3);
+      border-radius: var(--radius-full);
+      font-size: 0.875rem;
+    }
+
+    .cart-close {
+      width: 36px;
+      height: 36px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      color: white;
+      font-size: 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all var(--duration-normal) var(--ease-smooth);
+    }
+
+    .cart-close:hover {
+      background: var(--sunrise-coral);
+    }
+
+    .cart-items {
+      padding: var(--space-6);
+      max-height: 300px;
+      overflow-y: auto;
+    }
+
+    .cart-empty {
+      text-align: center;
+      padding: var(--space-10);
+      color: var(--coffee-medium);
+    }
+
+    .cart-empty-icon {
+      font-size: 3rem;
+      margin-bottom: var(--space-4);
+    }
+
+    .cart-summary {
+      padding: var(--space-4) var(--space-6);
+      background: var(--latte-cream);
+      border-top: 2px dashed var(--mocha-cream);
+    }
+
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: var(--space-2);
+      font-size: 0.9375rem;
+    }
+
+    .summary-row.total {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      color: var(--sunrise-coral);
+      margin-top: var(--space-4);
+      padding-top: var(--space-4);
+      border-top: 2px solid var(--mocha-cream);
+    }
+
+    .cart-actions {
+      padding: var(--space-4) var(--space-6);
+      display: flex;
+      gap: var(--space-3);
+    }
+
+    .cart-btn {
+      flex: 1;
+      padding: var(--space-4);
+      border-radius: var(--radius-lg);
+      font-family: var(--font-display);
+      font-size: 1rem;
+      transition: all var(--duration-normal) var(--ease-bounce);
+    }
+
+    .cart-btn-clear {
+      background: var(--latte-cream);
+      color: var(--coffee-medium);
+      border: 2px solid var(--mocha-cream);
+    }
+
+    .cart-btn-clear:hover {
+      background: var(--mocha-cream);
+      color: var(--espresso-dark);
+    }
+
+    .cart-btn-checkout {
+      background: var(--sunrise-coral);
+      color: white;
+      box-shadow: 0 4px 0 var(--sunrise-coral-dark);
+    }
+
+    .cart-btn-checkout:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 0 var(--sunrise-coral-dark);
+    }
+
+    .cart-btn-checkout:disabled {
+      background: var(--mocha-cream);
+      color: var(--coffee-light);
+      box-shadow: none;
+      cursor: not-allowed;
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+       LAYER 12: NOTIFICATION TOAST
+       ═══════════════════════════════════════════════════════════════ */
+    .cart-notification {
+      position: fixed;
+      bottom: var(--space-6);
+      right: var(--space-6);
+      background: var(--espresso-dark);
+      color: white;
+      padding: var(--space-4) var(--space-6);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-lg);
+      z-index: var(--z-toast);
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      transform: translateX(120%);
+      transition: transform var(--duration-normal) var(--ease-bounce);
+    }
+
+    .cart-notification.show {
+      transform: translateX(0);
+    }
+
+    .notification-icon {
+      width: 32px;
+      height: 32px;
+      background: var(--success-green);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+       LAYER 13: REDUCED MOTION & ACCESSIBILITY
+       ═══════════════════════════════════════════════════════════════ */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+
+      .sunburst-bg::before {
+        animation: none;
+      }
+    }
+
+    /* High Contrast Mode */
+    @media (prefers-contrast: high) {
+      :root {
+        --sunrise-coral: #FF4422;
+        --golden-hour: #FFD700;
+        --espresso-dark: #000000;
+      }
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+       LAYER 14: PRINT STYLES
+       ═══════════════════════════════════════════════════════════════ */
+    @media print {
+      .header,
+      .cart-overlay,
+      .wave-divider,
+      .sunburst-bg {
+        display: none !important;
+      }
+
+      body {
+        background: white;
+        color: black;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Skip Link for Accessibility -->
+  <a href="#main" class="skip-link">Skip to main content</a>
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       HEADER — RETRO NAVIGATION
+       ═══════════════════════════════════════════════════════════════ -->
+  <header class="header" role="banner">
+    <div class="container">
+      <div class="header-inner">
+        <!-- Logo -->
+        <a href="/" class="logo" aria-label="Morning Brew Collective Home">
+          <div class="logo-badge" aria-hidden="true"></div>
+          <div class="logo-text">
+            <span class="logo-title">Morning Brew</span>
+            <span class="logo-subtitle">Collective</span>
+          </div>
+        </a>
+
+        <!-- Desktop Navigation -->
+        <nav class="nav-main" aria-label="Main navigation">
+          <a href="#menu" class="nav-link">Menu</a>
+          <a href="#heritage" class="nav-link">Our Story</a>
+          <a href="#locations" class="nav-link">Visit Us</a>
+          <a href="#order" class="nav-link">Order</a>
+        </nav>
+
+        <!-- Header Actions -->
+        <div class="header-actions">
+          <button type="button" class="cart-btn" aria-label="Shopping cart, 0 items">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M6 6h15l-1.5 9h-12z M6 6L5 2H2 M9 22a1 1 0 100-2 1 1 0 000 2z M18 22a1 1 0 100-2 1 1 0 000 2z"/>
+            </svg>
+            <span class="cart-count">0</span>
+          </button>
+
+          <button type="button" class="menu-toggle" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open menu">
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Menu -->
+  <div id="mobile-menu" class="mobile-menu" aria-hidden="true">
+    <button type="button" class="mobile-menu-close" aria-label="Close menu">✕</button>
+    <a href="#menu" class="mobile-nav-link">Menu</a>
+    <a href="#heritage" class="mobile-nav-link">Our Story</a>
+    <a href="#locations" class="mobile-nav-link">Visit Us</a>
+    <a href="#order" class="mobile-nav-link">Order</a>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       MAIN CONTENT
+       ═══════════════════════════════════════════════════════════════ -->
+  <main id="main">
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         HERO SECTION — SUNRISE GLORY
+         ═══════════════════════════════════════════════════════════════ -->
+    <section class="hero" id="hero">
+      <!-- Sunburst Background -->
+      <div class="sunburst-bg" aria-hidden="true"></div>
+
+      <div class="container">
+        <div class="hero-content">
+          <!-- Hero Text -->
+          <div class="hero-text">
+            <!-- Retro Badge -->
+            <div class="retro-badge">
+              <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+                <path d="M8 0l1.5 5.5L15 7l-5.5 1.5L8 16l-1.5-5.5L1 9l5.5-1.5z"/>
+              </svg>
+              Est. 1973 · Singapore
+            </div>
+
+            <!-- Hero Title -->
+            <h1 class="hero-title">
+              Where Every
+              <span class="highlight">Morning Shines</span>
+            </h1>
+
+            <!-- Hero Subtitle -->
+            <p class="hero-subtitle">
+              Step into our kopitiam and taste 50 years of tradition. From the first aromatic sip of kopi to the last crumb of kaya toast, every moment is crafted with heritage and heart.
+            </p>
+
+            <!-- CTA Buttons -->
+            <div class="cta-group">
+              <a href="#menu" class="btn btn-primary">
+                Explore Our Menu
+                <span aria-hidden="true">→</span>
+              </a>
+              <a href="#order" class="btn btn-secondary">
+                Order for Pickup
+              </a>
+            </div>
+
+            <!-- Stats -->
+            <div class="hero-stats">
+              <div class="stat-item">
+                <span class="stat-number">50+</span>
+                <span class="stat-label">Years of Craft</span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-number">1,000+</span>
+                <span class="stat-label">Daily Brews</span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-number">3</span>
+                <span class="stat-label">Locations</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Hero Visual -->
+          <div class="hero-visual" aria-hidden="true">
+            <div class="coffee-cup-wrapper">
+              <div class="coffee-cup-bg"></div>
+              <svg class="coffee-cup-illustration" viewBox="0 0 200 200" fill="none">
+                <!-- Coffee Cup Base -->
+                <ellipse cx="100" cy="170" rx="55" ry="15" fill="var(--mocha-cream)" opacity="0.5"/>
+                <path d="M55 80 L55 150 Q55 170 100 170 Q145 170 145 150 L145 80 Z" fill="var(--ceramic-white)" stroke="var(--espresso-dark)" stroke-width="3"/>
+                <!-- Coffee Surface -->
+                <ellipse cx="100" cy="80" rx="45" ry="12" fill="var(--coffee-medium)"/>
+                <ellipse cx="100" cy="78" rx="35" ry="8" fill="var(--coffee-light)" opacity="0.5"/>
+                <!-- Cup Handle -->
+                <path d="M145 95 Q175 95 175 120 Q175 145 145 145" fill="none" stroke="var(--espresso-dark)" stroke-width="3"/>
+                <!-- Decorative Pattern on Cup -->
+                <path d="M65 100 L135 100" stroke="var(--sunrise-coral)" stroke-width="2"/>
+                <path d="M65 115 L135 115" stroke="var(--golden-hour)" stroke-width="2"/>
+                <path d="M65 130 L135 130" stroke="var(--sunrise-coral)" stroke-width="2"/>
+              </svg>
+              <!-- Steam -->
+              <div class="steam-container">
+                <div class="steam"></div>
+                <div class="steam"></div>
+                <div class="steam"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Wave Divider -->
+      <div class="wave-divider" aria-hidden="true">
+        <svg viewBox="0 0 1440 60" preserveAspectRatio="none">
+          <path d="M0,30 C360,60 720,0 1080,30 C1260,45 1380,30 1440,30 L1440,60 L0,60 Z"/>
+        </svg>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         MENU SECTION — TERRACOTTA WARMTH
+         ═══════════════════════════════════════════════════════════════ -->
+    <section class="menu-section" id="menu">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">Signature Brews & Bites</h2>
+          <p class="section-subtitle">Authentic recipes passed down since 1973, served with a smile.</p>
+        </div>
+
+        <!-- Filters -->
+        <div class="menu-filters">
+          <button class="filter-btn active" data-filter="all">All</button>
+          <button class="filter-btn" data-filter="coffee">Coffee</button>
+          <button class="filter-btn" data-filter="tea">Tea</button>
+          <button class="filter-btn" data-filter="breakfast">Breakfast</button>
+        </div>
+
+        <!-- Menu Grid -->
+        <div class="menu-grid">
+          <!-- Item 1 -->
+          <div class="menu-card" data-category="coffee">
+            <div class="menu-card-image">
+              <div class="menu-card-icon">☕</div>
+            </div>
+            <div class="menu-card-body">
+              <div class="menu-card-header">
+                <h3 class="menu-card-title">Traditional Kopi</h3>
+                <span class="menu-card-price">$3.50</span>
+              </div>
+              <p class="menu-card-desc">Robusta beans roasted with margarine and sugar, pulled through a sock.</p>
+              <div class="menu-card-tags">
+                <span class="tag">House Specialty</span>
+                <span class="tag">Strong</span>
+              </div>
+              <button class="add-to-cart" data-product="kopi" data-price="3.50" data-name="Traditional Kopi">
+                Add to Order +
+              </button>
+            </div>
+          </div>
+
+          <!-- Item 2 -->
+          <div class="menu-card" data-category="tea">
+            <div class="menu-card-image">
+              <div class="menu-card-icon">🍵</div>
+            </div>
+            <div class="menu-card-body">
+              <div class="menu-card-header">
+                <h3 class="menu-card-title">Teh Tarik</h3>
+                <span class="menu-card-price">$3.20</span>
+              </div>
+              <p class="menu-card-desc">Pulled tea with condensed milk. Frothy, creamy, and absolutely iconic.</p>
+              <div class="menu-card-tags">
+                <span class="tag">Best Seller</span>
+                <span class="tag">Sweet</span>
+              </div>
+              <button class="add-to-cart" data-product="teh-tarik" data-price="3.20" data-name="Teh Tarik">
+                Add to Order +
+              </button>
+            </div>
+          </div>
+
+          <!-- Item 3 -->
+          <div class="menu-card" data-category="breakfast">
+            <div class="menu-card-image">
+              <div class="menu-card-icon">🍞</div>
+            </div>
+            <div class="menu-card-body">
+              <div class="menu-card-header">
+                <h3 class="menu-card-title">Kaya Toast Set</h3>
+                <span class="menu-card-price">$4.50</span>
+              </div>
+              <p class="menu-card-desc">Charcoal-toasted bread with house-made coconut jam and cold butter.</p>
+              <div class="menu-card-tags">
+                <span class="tag">Classic</span>
+                <span class="tag">Set</span>
+              </div>
+              <button class="add-to-cart" data-product="kaya-toast" data-price="4.50" data-name="Kaya Toast Set">
+                Add to Order +
+              </button>
+            </div>
+          </div>
+          
+          <!-- Item 4 -->
+          <div class="menu-card" data-category="coffee">
+            <div class="menu-card-image">
+              <div class="menu-card-icon">🥛</div>
+            </div>
+            <div class="menu-card-body">
+              <div class="menu-card-header">
+                <h3 class="menu-card-title">Kopi-C</h3>
+                <span class="menu-card-price">$3.20</span>
+              </div>
+              <p class="menu-card-desc">Coffee with evaporated milk. Less sweet, perfect for the modern palate.</p>
+              <div class="menu-card-tags">
+                <span class="tag">Mild</span>
+                <span class="tag">Creamy</span>
+              </div>
+              <button class="add-to-cart" data-product="kopi-c" data-price="3.20" data-name="Kopi-C">
+                Add to Order +
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Wave Divider -->
+      <div class="wave-divider" aria-hidden="true">
+        <svg viewBox="0 0 1440 60" preserveAspectRatio="none">
+          <path d="M0,30 C360,60 720,0 1080,30 C1260,45 1380,30 1440,30 L1440,60 L0,60 Z" transform="scale(1, -1) translate(0, -60)"/>
+        </svg>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         HERITAGE SECTION — GOLDEN HOUR STORYTELLING
+         ═══════════════════════════════════════════════════════════════ -->
+    <section class="heritage-section" id="heritage">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">Our Kopitiam Heritage</h2>
+          <p class="section-subtitle">A story of roasting, brewing, and community since 1973.</p>
+        </div>
+
+        <div class="heritage-content">
+          <div class="heritage-text">
+            <p class="heritage-paragraph">
+              <span class="drop-cap">I</span>n 1973, amidst the bustling streets of Tiong Bahru, Uncle Lim set up a simple marble table and began roasting beans. It wasn't just about the caffeine; it was about creating a third space between home and work where the air smelled of charcoal and caramel.
+            </p>
+
+            <div class="heritage-quote">
+              <blockquote>
+                "The secret to good kopi isn't just the beans. It's the warmth you pour into the cup while pulling it. Every cup carries a little bit of your soul."
+              </blockquote>
+              <footer>— Uncle Lim, Founder</footer>
+            </div>
+
+            <p class="heritage-paragraph">
+              Today, Morning Brew Collective honors that legacy. We use the same vintage roaster, source coconuts from the same plantations for our kaya, and grind our spices fresh every morning. It's not nostalgia for the sake of it—it's because the old ways simply taste better.
+            </p>
+
+            <div class="heritage-values">
+              <div class="value-card">
+                <div class="value-icon">🔥</div>
+                <h3 class="value-title">Charcoal Roasted</h3>
+                <p class="value-desc">Beans roasted over charcoal for that distinct smoky aroma.</p>
+              </div>
+              <div class="value-card">
+                <div class="value-icon">🤝</div>
+                <h3 class="value-title">Community Heart</h3>
+                <p class="value-desc">A place where neighbors become friends over a shared breakfast.</p>
+              </div>
+              <div class="value-card">
+                <div class="value-icon">🌿</div>
+                <h3 class="value-title">Fresh Daily</h3>
+                <p class="value-desc">No preservatives. Just fresh ingredients and hard work.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="heritage-gallery">
+            <div class="gallery-item">
+              <div class="gallery-image">
+                1973
+              </div>
+              <div class="gallery-caption">The original stall at Tiong Bahru Market</div>
+            </div>
+            <div class="gallery-item">
+              <div class="gallery-image">
+                1985
+              </div>
+              <div class="gallery-caption">Expanding to serve the growing neighborhood</div>
+            </div>
+            <div class="gallery-item">
+              <div class="gallery-image">
+                2024
+              </div>
+              <div class="gallery-caption">Keeping the flame alive in the modern city</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Wave Divider -->
+      <div class="wave-divider" aria-hidden="true">
+        <svg viewBox="0 0 1440 60" preserveAspectRatio="none">
+          <path d="M0,30 C360,60 720,0 1080,30 C1260,45 1380,30 1440,30 L1440,60 L0,60 Z"/>
+        </svg>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         LOCATIONS SECTION — MINT FRESH GARDEN CITY
+         ═══════════════════════════════════════════════════════════════ -->
+    <section class="locations-section" id="locations">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">Find Your Kopitiam</h2>
+          <p class="section-subtitle">Three unique locations, one authentic taste.</p>
+        </div>
+
+        <div class="locations-grid">
+          <div class="location-card">
+            <div class="location-header">
+              <h3 class="location-name">Tiong Bahru Original</h3>
+              <span class="location-badge">Flagship</span>
+            </div>
+            <div class="location-image">🏙️</div>
+            <div class="location-details">
+              <p class="location-address">55 Tiong Bahru Road, #01-55</p>
+              <p class="location-hours">Daily: 7:00 AM - 8:00 PM</p>
+              <div class="location-features">
+                <span class="feature">Halal</span>
+                <span class="feature">Outdoor Seating</span>
+              </div>
+            </div>
+            <div class="location-actions">
+              <a href="#" class="location-btn location-btn-primary">Directions</a>
+              <a href="#order" class="location-btn location-btn-secondary">Order</a>
+            </div>
+          </div>
+
+          <div class="location-card">
+            <div class="location-header">
+              <h3 class="location-name">Joo Chiat Heritage</h3>
+              <span class="location-badge">Peranakan</span>
+            </div>
+            <div class="location-image">🏠</div>
+            <div class="location-details">
+              <p class="location-address">48 Joo Chiat Road</p>
+              <p class="location-hours">Daily: 8:00 AM - 9:00 PM</p>
+              <div class="location-features">
+                <span class="feature">Heritage Decor</span>
+                <span class="feature">Wifi</span>
+              </div>
+            </div>
+            <div class="location-actions">
+              <a href="#" class="location-btn location-btn-primary">Directions</a>
+              <a href="#order" class="location-btn location-btn-secondary">Order</a>
+            </div>
+          </div>
+
+          <div class="location-card">
+            <div class="location-header">
+              <h3 class="location-name">Jurong Lake Modern</h3>
+              <span class="location-badge">Lakeside</span>
+            </div>
+            <div class="location-image">🌳</div>
+            <div class="location-details">
+              <p class="location-address">101 Jurong Lake Street</p>
+              <p class="location-hours">Daily: 7:30 AM - 10:00 PM</p>
+              <div class="location-features">
+                <span class="feature">Green View</span>
+                <span class="feature">Parking</span>
+              </div>
+            </div>
+            <div class="location-actions">
+              <a href="#" class="location-btn location-btn-primary">Directions</a>
+              <a href="#order" class="location-btn location-btn-secondary">Order</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="map-container">
+          <div class="map-placeholder">
+            <h3 class="map-title">Interactive Map Coming Soon</h3>
+            <p class="map-desc">We are currently updating our map integration. In the meantime, use the address cards above!</p>
+            <div class="map-markers">
+              <div class="map-marker"></div>
+              <div class="map-marker"></div>
+              <div class="map-marker"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Wave Divider -->
+      <div class="wave-divider" aria-hidden="true">
+        <svg viewBox="0 0 1440 60" preserveAspectRatio="none">
+          <path d="M0,30 C360,60 720,0 1080,30 C1260,45 1380,30 1440,30 L1440,60 L0,60 Z" transform="scale(1, -1) translate(0, -60)"/>
+        </svg>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         FOOTER — ESPRESSO GROUNDING
+       ═══════════════════════════════════════════════════════════════ -->
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-section">
+            <h3>About Us</h3>
+            <p class="footer-text">
+              Morning Brew Collective is more than a cafe. It's a preservation of Singapore's coffee culture, serving authentic kopitiam favorites since 1973.
+            </p>
+          </div>
+
+          <div class="footer-section">
+            <h3>Quick Links</h3>
+            <ul class="footer-links">
+              <li><a href="#menu" class="footer-link">Our Menu</a></li>
+              <li><a href="#heritage" class="footer-link">Our Story</a></li>
+              <li><a href="#locations" class="footer-link">Locations</a></li>
+              <li><a href="#" class="footer-link">Careers</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-section">
+            <h3>Visit Us</h3>
+            <ul class="footer-contact">
+              <li>📍 55 Tiong Bahru Road, Singapore</li>
+              <li>📞 +65 6789 1234</li>
+              <li>✉️ hello@morningbrewcollective.com</li>
+            </ul>
+          </div>
+
+          <div class="footer-section">
+            <h3>Follow Us</h3>
+            <div class="social-links">
+              <a href="#" class="social-link" aria-label="Facebook">Fb</a>
+              <a href="#" class="social-link" aria-label="Instagram">Ig</a>
+              <a href="#" class="social-link" aria-label="TikTok">Tt</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="footer-bottom">
+          <p>&copy; 2024 Morning Brew Collective. All rights reserved.</p>
+          <div class="footer-badges">
+            <span class="footer-badge">Halal Certified</span>
+            <span class="footer-badge">Est. 1973</span>
+            <span class="footer-badge">Singapore Heritage</span>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </main>
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       CART OVERLAY — RETRO MODAL
+       ═══════════════════════════════════════════════════════════════ -->
+  <div id="cart-overlay" class="cart-overlay" aria-hidden="true">
+    <div class="cart-container">
+      <div class="cart-header">
+        <h3 class="cart-title">Your Order <span class="cart-count-badge">0</span></h3>
+        <button type="button" class="cart-close" aria-label="Close cart">×</button>
+      </div>
+
+      <div class="cart-items">
+        <div class="cart-empty">
+          <div class="cart-empty-icon">☕</div>
+          <p>Your tray is empty.</p>
+        </div>
+        <ul class="cart-items-list" aria-live="polite"></ul>
+      </div>
+
+      <div class="cart-summary">
+        <div class="summary-row">
+          <span class="subtotal-label">Subtotal:</span>
+          <span class="subtotal-amount">$0.00</span>
+        </div>
+        <div class="summary-row">
+          <span class="gst-label">GST (9%):</span>
+          <span class="gst-amount">$0.00</span>
+        </div>
+        <div class="summary-row total">
+          <span class="total-label">Total:</span>
+          <span class="total-amount">$0.00</span>
+        </div>
+      </div>
+
+      <div class="cart-actions">
+        <button class="cart-btn cart-btn-clear">Clear</button>
+        <button class="cart-btn cart-btn-checkout" disabled>Checkout</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cart Item Template -->
+  <template id="cart-item-template">
+    <li class="cart-item">
+      <div class="cart-item-details">
+        <h4 class="cart-item-name"></h4>
+        <div class="cart-item-meta">
+          <span class="cart-item-quantity">1x</span>
+          <span class="cart-item-price">$0.00</span>
+        </div>
+      </div>
+      <div class="cart-item-actions">
+        <button class="quantity-btn minus" aria-label="Decrease quantity">−</button>
+        <span class="quantity-display">1</span>
+        <button class="quantity-btn plus" aria-label="Increase quantity">+</button>
+        <button class="remove-item" aria-label="Remove item">×</button>
+      </div>
+    </li>
+  </template>
+
+  <!-- Notification Toast Template -->
+  <template id="notification-template">
+    <div class="cart-notification">
+      <div class="notification-icon">✓</div>
+      <div class="notification-text">
+        <strong>Item</strong> added to tray!
+      </div>
+    </div>
+  </template>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // ═══════════════════════════════════════════════════════════════
+      // MOBILE MENU
+      // ═══════════════════════════════════════════════════════════════
+      const menuToggle = document.querySelector('.menu-toggle');
+      const mobileMenu = document.getElementById('mobile-menu');
+      const mobileMenuClose = document.querySelector('.mobile-menu-close');
+      const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+
+      function toggleMenu() {
+        const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
+        menuToggle.setAttribute('aria-expanded', !isExpanded);
+        mobileMenu.setAttribute('aria-hidden', isExpanded);
+        mobileMenu.classList.toggle('active', !isExpanded);
+        document.body.style.overflow = !isExpanded ? 'hidden' : 'auto';
+      }
+
+      menuToggle.addEventListener('click', toggleMenu);
+      mobileMenuClose.addEventListener('click', toggleMenu);
+      mobileNavLinks.forEach(link => link.addEventListener('click', toggleMenu));
+
+      // ═══════════════════════════════════════════════════════════════
+      // CART SYSTEM
+      // ═══════════════════════════════════════════════════════════════
+      const cartOverlay = document.getElementById('cart-overlay');
+      const cartBtn = document.querySelector('.cart-btn');
+      const cartClose = document.querySelector('.cart-close');
+      const cartItemsList = document.querySelector('.cart-items-list');
+      const cartEmptyState = document.querySelector('.cart-empty');
+      const template = document.getElementById('cart-item-template');
+      const notificationTemplate = document.getElementById('notification-template');
+
+      let cart = JSON.parse(localStorage.getItem('morningBrewCart')) || [];
+
+      function saveCart() {
+        localStorage.setItem('morningBrewCart', JSON.stringify(cart));
+        updateCartUI();
+      }
+
+      function toggleCart() {
+        const isOpen = cartOverlay.getAttribute('aria-hidden') === 'false';
+        cartOverlay.setAttribute('aria-hidden', isOpen);
+        document.body.style.overflow = isOpen ? 'auto' : 'hidden';
+      }
+
+      cartBtn.addEventListener('click', toggleCart);
+      cartClose.addEventListener('click', toggleCart);
+      cartOverlay.addEventListener('click', (e) => {
+        if (e.target === cartOverlay) toggleCart();
+      });
+
+      function updateCartUI() {
+        // Update Counts
+        const totalCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+        document.querySelectorAll('.cart-count, .cart-count-badge').forEach(el => {
+          el.textContent = totalCount;
+        });
+
+        // Toggle Empty State
+        if (cart.length === 0) {
+          cartEmptyState.style.display = 'block';
+          cartItemsList.style.display = 'none';
+          document.querySelector('.cart-btn-checkout').disabled = true;
+        } else {
+          cartEmptyState.style.display = 'none';
+          cartItemsList.style.display = 'block';
+          document.querySelector('.cart-btn-checkout').disabled = false;
+        }
+
+        // Render Items
+        cartItemsList.innerHTML = '';
+        let subtotal = 0;
+
+        cart.forEach(item => {
+          const clone = template.content.cloneNode(true);
+          const li = clone.querySelector('li');
+          
+          li.querySelector('.cart-item-name').textContent = item.name;
+          li.querySelector('.cart-item-price').textContent = `$${(item.price * item.quantity).toFixed(2)}`;
+          li.querySelector('.cart-item-quantity').textContent = `${item.quantity}x`;
+          li.querySelector('.quantity-display').textContent = item.quantity;
+
+          li.querySelector('.minus').onclick = () => updateQuantity(item.id, -1);
+          li.querySelector('.plus').onclick = () => updateQuantity(item.id, 1);
+          li.querySelector('.remove-item').onclick = () => removeItem(item.id);
+
+          cartItemsList.appendChild(clone);
+          subtotal += item.price * item.quantity;
+        });
+
+        // Update Totals
+        const gst = subtotal * 0.09;
+        const total = subtotal + gst;
+        
+        document.querySelector('.subtotal-amount').textContent = `$${subtotal.toFixed(2)}`;
+        document.querySelector('.gst-amount').textContent = `$${gst.toFixed(2)}`;
+        document.querySelector('.total-amount').textContent = `$${total.toFixed(2)}`;
+      }
+
+      function addToCart(id, name, price) {
+        const existing = cart.find(item => item.id === id);
+        if (existing) {
+          existing.quantity++;
+        } else {
+          cart.push({ id, name, price, quantity: 1 });
+        }
+        saveCart();
+        showNotification(name);
+      }
+
+      function updateQuantity(id, change) {
+        const item = cart.find(i => i.id === id);
+        if (item) {
+          item.quantity += change;
+          if (item.quantity <= 0) removeItem(id);
+          else saveCart();
+        }
+      }
+
+      function removeItem(id) {
+        cart = cart.filter(i => i.id !== id);
+        saveCart();
+      }
+
+      function showNotification(name) {
+        const clone = notificationTemplate.content.cloneNode(true);
+        const notif = clone.querySelector('.cart-notification');
+        notif.querySelector('.notification-text strong').textContent = name;
+        document.body.appendChild(notif);
+        
+        // Trigger animation
+        requestAnimationFrame(() => notif.classList.add('show'));
+        
+        setTimeout(() => {
+          notif.classList.remove('show');
+          setTimeout(() => notif.remove(), 500);
+        }, 3000);
+      }
+
+      // Bind Add to Cart Buttons
+      document.querySelectorAll('.add-to-cart').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const { product, price, name } = btn.dataset;
+          addToCart(product, name, parseFloat(price));
+        });
+      });
+
+      // Clear Cart
+      document.querySelector('.cart-btn-clear').addEventListener('click', () => {
+        cart = [];
+        saveCart();
+      });
+
+      // Checkout
+      document.querySelector('.cart-btn-checkout').addEventListener('click', () => {
+        alert('This is a demo! In a real app, this would connect to Stripe/PayNow.');
+      });
+
+      // Initial Render
+      updateCartUI();
+
+      // ═══════════════════════════════════════════════════════════════
+      // MENU FILTER
+      // ═══════════════════════════════════════════════════════════════
+      const filterBtns = document.querySelectorAll('.filter-btn');
+      const menuCards = document.querySelectorAll('.menu-card');
+
+      filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          filterBtns.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          
+          const filter = btn.dataset.filter;
+          
+          menuCards.forEach(card => {
+            if (filter === 'all' || card.dataset.category === filter) {
+              card.style.display = 'block';
+              setTimeout(() => card.style.opacity = '1', 10);
+            } else {
+              card.style.opacity = '0';
+              setTimeout(() => card.style.display = 'none', 300);
+            }
+          });
+        });
+      });
+    });
+  </script>
+</body>
+</html>
+```
+
+#https://chat.z.ai/s/ba215949-baf3-4fc6-b0f4-c33fe94c8c6f
