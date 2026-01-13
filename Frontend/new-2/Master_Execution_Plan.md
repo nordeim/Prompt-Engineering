@@ -1,18 +1,8 @@
-# ✅ MASTER_EXECUTION_PLAN.md — Morning Brew Collective
-
-```
-╔═══════════════════════════════════════════════════════════════════════════════╗
-║                                                                               ║
-║   PROJECT: MORNING BREW COLLECTIVE                                            ║
-║   TYPE: SINGAPORE-FIRST HEADLESS COMMERCE PLATFORM                            ║
-║   STACK: NEXT.JS 15 (APP ROUTER) + LARAVEL 12 + POSTGRESQL 16                 ║
-║   AESTHETIC: 1970s RETRO KOPITIAM WITH AVANT-GARDE MINIMALISM                 ║
-║   COMPLIANCE: GST 9% • INVOICENOW • PAYNOW • PDPA                             ║
-║                                                                               ║
-╚═══════════════════════════════════════════════════════════════════════════════╝
-```
-
----
+**PROJECT:** MORNING BREW COLLECTIVE  
+**TYPE:** SINGAPORE-FIRST HEADLESS COMMERCE PLATFORM  
+**STACK:** NEXT.JS 15 (APP ROUTER) + LARAVEL 12 + POSTGRESQL 16  
+**AESTHETIC:** 1970s RETRO KOPITIAM WITH AVANT-GARDE MINIMALISM  
+**COMPLIANCE:** GST 9% • INVOICENOW • PAYNOW • PDPA  
 
 ## 🧭 EXECUTIVE SUMMARY
 
@@ -25,6 +15,123 @@ The architecture follows a strict **Backend-for-Frontend (BFF)** pattern:
 - **Backend (`/backend`)**: Laravel 12 owns the truth — inventory reservations, order state machines, tax calculations, regulatory compliance.
 
 All UI components are built using **Shadcn UI primitives**, styled to match the 1970s retro aesthetic — never rebuilt from scratch. We enforce intentional minimalism: whitespace as structure, hierarchy over decoration.
+
+---
+
+First, conduct an exhaustive multi-dimensional analysis of the static HTML mock-up and the enterprise requirements. Below is my strategic assessment, followed by the comprehensive `MASTER_EXECUTION_PLAN.md`.
+
+## Pre-Planning Analysis
+1. Design Token Extraction from HTML Mock-up
+```text
+┌─────────────────────────────────────────────────────────────────────────────┐
+│  DESIGN SYSTEM AUDIT — "SUNRISE AT THE KOPITIAM"                            │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                                                                             │
+│  PALETTE HIERARCHY                                                          │
+│  ─────────────────                                                          │
+│  Primary Action    → Sunrise Coral #FF6B4A (CTAs, badges, highlights)       │
+│  Secondary Warmth  → Golden Hour #FFBE4F (accents, underlines, borders)     │
+│  Grounding Dark    → Espresso Dark #3D2317 (text, footer, modals)           │
+│  Surface Light     → Latte Cream #FFF5E6 (backgrounds)                      │
+│  Fresh Accent      → Mint Fresh #B8E6D4 (location section)                  │
+│                                                                             │
+│  TYPOGRAPHY PAIRING                                                         │
+│  ─────────────────                                                          │
+│  Display           → 'Righteous' (Google Fonts) - 1970s groovy aesthetic    │
+│  Body              → 'Nunito' - Warm, readable, friendly                    │
+│                                                                             │
+│  SPATIAL SYSTEM                                                             │
+│  ─────────────────                                                          │
+│  Grid              → 8pt base unit (0.25rem increments)                     │
+│  Container         → 1200px max-width                                       │
+│  Radius            → Generous (16-48px) - "soft 70s" feel                   │
+│                                                                             │
+│  MOTION SIGNATURE                                                           │
+│  ─────────────────                                                          │
+│  Primary Easing    → cubic-bezier(0.34, 1.56, 0.64, 1) — "bounce"           │
+│  Secondary Easing  → cubic-bezier(0.23, 1, 0.32, 1) — "smooth"              │
+│  Duration Scale    → 150ms / 300ms / 500ms                                  │
+│                                                                             │
+│  DECORATIVE PATTERNS                                                        │
+│  ─────────────────                                                          │
+│  • Sunburst conic gradients (rotating background)                           │
+│  • Wave section dividers (SVG paths)                                        │
+│  • Scalloped edges                                                          │
+│  • Tile patterns (kopitiam floor aesthetic)                                 │
+│  • Coffee ring stain decorations                                            │
+│                                                                             │
+└─────────────────────────────────────────────────────────────────────────────┘
+```
+
+2. Singapore Compliance Requirements Analysis
+Requirement	Implementation Strategy	Complexity
+9% GST Inclusive	All displayed prices include GST; breakdown shown at checkout. Store prices as cents (integer) to avoid float precision issues.	Medium
+PayNow QR	Stripe Singapore supports PayNow. Generate QR codes via Stripe API with paynow payment method.	Medium
+InvoiceNow (PEPPOL)	Integrate with IMDA-approved Access Point (e.g., InvoiceNow API). Generate UBL 2.1 compliant XML.	High
+PDPA Consent	Explicit opt-in checkboxes, consent timestamps, withdrawal mechanism, data export capability.	Medium
+
+3. Architecture Decision Records
+```text
+┌─────────────────────────────────────────────────────────────────────────────┐
+│  ADR-001: BFF ARCHITECTURE                                                  │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                                                                             │
+│  DECISION: Next.js handles UI orchestration; Laravel owns domain logic      │
+│                                                                             │
+│  RATIONALE:                                                                 │
+│  • Next.js Server Components reduce client bundle, improve SEO              │
+│  • Laravel's Eloquent ORM provides robust relational data handling          │
+│  • Redis enables inventory reservation locks (atomic operations)            │
+│  • Clear separation: Frontend = Experience, Backend = Truth                 │
+│                                                                             │
+│  DATA FLOW:                                                                 │
+│                                                                             │
+│   Browser ─────► Next.js (App Router) ─────► Laravel API ─────► PostgreSQL  │
+│      │               │                            │                         │
+│      │               │ Server Components          │ Domain Logic            │
+│      │               │ Route Handlers             │ Validation              │
+│      │               │ Edge Middleware            │ Business Rules          │
+│      │               ▼                            ▼                         │
+│      └────────── React RSC ◄───────────── JSON API Responses               │
+│                                                                             │
+└─────────────────────────────────────────────────────────────────────────────┘
+```
+
+```text
+┌─────────────────────────────────────────────────────────────────────────────┐
+│  ADR-002: TWO-PHASE INVENTORY RESERVATION                                   │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                                                                             │
+│  PROBLEM: Prevent overselling while allowing cart abandonment               │
+│                                                                             │
+│  SOLUTION:                                                                  │
+│                                                                             │
+│  PHASE 1: SOFT RESERVE (Add to Cart)                                        │
+│  ┌─────────────────────────────────────────────────────────────────┐        │
+│  │  • Decrement `available_quantity` in Redis (atomic DECRBY)      │        │
+│  │  • Set TTL on reservation (15 minutes default)                  │        │
+│  │  • Store reservation_id in cart session                         │        │
+│  │  • On TTL expiry: Redis keyspace notification → restore stock   │        │
+│  └─────────────────────────────────────────────────────────────────┘        │
+│                                                                             │
+│  PHASE 2: HARD COMMIT (Checkout Success)                                    │
+│  ┌─────────────────────────────────────────────────────────────────┐        │
+│  │  • Decrement `stock_quantity` in PostgreSQL (transaction)       │        │
+│  │  • Delete Redis reservation key                                 │        │
+│  │  • Create order record with line items                          │        │
+│  │  • Trigger InvoiceNow generation (async job)                    │        │
+│  └─────────────────────────────────────────────────────────────────┘        │
+│                                                                             │
+└─────────────────────────────────────────────────────────────────────────────┘
+```
+
+4. Risk Assessment
+Risk	Impact	Probability	Mitigation
+Design drift from mock-up	High	Medium	Design tokens as single source; automated visual regression tests
+GST calculation errors	Critical	Low	Decimal128 for currency; unit tests for edge cases; audit logging
+Inventory race conditions	High	Medium	Redis atomic operations; database row-level locking
+InvoiceNow API unavailability	Medium	Low	Queue-based retry with exponential backoff; manual fallback
+PDPA non-compliance	Critical	Low	Consent audit trail; data retention policies; encryption at rest
 
 ---
 
