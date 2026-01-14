@@ -1,0 +1,2256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Morning Brew Collective - Singapore's authentic kopitiam experience since 1973. Traditional coffee, breakfast, and pastries with a modern touch.">
+  <meta name="theme-color" content="#3D2B1F">
+  <title>Morning Brew Collective - Where Singapore's Morning Ritual Begins</title>
+
+  <!-- Preconnect -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  
+  <!-- Google Fonts - 70s Inspired -->
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;0,9..144,800;1,9..144,400&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet">
+
+  <style>
+    /* ═══════════════════════════════════════════════════════════════
+       MORNING BREW COLLECTIVE - 1970s NOSTALGIC REIMAGINING
+       Design Direction: "Sunrise at the Kopitiam"
+       ═══════════════════════════════════════════════════════════════ */
+
+    /* ===== DESIGN TOKENS ===== */
+    :root {
+      /* === PRIMARY PALETTE: Cheerful Coffee Morning === */
+      --sunrise-amber: #E8A857;
+      --sunrise-amber-rgb: 232, 168, 87;
+      --terracotta-warm: #D4693B;
+      --terracotta-warm-rgb: 212, 105, 59;
+      --cream-white: #FFF8E7;
+      --cream-white-rgb: 255, 248, 231;
+      --espresso-dark: #3D2B1F;
+      --espresso-dark-rgb: 61, 43, 31;
+      --coral-pop: #FF7B54;
+      --coral-pop-rgb: 255, 123, 84;
+      --sage-fresh: #8FA68A;
+      --sage-fresh-rgb: 143, 166, 138;
+      --cinnamon-glow: #C68642;
+      --honey-light: #F5DEB3;
+      --mocha-medium: #6B4423;
+      
+      /* === EXTENDED PALETTE === */
+      --caramel-swirl: #D4A574;
+      --butter-toast: #E6C9A8;
+      --vintage-paper: #FAF3E3;
+      --kopi-black: #2A1F16;
+      
+      /* === GRADIENTS === */
+      --gradient-sunrise: linear-gradient(135deg, #FFF8E7 0%, #F5DEB3 50%, #E8A857 100%);
+      --gradient-warm-glow: radial-gradient(ellipse at center, rgba(232, 168, 87, 0.3) 0%, transparent 70%);
+      --gradient-sunset-stripe: repeating-linear-gradient(
+        -45deg,
+        transparent,
+        transparent 10px,
+        rgba(212, 105, 59, 0.05) 10px,
+        rgba(212, 105, 59, 0.05) 20px
+      );
+      
+      /* === RETRO TEXTURES (SVG Data URIs) === */
+      --texture-grain: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+      
+      --texture-sunburst: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 800'%3E%3Cdefs%3E%3ClinearGradient id='sb' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23E8A857;stop-opacity:0.15'/%3E%3Cstop offset='100%25' style='stop-color:%23D4693B;stop-opacity:0.08'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cg fill='url(%23sb)'%3E%3Cpath d='M400 0L420 380L400 400L380 380Z'/%3E%3Cpath d='M400 0L420 380L400 400L380 380Z' transform='rotate(15 400 400)'/%3E%3Cpath d='M400 0L420 380L400 400L380 380Z' transform='rotate(30 400 400)'/%3E%3Cpath d='M400 0L420 380L400 400L380 380Z' transform='rotate(45 400 400)'/%3E%3Cpath d='M400 0L420 380L400 400L380 380Z' transform='rotate(60 400 400)'/%3E%3Cpath d='M400 0L420 380L400 400L380 380Z' transform='rotate(75 400 400)'/%3E%3Cpath d='M400 0L420 380L400 400L380 380Z' transform='rotate(90 400 400)'/%3E%3Cpath d='M400 0L420 380L400 400L380 380Z' transform='rotate(105 400 400)'/%3E%3Cpath d='M400 0L420 380L400 400L380 380Z' transform='rotate(120 400 400)'/%3E%3Cpath d='M400 0L420 380L400 400L380 380Z' transform='rotate(135 400 400)'/%3E%3Cpath d='M400 0L420 380L400 400L380 380Z' transform='rotate(150 400 400)'/%3E%3Cpath d='M400 0L420 380L400 400L380 380Z' transform='rotate(165 400 400)'/%3E%3Cpath d='M400 0L420 380L400 400L380 380Z' transform='rotate(180 400 400)'/%3E%3Cpath d='M400 0L420 380L400 400L380 380Z' transform='rotate(195 400 400)'/%3E%3Cpath d='M400 0L420 380L400 400L380 380Z' transform='rotate(210 400 400)'/%3E%3Cpath d='M400 0L420 380L400 400L380 380Z' transform='rotate(225 400 400)'/%3E%3Cpath d='M400 0L420 380L400 400L380 380Z' transform='rotate(240 400 400)'/%3E%3Cpath d='M400 0L420 380L400 400L380 380Z' transform='rotate(255 400 400)'/%3E%3Cpath d='M400 0L420 380L400 400L380 380Z' transform='rotate(270 400 400)'/%3E%3Cpath d='M400 0L420 380L400 400L380 380Z' transform='rotate(285 400 400)'/%3E%3Cpath d='M400 0L420 380L400 400L380 380Z' transform='rotate(300 400 400)'/%3E%3Cpath d='M400 0L420 380L400 400L380 380Z' transform='rotate(315 400 400)'/%3E%3Cpath d='M400 0L420 380L400 400L380 380Z' transform='rotate(330 400 400)'/%3E%3Cpath d='M400 0L420 380L400 400L380 380Z' transform='rotate(345 400 400)'/%3E%3C/g%3E%3C/svg%3E");
+
+      --texture-circles: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='40' fill='none' stroke='%23E8A857' stroke-width='1' opacity='0.1'/%3E%3Ccircle cx='50' cy='50' r='30' fill='none' stroke='%23D4693B' stroke-width='1' opacity='0.08'/%3E%3Ccircle cx='50' cy='50' r='20' fill='none' stroke='%23C68642' stroke-width='1' opacity='0.06'/%3E%3C/svg%3E");
+
+      --texture-arcs: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60' viewBox='0 0 60 60'%3E%3Cpath d='M0 60 Q30 30 60 60' fill='none' stroke='%23E8A857' stroke-width='2' opacity='0.08'/%3E%3C/svg%3E");
+
+      /* === TYPOGRAPHY === */
+      --font-display: 'Fraunces', Georgia, serif;
+      --font-body: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      
+      /* === SPACING (8px Grid) === */
+      --space-1: 0.25rem;
+      --space-2: 0.5rem;
+      --space-3: 0.75rem;
+      --space-4: 1rem;
+      --space-5: 1.25rem;
+      --space-6: 1.5rem;
+      --space-8: 2rem;
+      --space-10: 2.5rem;
+      --space-12: 3rem;
+      --space-16: 4rem;
+      --space-20: 5rem;
+      --space-24: 6rem;
+      
+      /* === BORDER RADIUS (Very 70s - Rounded!) === */
+      --radius-sm: 8px;
+      --radius-md: 16px;
+      --radius-lg: 24px;
+      --radius-xl: 32px;
+      --radius-2xl: 48px;
+      --radius-full: 9999px;
+      
+      /* === SHADOWS (Warm-tinted) === */
+      --shadow-sm: 0 2px 8px rgba(61, 43, 31, 0.08);
+      --shadow-md: 0 4px 16px rgba(61, 43, 31, 0.12);
+      --shadow-lg: 0 8px 32px rgba(61, 43, 31, 0.16);
+      --shadow-glow: 0 0 40px rgba(232, 168, 87, 0.3);
+      
+      /* === TRANSITIONS === */
+      --ease-smooth: cubic-bezier(0.23, 1, 0.32, 1);
+      --ease-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+      --duration-fast: 0.15s;
+      --duration-normal: 0.3s;
+      --duration-slow: 0.5s;
+      
+      /* === Z-INDEX === */
+      --z-base: 1;
+      --z-sticky: 100;
+      --z-nav: 1000;
+      --z-overlay: 2000;
+      --z-modal: 3000;
+      --z-toast: 4000;
+    }
+
+    /* ===== RESET & BASE ===== */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+
+    body {
+      font-family: var(--font-body);
+      font-size: 1.125rem;
+      line-height: 1.7;
+      color: var(--espresso-dark);
+      background-color: var(--cream-white);
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* Grain overlay for vintage texture */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: var(--texture-grain);
+      opacity: 0.03;
+      pointer-events: none;
+      z-index: 10000;
+    }
+
+    img, svg {
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button {
+      font-family: inherit;
+      cursor: pointer;
+      border: none;
+      background: none;
+    }
+
+    ul, ol { list-style: none; }
+
+    /* === Focus States === */
+    :focus-visible {
+      outline: 3px solid var(--coral-pop);
+      outline-offset: 3px;
+    }
+
+    /* === Skip Link === */
+    .skip-link {
+      position: absolute;
+      top: -100%;
+      left: var(--space-4);
+      background: var(--espresso-dark);
+      color: var(--cream-white);
+      padding: var(--space-3) var(--space-6);
+      border-radius: var(--radius-full);
+      font-weight: 600;
+      z-index: var(--z-toast);
+      transition: top var(--duration-normal) var(--ease-smooth);
+    }
+
+    .skip-link:focus {
+      top: var(--space-4);
+    }
+
+    /* ===== TYPOGRAPHY ===== */
+    h1, h2, h3, h4, h5, h6 {
+      font-family: var(--font-display);
+      font-weight: 700;
+      line-height: 1.2;
+      color: var(--espresso-dark);
+    }
+
+    h1 { font-size: clamp(2.5rem, 6vw, 4.5rem); }
+    h2 { font-size: clamp(2rem, 4vw, 3rem); }
+    h3 { font-size: clamp(1.5rem, 3vw, 2rem); }
+    h4 { font-size: clamp(1.25rem, 2vw, 1.5rem); }
+
+    p { margin-bottom: var(--space-4); }
+
+    /* ===== LAYOUT ===== */
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 var(--space-6);
+    }
+
+    section {
+      position: relative;
+      padding: var(--space-20) 0;
+    }
+
+    @media (min-width: 768px) {
+      section { padding: var(--space-24) 0; }
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+       HEADER - Warm Espresso Bar
+       ═══════════════════════════════════════════════════════════════ */
+    .header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: var(--z-nav);
+      background: rgba(61, 43, 31, 0.95);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 3px solid var(--sunrise-amber);
+    }
+
+    .header__inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 80px;
+    }
+
+    /* Logo with 70s Flair */
+    .logo {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-1);
+      transition: transform var(--duration-normal) var(--ease-smooth);
+    }
+
+    .logo:hover { transform: scale(1.03); }
+
+    .logo__main {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--cream-white);
+      letter-spacing: -0.02em;
+    }
+
+    .logo__sub {
+      font-family: var(--font-display);
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--sunrise-amber);
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+    }
+
+    /* Navigation */
+    .nav { display: none; }
+
+    @media (min-width: 768px) {
+      .nav { display: block; }
+    }
+
+    .nav__list {
+      display: flex;
+      gap: var(--space-8);
+    }
+
+    .nav__link {
+      position: relative;
+      font-weight: 600;
+      font-size: 1rem;
+      color: var(--cream-white);
+      padding: var(--space-2) var(--space-4);
+      border-radius: var(--radius-full);
+      transition: all var(--duration-normal) var(--ease-smooth);
+    }
+
+    .nav__link::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%) scaleX(0);
+      width: 24px;
+      height: 3px;
+      background: var(--sunrise-amber);
+      border-radius: var(--radius-full);
+      transition: transform var(--duration-normal) var(--ease-smooth);
+    }
+
+    .nav__link:hover {
+      color: var(--sunrise-amber);
+    }
+
+    .nav__link:hover::after {
+      transform: translateX(-50%) scaleX(1);
+    }
+
+    /* Header Actions */
+    .header__actions {
+      display: flex;
+      align-items: center;
+      gap: var(--space-4);
+    }
+
+    .cart-btn {
+      position: relative;
+      width: 48px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(232, 168, 87, 0.15);
+      border-radius: var(--radius-full);
+      transition: all var(--duration-normal) var(--ease-smooth);
+    }
+
+    .cart-btn:hover {
+      background: var(--sunrise-amber);
+      transform: scale(1.1);
+    }
+
+    .cart-btn svg {
+      width: 24px;
+      height: 24px;
+      stroke: var(--cream-white);
+      stroke-width: 2;
+      fill: none;
+    }
+
+    .cart-btn__count {
+      position: absolute;
+      top: -4px;
+      right: -4px;
+      min-width: 20px;
+      height: 20px;
+      background: var(--coral-pop);
+      color: white;
+      font-size: 0.75rem;
+      font-weight: 700;
+      border-radius: var(--radius-full);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid var(--espresso-dark);
+    }
+
+    /* Mobile Menu Toggle */
+    .menu-toggle {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      padding: var(--space-2);
+      border-radius: var(--radius-sm);
+    }
+
+    @media (min-width: 768px) {
+      .menu-toggle { display: none; }
+    }
+
+    .menu-toggle__line {
+      width: 24px;
+      height: 2px;
+      background: var(--cream-white);
+      border-radius: var(--radius-full);
+      transition: all var(--duration-normal) var(--ease-smooth);
+    }
+
+    .menu-toggle[aria-expanded="true"] .menu-toggle__line:nth-child(1) {
+      transform: rotate(45deg) translate(5px, 5px);
+    }
+
+    .menu-toggle[aria-expanded="true"] .menu-toggle__line:nth-child(2) {
+      opacity: 0;
+    }
+
+    .menu-toggle[aria-expanded="true"] .menu-toggle__line:nth-child(3) {
+      transform: rotate(-45deg) translate(5px, -5px);
+    }
+
+    /* Mobile Menu */
+    .mobile-menu {
+      position: fixed;
+      inset: 0;
+      background: var(--espresso-dark);
+      z-index: var(--z-overlay);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-8);
+      transform: translateX(100%);
+      transition: transform var(--duration-slow) var(--ease-smooth);
+    }
+
+    .mobile-menu.active {
+      transform: translateX(0);
+    }
+
+    .mobile-menu__link {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--cream-white);
+      transition: color var(--duration-normal) var(--ease-smooth);
+    }
+
+    .mobile-menu__link:hover {
+      color: var(--sunrise-amber);
+    }
+
+    .mobile-menu__close {
+      position: absolute;
+      top: var(--space-6);
+      right: var(--space-6);
+      width: 48px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      color: var(--cream-white);
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: var(--radius-full);
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+       HERO SECTION - Sunrise Sunburst
+       ═══════════════════════════════════════════════════════════════ */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      background: var(--gradient-sunrise);
+      position: relative;
+      overflow: hidden;
+      padding-top: 100px;
+    }
+
+    /* Sunburst Background */
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 200%;
+      height: 200%;
+      background: var(--texture-sunburst);
+      background-size: 800px 800px;
+      background-position: center;
+      background-repeat: no-repeat;
+      opacity: 0.6;
+      animation: slowRotate 120s linear infinite;
+    }
+
+    @keyframes slowRotate {
+      from { transform: translateX(-50%) rotate(0deg); }
+      to { transform: translateX(-50%) rotate(360deg); }
+    }
+
+    /* Decorative circles */
+    .hero::after {
+      content: '';
+      position: absolute;
+      top: 20%;
+      right: -10%;
+      width: 600px;
+      height: 600px;
+      background: var(--texture-circles);
+      background-size: 100px 100px;
+      opacity: 0.4;
+      border-radius: 50%;
+    }
+
+    .hero__content {
+      position: relative;
+      z-index: 2;
+      max-width: 700px;
+    }
+
+    /* Vintage Badge */
+    .hero__badge {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-3);
+      background: var(--espresso-dark);
+      color: var(--cream-white);
+      padding: var(--space-3) var(--space-5);
+      border-radius: var(--radius-full);
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: 0.875rem;
+      margin-bottom: var(--space-6);
+      box-shadow: var(--shadow-md);
+      border: 2px dashed var(--sunrise-amber);
+    }
+
+    .hero__badge-icon {
+      width: 24px;
+      height: 24px;
+    }
+
+    .hero__title {
+      margin-bottom: var(--space-6);
+      color: var(--espresso-dark);
+    }
+
+    .hero__title-highlight {
+      display: block;
+      color: var(--terracotta-warm);
+      font-style: italic;
+    }
+
+    .hero__subtitle {
+      font-size: 1.25rem;
+      color: var(--mocha-medium);
+      margin-bottom: var(--space-8);
+      max-width: 550px;
+    }
+
+    /* CTA Buttons - Chunky 70s Style */
+    .hero__ctas {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-4);
+      margin-bottom: var(--space-12);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-2);
+      padding: var(--space-4) var(--space-8);
+      border-radius: var(--radius-full);
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 1.125rem;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+      transition: all var(--duration-normal) var(--ease-smooth);
+      box-shadow: var(--shadow-md);
+    }
+
+    .btn--primary {
+      background: var(--coral-pop);
+      color: white;
+      border: 3px solid var(--coral-pop);
+    }
+
+    .btn--primary:hover {
+      background: var(--terracotta-warm);
+      border-color: var(--terracotta-warm);
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .btn--secondary {
+      background: transparent;
+      color: var(--espresso-dark);
+      border: 3px solid var(--espresso-dark);
+    }
+
+    .btn--secondary:hover {
+      background: var(--espresso-dark);
+      color: var(--cream-white);
+      transform: translateY(-3px) scale(1.02);
+    }
+
+    /* Stats Row */
+    .hero__stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-6);
+      padding-top: var(--space-8);
+      border-top: 2px dashed var(--cinnamon-glow);
+    }
+
+    .stat {
+      text-align: center;
+    }
+
+    .stat__number {
+      display: block;
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 800;
+      color: var(--terracotta-warm);
+      line-height: 1;
+    }
+
+    .stat__label {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--mocha-medium);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    /* Floating Coffee Cup Illustration */
+    .hero__illustration {
+      position: absolute;
+      right: 5%;
+      bottom: 10%;
+      width: clamp(200px, 30vw, 400px);
+      opacity: 0.9;
+      animation: gentleFloat 6s ease-in-out infinite;
+    }
+
+    @keyframes gentleFloat {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-20px) rotate(3deg); }
+    }
+
+    /* Steam Animation */
+    .steam {
+      position: absolute;
+      display: flex;
+      gap: var(--space-2);
+      top: -40px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .steam__particle {
+      width: 8px;
+      height: 8px;
+      background: rgba(255, 255, 255, 0.7);
+      border-radius: 50%;
+      animation: steamRise 2s ease-in-out infinite;
+    }
+
+    .steam__particle:nth-child(2) { animation-delay: 0.3s; }
+    .steam__particle:nth-child(3) { animation-delay: 0.6s; }
+
+    @keyframes steamRise {
+      0% {
+        opacity: 0;
+        transform: translateY(0) scale(1);
+      }
+      50% {
+        opacity: 1;
+      }
+      100% {
+        opacity: 0;
+        transform: translateY(-30px) scale(0.5);
+      }
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+       WAVE DIVIDER - Section Separator
+       ═══════════════════════════════════════════════════════════════ */
+    .wave-divider {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 80px;
+      overflow: hidden;
+    }
+
+    .wave-divider svg {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .wave-divider--flip {
+      top: 0;
+      bottom: auto;
+      transform: rotate(180deg);
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+       MENU SECTION - Terracotta Warmth
+       ═══════════════════════════════════════════════════════════════ */
+    .menu {
+      background: var(--terracotta-warm);
+      color: var(--cream-white);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Arc pattern background */
+    .menu::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--texture-arcs);
+      background-size: 60px 60px;
+      opacity: 0.3;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: var(--space-12);
+      position: relative;
+      z-index: 2;
+    }
+
+    .section-header__title {
+      color: var(--cream-white);
+      margin-bottom: var(--space-3);
+    }
+
+    .section-header__subtitle {
+      font-size: 1.125rem;
+      opacity: 0.9;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    /* Decorative underline */
+    .section-header__decoration {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-4);
+      margin-top: var(--space-4);
+    }
+
+    .section-header__line {
+      width: 60px;
+      height: 3px;
+      background: var(--sunrise-amber);
+      border-radius: var(--radius-full);
+    }
+
+    .section-header__icon {
+      width: 32px;
+      height: 32px;
+      fill: var(--sunrise-amber);
+    }
+
+    /* Filter Buttons */
+    .menu__filters {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: var(--space-3);
+      margin-bottom: var(--space-10);
+      position: relative;
+      z-index: 2;
+    }
+
+    .filter-btn {
+      padding: var(--space-3) var(--space-6);
+      border-radius: var(--radius-full);
+      font-weight: 600;
+      font-size: 0.9375rem;
+      background: rgba(255, 255, 255, 0.1);
+      color: var(--cream-white);
+      border: 2px solid transparent;
+      transition: all var(--duration-normal) var(--ease-smooth);
+    }
+
+    .filter-btn:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .filter-btn.active {
+      background: var(--sunrise-amber);
+      color: var(--espresso-dark);
+      border-color: var(--sunrise-amber);
+    }
+
+    /* Menu Grid */
+    .menu__grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: var(--space-6);
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Menu Card - Vintage Ticket Style */
+    .menu-card {
+      background: var(--cream-white);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-lg);
+      transition: all var(--duration-normal) var(--ease-smooth);
+      position: relative;
+    }
+
+    .menu-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 6px;
+      background: repeating-linear-gradient(
+        90deg,
+        var(--sunrise-amber),
+        var(--sunrise-amber) 10px,
+        transparent 10px,
+        transparent 20px
+      );
+    }
+
+    .menu-card:hover {
+      transform: translateY(-8px) rotate(-1deg);
+      box-shadow: var(--shadow-lg), var(--shadow-glow);
+    }
+
+    .menu-card__image {
+      height: 200px;
+      background: linear-gradient(135deg, var(--honey-light) 0%, var(--butter-toast) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Coffee bean decorations */
+    .menu-card__beans {
+      display: flex;
+      gap: var(--space-3);
+    }
+
+    .bean {
+      width: 16px;
+      height: 24px;
+      background: var(--mocha-medium);
+      border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+      position: relative;
+      animation: beanBounce 2s ease-in-out infinite;
+    }
+
+    .bean::before {
+      content: '';
+      position: absolute;
+      top: 30%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 2px;
+      height: 40%;
+      background: var(--espresso-dark);
+      border-radius: var(--radius-full);
+    }
+
+    .bean:nth-child(2) { animation-delay: 0.2s; }
+    .bean:nth-child(3) { animation-delay: 0.4s; }
+
+    @keyframes beanBounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+
+    .menu-card__content {
+      padding: var(--space-6);
+      color: var(--espresso-dark);
+    }
+
+    .menu-card__header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: var(--space-3);
+    }
+
+    .menu-card__title {
+      font-size: 1.375rem;
+      color: var(--espresso-dark);
+      margin: 0;
+    }
+
+    .menu-card__price {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--terracotta-warm);
+      background: var(--honey-light);
+      padding: var(--space-1) var(--space-3);
+      border-radius: var(--radius-full);
+    }
+
+    .menu-card__description {
+      font-size: 0.9375rem;
+      color: var(--mocha-medium);
+      line-height: 1.6;
+      margin-bottom: var(--space-4);
+    }
+
+    .menu-card__meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: var(--space-4);
+    }
+
+    .menu-card__tag {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--cream-white);
+      background: var(--coral-pop);
+      padding: var(--space-1) var(--space-3);
+      border-radius: var(--radius-full);
+    }
+
+    .menu-card__spice {
+      font-size: 0.875rem;
+    }
+
+    .add-to-cart {
+      width: 100%;
+      padding: var(--space-4);
+      background: var(--espresso-dark);
+      color: var(--cream-white);
+      border-radius: var(--radius-md);
+      font-weight: 700;
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-2);
+      transition: all var(--duration-normal) var(--ease-smooth);
+    }
+
+    .add-to-cart:hover {
+      background: var(--coral-pop);
+      transform: scale(1.02);
+    }
+
+    .add-to-cart__icon {
+      width: 20px;
+      height: 20px;
+      background: var(--sunrise-amber);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      color: var(--espresso-dark);
+    }
+
+    /* View Full Menu Link */
+    .menu__footer {
+      text-align: center;
+      margin-top: var(--space-12);
+      position: relative;
+      z-index: 2;
+    }
+
+    .menu__link {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--cream-white);
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      padding: var(--space-3) var(--space-6);
+      border: 2px solid var(--cream-white);
+      border-radius: var(--radius-full);
+      transition: all var(--duration-normal) var(--ease-smooth);
+    }
+
+    .menu__link:hover {
+      background: var(--cream-white);
+      color: var(--terracotta-warm);
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+       HERITAGE SECTION - Honey Gold Warmth
+       ═══════════════════════════════════════════════════════════════ */
+    .heritage {
+      background: var(--sunrise-amber);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Wood grain texture */
+    .heritage::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(61, 43, 31, 0.03) 2px,
+        rgba(61, 43, 31, 0.03) 4px
+      );
+    }
+
+    .heritage__grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--space-12);
+      position: relative;
+      z-index: 2;
+    }
+
+    @media (min-width: 768px) {
+      .heritage__grid {
+        grid-template-columns: 1fr 1fr;
+        align-items: center;
+      }
+    }
+
+    .heritage__content {
+      color: var(--espresso-dark);
+    }
+
+    .heritage__intro {
+      font-size: 1.25rem;
+      line-height: 1.8;
+    }
+
+    .heritage__dropcap {
+      float: left;
+      font-family: var(--font-display);
+      font-size: 5rem;
+      font-weight: 800;
+      line-height: 0.8;
+      margin-right: var(--space-4);
+      color: var(--terracotta-warm);
+    }
+
+    /* Quote Block - Vintage Frame */
+    .heritage__quote {
+      background: rgba(255, 255, 255, 0.3);
+      border-radius: var(--radius-lg);
+      padding: var(--space-8);
+      margin: var(--space-8) 0;
+      position: relative;
+      border: 3px dashed var(--terracotta-warm);
+    }
+
+    .heritage__quote::before {
+      content: '"';
+      position: absolute;
+      top: -20px;
+      left: 20px;
+      font-family: var(--font-display);
+      font-size: 6rem;
+      color: var(--terracotta-warm);
+      line-height: 1;
+      opacity: 0.5;
+    }
+
+    .heritage__quote blockquote {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-style: italic;
+      line-height: 1.6;
+      margin-bottom: var(--space-4);
+    }
+
+    .heritage__quote footer {
+      font-weight: 700;
+      color: var(--terracotta-warm);
+    }
+
+    /* Values Grid */
+    .heritage__values {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-4);
+      margin-top: var(--space-8);
+    }
+
+    .value {
+      text-align: center;
+      padding: var(--space-4);
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: var(--radius-lg);
+    }
+
+    .value__icon {
+      font-size: 2.5rem;
+      margin-bottom: var(--space-2);
+    }
+
+    .value__title {
+      font-size: 1rem;
+      margin-bottom: var(--space-1);
+      color: var(--espresso-dark);
+    }
+
+    .value__text {
+      font-size: 0.8125rem;
+      color: var(--mocha-medium);
+      margin: 0;
+    }
+
+    /* Gallery - Polaroid Style */
+    .heritage__gallery {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-4);
+    }
+
+    .polaroid {
+      background: var(--cream-white);
+      padding: var(--space-3);
+      padding-bottom: var(--space-8);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-lg);
+      transform: rotate(-2deg);
+      transition: transform var(--duration-normal) var(--ease-smooth);
+    }
+
+    .polaroid:nth-child(2) { transform: rotate(3deg); }
+    .polaroid:nth-child(3) { transform: rotate(-1deg); }
+
+    .polaroid:hover {
+      transform: rotate(0deg) scale(1.05);
+      z-index: 10;
+    }
+
+    .polaroid__image {
+      width: 100%;
+      height: 150px;
+      background: linear-gradient(135deg, var(--honey-light) 0%, var(--cinnamon-glow) 100%);
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      color: var(--mocha-medium);
+    }
+
+    .polaroid__caption {
+      text-align: center;
+      font-family: var(--font-display);
+      font-size: 0.875rem;
+      color: var(--mocha-medium);
+      margin-top: var(--space-3);
+    }
+
+    /* Heritage CTA */
+    .heritage__cta {
+      grid-column: 1 / -1;
+      background: var(--espresso-dark);
+      color: var(--cream-white);
+      border-radius: var(--radius-xl);
+      padding: var(--space-10);
+      text-align: center;
+      margin-top: var(--space-8);
+    }
+
+    .heritage__cta h3 {
+      color: var(--cream-white);
+      margin-bottom: var(--space-3);
+    }
+
+    .heritage__cta p {
+      opacity: 0.9;
+      max-width: 500px;
+      margin: 0 auto var(--space-6);
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+       LOCATIONS SECTION - Sage Fresh
+       ═══════════════════════════════════════════════════════════════ */
+    .locations {
+      background: var(--sage-fresh);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .locations::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--texture-circles);
+      background-size: 100px 100px;
+      opacity: 0.15;
+    }
+
+    .locations__grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: var(--space-6);
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Location Card */
+    .location-card {
+      background: var(--cream-white);
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      box-shadow: var(--shadow-lg);
+      transition: all var(--duration-normal) var(--ease-smooth);
+    }
+
+    .location-card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-lg), 0 20px 60px rgba(61, 43, 31, 0.2);
+    }
+
+    .location-card__header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: var(--space-4) var(--space-6);
+      background: var(--espresso-dark);
+    }
+
+    .location-card__title {
+      color: var(--cream-white);
+      font-size: 1.25rem;
+      margin: 0;
+    }
+
+    .location-card__badge {
+      font-size: 0.6875rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--espresso-dark);
+      background: var(--sunrise-amber);
+      padding: var(--space-1) var(--space-3);
+      border-radius: var(--radius-full);
+    }
+
+    .location-card__image {
+      height: 180px;
+      background: linear-gradient(135deg, var(--sage-fresh) 0%, var(--honey-light) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+    }
+
+    .location-card__details {
+      padding: var(--space-6);
+    }
+
+    .location-card__address {
+      font-weight: 600;
+      margin-bottom: var(--space-2);
+      color: var(--espresso-dark);
+    }
+
+    .location-card__hours {
+      font-size: 0.9375rem;
+      color: var(--mocha-medium);
+      margin-bottom: var(--space-4);
+    }
+
+    .location-card__features {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2);
+    }
+
+    .feature {
+      font-size: 0.875rem;
+      color: var(--mocha-medium);
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+    }
+
+    .location-card__actions {
+      display: flex;
+      gap: var(--space-3);
+      padding: var(--space-4) var(--space-6);
+      background: var(--vintage-paper);
+      border-top: 2px dashed var(--butter-toast);
+    }
+
+    .location-card__link {
+      flex: 1;
+      text-align: center;
+      padding: var(--space-3);
+      border-radius: var(--radius-md);
+      font-weight: 600;
+      font-size: 0.875rem;
+      background: var(--espresso-dark);
+      color: var(--cream-white);
+      transition: all var(--duration-normal) var(--ease-smooth);
+    }
+
+    .location-card__link:hover {
+      background: var(--coral-pop);
+    }
+
+    .location-card__link--secondary {
+      background: transparent;
+      color: var(--espresso-dark);
+      border: 2px solid var(--espresso-dark);
+    }
+
+    .location-card__link--secondary:hover {
+      background: var(--espresso-dark);
+      color: var(--cream-white);
+    }
+
+    /* Map Placeholder */
+    .locations__map {
+      margin-top: var(--space-12);
+      height: 400px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: var(--radius-xl);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      z-index: 2;
+      border: 3px dashed rgba(255, 255, 255, 0.3);
+    }
+
+    .locations__map-title {
+      color: var(--cream-white);
+      margin-bottom: var(--space-2);
+    }
+
+    .locations__map-text {
+      color: rgba(255, 255, 255, 0.8);
+      margin-bottom: var(--space-6);
+    }
+
+    .locations__map-markers {
+      display: flex;
+      gap: var(--space-8);
+    }
+
+    .map-marker {
+      width: 24px;
+      height: 24px;
+      background: var(--coral-pop);
+      border-radius: 50%;
+      box-shadow: 0 0 0 8px rgba(255, 123, 84, 0.3), 0 0 0 16px rgba(255, 123, 84, 0.1);
+      animation: markerPulse 2s ease-in-out infinite;
+    }
+
+    .map-marker:nth-child(2) { animation-delay: 0.3s; }
+    .map-marker:nth-child(3) { animation-delay: 0.6s; }
+
+    @keyframes markerPulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+    }
+
+    /* Locations Footer */
+    .locations__footer {
+      text-align: center;
+      margin-top: var(--space-8);
+      color: var(--cream-white);
+      position: relative;
+      z-index: 2;
+    }
+
+    .locations__footer p {
+      margin-bottom: var(--space-4);
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+       FOOTER - Espresso Dark
+       ═══════════════════════════════════════════════════════════════ */
+    .footer {
+      background: var(--espresso-dark);
+      color: var(--cream-white);
+      position: relative;
+      padding-top: var(--space-16);
+    }
+
+    /* Decorative border */
+    .footer::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 8px;
+      background: repeating-linear-gradient(
+        90deg,
+        var(--sunrise-amber),
+        var(--sunrise-amber) 20px,
+        var(--terracotta-warm) 20px,
+        var(--terracotta-warm) 40px,
+        var(--coral-pop) 40px,
+        var(--coral-pop) 60px
+      );
+    }
+
+    .footer__grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: var(--space-8);
+      margin-bottom: var(--space-12);
+    }
+
+    .footer__section h3 {
+      color: var(--sunrise-amber);
+      font-size: 1.125rem;
+      margin-bottom: var(--space-4);
+    }
+
+    .footer__section p {
+      opacity: 0.8;
+      line-height: 1.7;
+    }
+
+    .footer__links {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2);
+    }
+
+    .footer__link {
+      opacity: 0.8;
+      transition: all var(--duration-normal) var(--ease-smooth);
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+    }
+
+    .footer__link:hover {
+      opacity: 1;
+      color: var(--sunrise-amber);
+      transform: translateX(4px);
+    }
+
+    .footer__contact li {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      margin-bottom: var(--space-3);
+      opacity: 0.8;
+    }
+
+    .footer__social {
+      display: flex;
+      gap: var(--space-3);
+    }
+
+    .footer__social-link {
+      width: 48px;
+      height: 48px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: var(--radius-full);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.875rem;
+      font-weight: 600;
+      transition: all var(--duration-normal) var(--ease-smooth);
+    }
+
+    .footer__social-link:hover {
+      background: var(--sunrise-amber);
+      color: var(--espresso-dark);
+      transform: translateY(-4px);
+    }
+
+    .footer__bottom {
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding: var(--space-6) 0;
+      text-align: center;
+    }
+
+    .footer__bottom p {
+      opacity: 0.6;
+      font-size: 0.875rem;
+      margin-bottom: var(--space-2);
+    }
+
+    .footer__badges {
+      display: flex;
+      justify-content: center;
+      gap: var(--space-4);
+      flex-wrap: wrap;
+    }
+
+    .footer__badge {
+      font-size: 0.75rem;
+      padding: var(--space-2) var(--space-4);
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: var(--radius-full);
+      opacity: 0.8;
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+       ANIMATIONS & SCROLL EFFECTS
+       ═══════════════════════════════════════════════════════════════ */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity var(--duration-slow) var(--ease-smooth),
+                  transform var(--duration-slow) var(--ease-smooth);
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+       UTILITIES
+       ═══════════════════════════════════════════════════════════════ */
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      border: 0;
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+       RESPONSIVE ADJUSTMENTS
+       ═══════════════════════════════════════════════════════════════ */
+    @media (max-width: 768px) {
+      .hero__stats {
+        grid-template-columns: 1fr;
+        gap: var(--space-4);
+      }
+
+      .heritage__values {
+        grid-template-columns: 1fr;
+      }
+
+      .heritage__gallery {
+        grid-template-columns: 1fr;
+      }
+
+      .polaroid {
+        transform: rotate(0deg) !important;
+      }
+
+      .menu__grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero__illustration {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       HEADER
+       ═══════════════════════════════════════════════════════════════ -->
+  <header class="header" role="banner">
+    <div class="container header__inner">
+      <a href="/" class="logo" aria-label="Morning Brew Collective Home">
+        <span class="logo__main">Morning Brew</span>
+        <span class="logo__sub">Collective</span>
+      </a>
+
+      <nav class="nav" aria-label="Main navigation">
+        <ul class="nav__list">
+          <li><a href="#menu" class="nav__link">Menu</a></li>
+          <li><a href="#heritage" class="nav__link">Our Story</a></li>
+          <li><a href="#locations" class="nav__link">Visit Us</a></li>
+          <li><a href="#order" class="nav__link">Order</a></li>
+        </ul>
+      </nav>
+
+      <div class="header__actions">
+        <button class="cart-btn" aria-label="Shopping cart, 0 items">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M6 6h15l-1.5 9h-11z"/>
+            <circle cx="9" cy="20" r="1"/>
+            <circle cx="18" cy="20" r="1"/>
+            <path d="M6 6L5 3H2"/>
+          </svg>
+          <span class="cart-btn__count">0</span>
+        </button>
+
+        <button class="menu-toggle" aria-expanded="false" aria-controls="mobile-menu" aria-label="Toggle menu">
+          <span class="menu-toggle__line"></span>
+          <span class="menu-toggle__line"></span>
+          <span class="menu-toggle__line"></span>
+        </button>
+      </div>
+    </div>
+
+    <nav id="mobile-menu" class="mobile-menu" aria-hidden="true">
+      <button class="mobile-menu__close" aria-label="Close menu">×</button>
+      <a href="#menu" class="mobile-menu__link">Menu</a>
+      <a href="#heritage" class="mobile-menu__link">Our Story</a>
+      <a href="#locations" class="mobile-menu__link">Visit Us</a>
+      <a href="#order" class="mobile-menu__link">Order</a>
+    </nav>
+  </header>
+
+  <main id="main-content">
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         HERO SECTION
+         ═══════════════════════════════════════════════════════════════ -->
+    <section class="hero" id="hero">
+      <div class="container">
+        <div class="hero__content fade-in">
+          <div class="hero__badge">
+            <svg class="hero__badge-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 2L15 8L22 9L17 14L18 21L12 18L6 21L7 14L2 9L9 8L12 2Z"/>
+            </svg>
+            <span>Est. 1973 • Singapore Heritage</span>
+          </div>
+
+          <h1 class="hero__title">
+            Where Singapore's
+            <span class="hero__title-highlight">Morning Ritual</span>
+            Begins
+          </h1>
+
+          <p class="hero__subtitle">
+            Experience the perfect blend of tradition and modernity in every cup. Crafted with love since 1973, our kopi tells the story of Singapore's kopitiam heritage.
+          </p>
+
+          <div class="hero__ctas">
+            <a href="#menu" class="btn btn--primary">Explore Menu</a>
+            <a href="#order" class="btn btn--secondary">Order Online</a>
+          </div>
+
+          <div class="hero__stats">
+            <div class="stat">
+              <span class="stat__number">50+</span>
+              <span class="stat__label">Years of Craft</span>
+            </div>
+            <div class="stat">
+              <span class="stat__number">1000+</span>
+              <span class="stat__label">Daily Brews</span>
+            </div>
+            <div class="stat">
+              <span class="stat__number">3</span>
+              <span class="stat__label">Locations</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Floating Coffee Cup -->
+      <div class="hero__illustration" aria-hidden="true">
+        <svg viewBox="0 0 200 220" xmlns="http://www.w3.org/2000/svg">
+          <!-- Steam -->
+          <g class="steam" transform="translate(100, 20)">
+            <circle class="steam__particle" cx="-15" cy="0" r="6" fill="#FFF8E7" opacity="0.6"/>
+            <circle class="steam__particle" cx="0" cy="-10" r="8" fill="#FFF8E7" opacity="0.5"/>
+            <circle class="steam__particle" cx="15" cy="0" r="5" fill="#FFF8E7" opacity="0.6"/>
+          </g>
+          <!-- Cup -->
+          <ellipse cx="100" cy="70" rx="70" ry="20" fill="#D4693B"/>
+          <path d="M30 70 L40 180 Q100 200 160 180 L170 70" fill="#3D2B1F"/>
+          <ellipse cx="100" cy="70" rx="60" ry="15" fill="#6B4423"/>
+          <ellipse cx="100" cy="70" rx="55" ry="12" fill="#D4693B"/>
+          <!-- Handle -->
+          <path d="M165 90 Q200 90 200 130 Q200 170 165 170" fill="none" stroke="#3D2B1F" stroke-width="12" stroke-linecap="round"/>
+          <!-- Decorative band -->
+          <path d="M35 120 L165 120" stroke="#E8A857" stroke-width="4" stroke-dasharray="10 5"/>
+        </svg>
+      </div>
+
+      <!-- Wave Divider -->
+      <div class="wave-divider">
+        <svg viewBox="0 0 1440 120" preserveAspectRatio="none">
+          <path d="M0,64 C480,150 960,0 1440,64 L1440,120 L0,120 Z" fill="#D4693B"/>
+        </svg>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         MENU SECTION
+         ═══════════════════════════════════════════════════════════════ -->
+    <section class="menu" id="menu">
+      <div class="container">
+        <div class="section-header fade-in">
+          <h2 class="section-header__title">Our Signature Brews</h2>
+          <p class="section-header__subtitle">Crafted with beans roasted in-house since 1973</p>
+          <div class="section-header__decoration">
+            <span class="section-header__line"></span>
+            <svg class="section-header__icon" viewBox="0 0 32 32">
+              <path d="M16 2C9.4 2 4 7.4 4 14c0 5.2 3.4 9.6 8 11.2V26h8v-0.8c4.6-1.6 8-6 8-11.2 0-6.6-5.4-12-12-12zm0 4c4.4 0 8 3.6 8 8s-3.6 8-8 8-8-3.6-8-8 3.6-8 8-8z"/>
+            </svg>
+            <span class="section-header__line"></span>
+          </div>
+        </div>
+
+        <div class="menu__filters fade-in">
+          <button class="filter-btn active" data-filter="all">All</button>
+          <button class="filter-btn" data-filter="coffee">Kopi</button>
+          <button class="filter-btn" data-filter="tea">Teh</button>
+          <button class="filter-btn" data-filter="food">Food</button>
+        </div>
+
+        <div class="menu__grid">
+          <!-- Menu Card 1 -->
+          <article class="menu-card fade-in" data-category="coffee">
+            <div class="menu-card__image">
+              <div class="menu-card__beans">
+                <div class="bean"></div>
+                <div class="bean"></div>
+                <div class="bean"></div>
+              </div>
+            </div>
+            <div class="menu-card__content">
+              <div class="menu-card__header">
+                <h3 class="menu-card__title">Traditional Kopi</h3>
+                <span class="menu-card__price">$3.50</span>
+              </div>
+              <p class="menu-card__description">
+                Strong coffee brewed with margarine and sugar, served with evaporated milk — the authentic Singaporean way.
+              </p>
+              <div class="menu-card__meta">
+                <span class="menu-card__tag">House Specialty</span>
+                <span class="menu-card__spice">★★☆</span>
+              </div>
+              <button class="add-to-cart" data-product="kopi" data-price="3.50">
+                Add to Cart <span class="add-to-cart__icon">+</span>
+              </button>
+            </div>
+          </article>
+
+          <!-- Menu Card 2 -->
+          <article class="menu-card fade-in" data-category="coffee">
+            <div class="menu-card__image">
+              <div class="menu-card__beans">
+                <div class="bean"></div>
+                <div class="bean"></div>
+                <div class="bean"></div>
+              </div>
+            </div>
+            <div class="menu-card__content">
+              <div class="menu-card__header">
+                <h3 class="menu-card__title">Kopi-C</h3>
+                <span class="menu-card__price">$3.20</span>
+              </div>
+              <p class="menu-card__description">
+                Coffee with evaporated milk and sugar. Creamy, sweet, and perfectly balanced for your morning ritual.
+              </p>
+              <div class="menu-card__meta">
+                <span class="menu-card__tag">Best Seller</span>
+                <span class="menu-card__spice">★☆☆</span>
+              </div>
+              <button class="add-to-cart" data-product="kopi-c" data-price="3.20">
+                Add to Cart <span class="add-to-cart__icon">+</span>
+              </button>
+            </div>
+          </article>
+
+          <!-- Menu Card 3 -->
+          <article class="menu-card fade-in" data-category="coffee">
+            <div class="menu-card__image">
+              <div class="menu-card__beans">
+                <div class="bean"></div>
+                <div class="bean"></div>
+                <div class="bean"></div>
+              </div>
+            </div>
+            <div class="menu-card__content">
+              <div class="menu-card__header">
+                <h3 class="menu-card__title">Kopi-O</h3>
+                <span class="menu-card__price">$3.00</span>
+              </div>
+              <p class="menu-card__description">
+                Strong black coffee with sugar. Bold, intense, and unapologetically Singaporean.
+              </p>
+              <div class="menu-card__meta">
+                <span class="menu-card__tag">Authentic</span>
+                <span class="menu-card__spice">★★★</span>
+              </div>
+              <button class="add-to-cart" data-product="kopi-o" data-price="3.00">
+                Add to Cart <span class="add-to-cart__icon">+</span>
+              </button>
+            </div>
+          </article>
+
+          <!-- Menu Card 4 - Tea -->
+          <article class="menu-card fade-in" data-category="tea">
+            <div class="menu-card__image" style="background: linear-gradient(135deg, #8FA68A 0%, #C68642 100%);">
+              <span style="font-size: 3rem;">🍵</span>
+            </div>
+            <div class="menu-card__content">
+              <div class="menu-card__header">
+                <h3 class="menu-card__title">Teh Tarik</h3>
+                <span class="menu-card__price">$3.20</span>
+              </div>
+              <p class="menu-card__description">
+                Pulled tea with condensed milk. Smooth, creamy, and served with that signature frothy top.
+              </p>
+              <div class="menu-card__meta">
+                <span class="menu-card__tag">Malaysian Heritage</span>
+                <span class="menu-card__spice">☆☆☆</span>
+              </div>
+              <button class="add-to-cart" data-product="teh-tarik" data-price="3.20">
+                Add to Cart <span class="add-to-cart__icon">+</span>
+              </button>
+            </div>
+          </article>
+
+          <!-- Menu Card 5 - Food -->
+          <article class="menu-card fade-in" data-category="food">
+            <div class="menu-card__image" style="background: linear-gradient(135deg, #F5DEB3 0%, #E6C9A8 100%);">
+              <span style="font-size: 3rem;">🍞</span>
+            </div>
+            <div class="menu-card__content">
+              <div class="menu-card__header">
+                <h3 class="menu-card__title">Kaya Toast Set</h3>
+                <span class="menu-card__price">$5.50</span>
+              </div>
+              <p class="menu-card__description">
+                Crispy toast with house-made coconut jam and butter. Served with soft-boiled eggs and your choice of kopi.
+              </p>
+              <div class="menu-card__meta">
+                <span class="menu-card__tag">Breakfast Classic</span>
+                <span class="menu-card__spice">☆☆☆</span>
+              </div>
+              <button class="add-to-cart" data-product="kaya-toast" data-price="5.50">
+                Add to Cart <span class="add-to-cart__icon">+</span>
+              </button>
+            </div>
+          </article>
+
+          <!-- Menu Card 6 - Food -->
+          <article class="menu-card fade-in" data-category="food">
+            <div class="menu-card__image" style="background: linear-gradient(135deg, #D4693B 0%, #C68642 100%);">
+              <span style="font-size: 3rem;">🥐</span>
+            </div>
+            <div class="menu-card__content">
+              <div class="menu-card__header">
+                <h3 class="menu-card__title">Roti Prata</h3>
+                <span class="menu-card__price">$5.00</span>
+              </div>
+              <p class="menu-card__description">
+                Flaky, crispy flatbread served with curry dipping sauce. The perfect pairing with any hot beverage.
+              </p>
+              <div class="menu-card__meta">
+                <span class="menu-card__tag">Indian Influence</span>
+                <span class="menu-card__spice">★★☆</span>
+              </div>
+              <button class="add-to-cart" data-product="roti-prata" data-price="5.00">
+                Add to Cart <span class="add-to-cart__icon">+</span>
+              </button>
+            </div>
+          </article>
+        </div>
+
+        <div class="menu__footer fade-in">
+          <a href="#order" class="menu__link">
+            View Full Menu →
+          </a>
+        </div>
+      </div>
+
+      <!-- Wave Divider -->
+      <div class="wave-divider">
+        <svg viewBox="0 0 1440 120" preserveAspectRatio="none">
+          <path d="M0,64 C480,0 960,120 1440,64 L1440,120 L0,120 Z" fill="#E8A857"/>
+        </svg>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         HERITAGE SECTION
+         ═══════════════════════════════════════════════════════════════ -->
+    <section class="heritage" id="heritage">
+      <div class="container">
+        <div class="section-header fade-in">
+          <h2 class="section-header__title" style="color: var(--espresso-dark);">Our Kopitiam Heritage</h2>
+          <p class="section-header__subtitle" style="color: var(--mocha-medium);">Preserving Singapore's coffee culture since 1973</p>
+        </div>
+
+        <div class="heritage__grid">
+          <div class="heritage__content fade-in">
+            <p class="heritage__intro">
+              <span class="heritage__dropcap">I</span>n 1973, Uncle Lim opened his first kopitiam stall at Tiong Bahru Market. With nothing but a trusty coffee sock, a worn marble table, and recipes passed down through generations, he began serving what would become Singapore's most beloved morning ritual.
+            </p>
+
+            <div class="heritage__quote">
+              <blockquote>
+                "The kopitiam is more than just a place to drink coffee. It's where lawyers and laborers sit side by side, where deals are made and friendships are forged over steaming cups of kopi."
+              </blockquote>
+              <footer>— Uncle Lim, Founder</footer>
+            </div>
+
+            <p>
+              Today, Morning Brew Collective honors that legacy. Our coffee beans are still roasted in small batches using Uncle Lim's original 1970s roaster. Our kaya is made fresh daily. Every cup tells a story of Singapore's multicultural soul.
+            </p>
+
+            <div class="heritage__values">
+              <div class="value">
+                <div class="value__icon">☕</div>
+                <h4 class="value__title">Authentic Recipes</h4>
+                <p class="value__text">Uncle Lim's handwritten recipes from 1973</p>
+              </div>
+              <div class="value">
+                <div class="value__icon">🤝</div>
+                <h4 class="value__title">Community First</h4>
+                <p class="value__text">Three generations of families served</p>
+              </div>
+              <div class="value">
+                <div class="value__icon">🌱</div>
+                <h4 class="value__title">Sustainable</h4>
+                <p class="value__text">Direct partnerships with ASEAN farmers</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="heritage__gallery fade-in">
+            <div class="polaroid">
+              <div class="polaroid__image">1973</div>
+              <p class="polaroid__caption">Uncle Lim's first stall</p>
+            </div>
+            <div class="polaroid">
+              <div class="polaroid__image">1980s</div>
+              <p class="polaroid__caption">Vintage cup collection</p>
+            </div>
+            <div class="polaroid">
+              <div class="polaroid__image">Today</div>
+              <p class="polaroid__caption">Modern Tiong Bahru café</p>
+            </div>
+          </div>
+
+          <div class="heritage__cta fade-in">
+            <h3>Join Our Morning Tradition</h3>
+            <p>Experience the authentic kopitiam culture. Every visit includes a complimentary taste of our signature kaya.</p>
+            <a href="#locations" class="btn btn--secondary" style="border-color: var(--cream-white); color: var(--cream-white);">Visit Us Today</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Wave Divider -->
+      <div class="wave-divider">
+        <svg viewBox="0 0 1440 120" preserveAspectRatio="none">
+          <path d="M0,40 C360,120 720,0 1080,80 C1260,120 1380,60 1440,40 L1440,120 L0,120 Z" fill="#8FA68A"/>
+        </svg>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         LOCATIONS SECTION
+         ═══════════════════════════════════════════════════════════════ -->
+    <section class="locations" id="locations">
+      <div class="container">
+        <div class="section-header fade-in">
+          <h2 class="section-header__title" style="color: var(--cream-white);">Find Your Nearest Kopitiam</h2>
+          <p class="section-header__subtitle" style="color: rgba(255,255,255,0.9);">Three locations across Singapore, each with its own unique character</p>
+        </div>
+
+        <div class="locations__grid">
+          <!-- Location 1 -->
+          <article class="location-card fade-in">
+            <div class="location-card__header">
+              <h3 class="location-card__title">Tiong Bahru</h3>
+              <span class="location-card__badge">Flagship</span>
+            </div>
+            <div class="location-card__image">☕</div>
+            <div class="location-card__details">
+              <p class="location-card__address">55 Tiong Bahru Road, #01-55</p>
+              <p class="location-card__hours">Daily: 7:00 AM - 8:00 PM</p>
+              <div class="location-card__features">
+                <span class="feature">🍳 Full Breakfast Menu</span>
+                <span class="feature">♿ Wheelchair Accessible</span>
+                <span class="feature">🅿️ Parking Available</span>
+              </div>
+            </div>
+            <div class="location-card__actions">
+              <a href="#" class="location-card__link">Get Directions</a>
+              <a href="#" class="location-card__link location-card__link--secondary">Reserve</a>
+            </div>
+          </article>
+
+          <!-- Location 2 -->
+          <article class="location-card fade-in">
+            <div class="location-card__header">
+              <h3 class="location-card__title">Joo Chiat</h3>
+              <span class="location-card__badge">Peranakan</span>
+            </div>
+            <div class="location-card__image">🏠</div>
+            <div class="location-card__details">
+              <p class="location-card__address">48 Joo Chiat Road</p>
+              <p class="location-card__hours">Daily: 8:00 AM - 9:00 PM</p>
+              <div class="location-card__features">
+                <span class="feature">🎨 Peranakan Decor</span>
+                <span class="feature">📸 Instagram Famous</span>
+                <span class="feature">🎵 Live Music (Weekends)</span>
+              </div>
+            </div>
+            <div class="location-card__actions">
+              <a href="#" class="location-card__link">Get Directions</a>
+              <a href="#" class="location-card__link location-card__link--secondary">Reserve</a>
+            </div>
+          </article>
+
+          <!-- Location 3 -->
+          <article class="location-card fade-in">
+            <div class="location-card__header">
+              <h3 class="location-card__title">Jurong Lake</h3>
+              <span class="location-card__badge">Modern</span>
+            </div>
+            <div class="location-card__image">🌳</div>
+            <div class="location-card__details">
+              <p class="location-card__address">101 Jurong Lake Street, #01-12</p>
+              <p class="location-card__hours">Daily: 7:30 AM - 10:00 PM</p>
+              <div class="location-card__features">
+                <span class="feature">💻 Co-working Space</span>
+                <span class="feature">⚡ Fast Charging</span>
+                <span class="feature">🌿 Green Terrace</span>
+              </div>
+            </div>
+            <div class="location-card__actions">
+              <a href="#" class="location-card__link">Get Directions</a>
+              <a href="#" class="location-card__link location-card__link--secondary">Reserve</a>
+            </div>
+          </article>
+        </div>
+
+        <div class="locations__map fade-in">
+          <h3 class="locations__map-title">Interactive Store Locator</h3>
+          <p class="locations__map-text">Click on any marker to view details</p>
+          <div class="locations__map-markers">
+            <div class="map-marker"></div>
+            <div class="map-marker"></div>
+            <div class="map-marker"></div>
+          </div>
+        </div>
+
+        <div class="locations__footer fade-in">
+          <p>Can't visit? Order via <strong>GrabFood</strong>, <strong>FoodPanda</strong>, or <strong>Deliveroo</strong>.</p>
+          <a href="#order" class="btn btn--primary">Order Delivery</a>
+        </div>
+      </div>
+
+      <!-- Wave Divider -->
+      <div class="wave-divider">
+        <svg viewBox="0 0 1440 120" preserveAspectRatio="none">
+          <path d="M0,80 C480,20 960,100 1440,40 L1440,120 L0,120 Z" fill="#3D2B1F"/>
+        </svg>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       FOOTER
+       ═══════════════════════════════════════════════════════════════ -->
+  <footer class="footer" id="footer">
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__section">
+          <h3>About Us</h3>
+          <p>Since 1973, Morning Brew Collective has been serving Singapore's best traditional kopitiam experience. Our recipes honor generations of heritage.</p>
+        </div>
+
+        <div class="footer__section">
+          <h3>Quick Links</h3>
+          <ul class="footer__links">
+            <li><a href="#menu" class="footer__link">→ Menu</a></li>
+            <li><a href="#heritage" class="footer__link">→ Our Heritage</a></li>
+            <li><a href="#locations" class="footer__link">→ Locations</a></li>
+            <li><a href="#order" class="footer__link">→ Order Online</a></li>
+          </ul>
+        </div>
+
+        <div class="footer__section">
+          <h3>Contact Us</h3>
+          <ul class="footer__contact">
+            <li>📞 +65 6789 1234</li>
+            <li>✉️ hello@morningbrew.sg</li>
+            <li>🕒 Daily: 7AM - 8PM</li>
+          </ul>
+        </div>
+
+        <div class="footer__section">
+          <h3>Follow Us</h3>
+          <div class="footer__social">
+            <a href="#" class="footer__social-link" aria-label="Facebook">FB</a>
+            <a href="#" class="footer__social-link" aria-label="Instagram">IG</a>
+            <a href="#" class="footer__social-link" aria-label="TikTok">TT</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer__bottom">
+        <p>&copy; 2026 Morning Brew Collective. All rights reserved.</p>
+        <div class="footer__badges">
+          <span class="footer__badge">Halal Certified</span>
+          <span class="footer__badge">Singapore Brand</span>
+          <span class="footer__badge">Est. 1973</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // ═══════════════════════════════════════════════════════════════
+    // INTERACTIVE LOGIC
+    // ═══════════════════════════════════════════════════════════════
+    
+    document.addEventListener('DOMContentLoaded', () => {
+      initMenu();
+      initScrollAnimations();
+      initFilters();
+      initCart();
+      initSmoothScroll();
+    });
+
+    // Mobile Menu
+    function initMenu() {
+      const toggle = document.querySelector('.menu-toggle');
+      const menu = document.getElementById('mobile-menu');
+      const closeBtn = document.querySelector('.mobile-menu__close');
+      const links = document.querySelectorAll('.mobile-menu__link');
+
+      if (!toggle || !menu || !closeBtn) return;
+
+      function toggleMenu() {
+        const isExpanded = toggle.getAttribute('aria-expanded') === 'true';
+        toggle.setAttribute('aria-expanded', !isExpanded);
+        menu.classList.toggle('active');
+        menu.setAttribute('aria-hidden', isExpanded);
+        document.body.style.overflow = isExpanded ? '' : 'hidden'; // Prevent scroll
+      }
+
+      toggle.addEventListener('click', toggleMenu);
+      closeBtn.addEventListener('click', toggleMenu);
+      
+      links.forEach(link => {
+        link.addEventListener('click', toggleMenu);
+      });
+    }
+
+    // Scroll Animations
+    function initScrollAnimations() {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+          }
+        });
+      }, {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+      });
+
+      document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+    }
+
+    // Menu Filters
+    function initFilters() {
+      const buttons = document.querySelectorAll('.filter-btn');
+      const cards = document.querySelectorAll('.menu-card');
+
+      buttons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          // Update active state
+          buttons.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+
+          const filter = btn.dataset.filter;
+          
+          cards.forEach(card => {
+            if (filter === 'all' || card.dataset.category === filter) {
+              card.style.display = '';
+              setTimeout(() => {
+                card.style.opacity = '1';
+                card.style.transform = 'translateY(0)';
+              }, 50);
+            } else {
+              card.style.opacity = '0';
+              card.style.transform = 'translateY(20px)';
+              setTimeout(() => card.style.display = 'none', 300);
+            }
+          });
+        });
+      });
+    }
+
+    // Cart Interaction
+    function initCart() {
+      let count = 0;
+      const countEl = document.querySelector('.cart-btn__count');
+      const cartBtn = document.querySelector('.cart-btn');
+
+      if (!countEl || !cartBtn) return;
+
+      document.querySelectorAll('.add-to-cart').forEach(btn => {
+        btn.addEventListener('click', function() {
+          count++;
+          countEl.textContent = count;
+          
+          // Animation feedback
+          cartBtn.style.transform = 'scale(1.2)';
+          setTimeout(() => cartBtn.style.transform = '', 200);
+          
+          const originalText = this.innerHTML;
+          this.innerHTML = 'Added! ✓';
+          this.style.background = 'var(--sage-fresh)';
+          
+          setTimeout(() => {
+            this.innerHTML = originalText;
+            this.style.background = '';
+          }, 1500);
+        });
+      });
+    }
+
+    // Smooth Scroll
+    function initSmoothScroll() {
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+          e.preventDefault();
+          const href = this.getAttribute('href');
+          if (href === '#') return;
+          
+          const target = document.querySelector(href);
+          if (target) {
+            target.scrollIntoView({
+              behavior: 'smooth'
+            });
+          }
+        });
+      });
+    }
+  </script>
+</body>
+</html>
