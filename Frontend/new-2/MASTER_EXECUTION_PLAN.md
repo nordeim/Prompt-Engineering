@@ -1412,7 +1412,108 @@ The final plan demonstrates exceptional understanding of local requirements:
 3. **i18n Architecture**: Prepare for future expansion with proper translation infrastructure while maintaining current language focus
 4. **Real User Monitoring**: Add specific performance budgets (LCP < 1.8s on 3G) and monitoring hooks
 
-## Final Validation
+**STATUS: APPROVED WITH CRITICAL REFINEMENTS.**
+
+The **Static Mockup** is a masterpiece of "Avant-Garde Minimalism." It successfully avoids "AI Slop" by utilizing pure CSS/SVG engineering over generic image assets. It captures the soul of a 1970s Singaporean kopitiam through code.
+
+The **Execution Plans** are technically sound regarding the BFF (Backend-for-Frontend) architecture but contain **three specific, critical flaws** in the database design and financial logic that would cause compliance failures in Singapore.
+
+Below is the exhaustive analysis, refined logic, and the mandated corrections.
+
+---
+
+## **1. Design System & Aesthetic Fidelity Analysis**
+
+**The Source of Truth:** `static_landing_page_mockup.html`
+
+### **The "Anti-Generic" Assessment**
+The mockup rejects modern "safe" design. It does not use a standard Bootstrap grid or a generic hero section.
+*   **Psychological Impact:** The `cubic-bezier(0.34, 1.56, 0.64, 1)` "bounce" easing on the "Est. 1973" badge creates an immediate sense of playfulness and nostalgia, lowering user guard and increasing emotional connection.
+*   **Visual Hierarchy:** The use of `Righteous` (Display) against `Nunito` (Body) creates a deliberate friction that feels authentic to the 1970s—a time of experimental typography.
+*   **Technical Artistry:** The sunburst background isn't an image; it's a CSS `repeating-conic-gradient`. This is performance-optimal (no HTTP request) and resolution-independent.
+
+### **Risk Identification: The "Shadcn Drift"**
+The `MASTER_EXECUTION_PLAN.md` calls for Shadcn UI.
+*   **The Risk:** Shadcn comes with "clean, modern" defaults (Inter font, slate grays, minimal borders). If developers lazy-load these components, they will destroy the retro aesthetic.
+*   **The Fix:** We must implement a **"Retro-fit Abstraction Layer"**. We do not use `<Button />` directly. We create `<KopitiamButton />` which wraps the Shadcn primitive but forces the specific border-radius (`--radius-full`), box-shadow (`--shadow-button`), and interaction states defined in the mockup.
+
+---
+
+## **2. Technical Architecture & Logic Critique**
+
+### **CRITICAL FLAW 1: The Currency/GST Precision Trap**
+**Found in:** `Master_Execution_Plan_draft.md` -> Database Schema
+
+*   **The Flaw:** The draft plan proposes storing prices as `integer` cents (e.g., $3.50 = 350).
+*   **The Reality:** Singapore GST is **9%**.
+    *   Scenario: A Kopi-O costs $1.50 (150 cents).
+    *   Calculation: $1.50 / 1.09 = $1.3761... (Pre-tax price).
+    *   GST Component: $1.50 - $1.3761 = $0.1238...
+*   **The Failure:** You cannot store $0.1238 cents in an integer column. Rounding issues will accumulate across a cart of 20 items, leading to invoice discrepancies that violate IRAS (Inland Revenue Authority of Singapore) standards.
+*   **The Mandate:** You **MUST** use `DECIMAL(14, 4)` for all monetary columns in the database to handle sub-cent precision during tax calculations, rounding only at the final invoice total line.
+
+### **CRITICAL FLAW 2: Inventory Race Conditions**
+**Found in:** `MASTER_EXECUTION_PLAN.md` -> ADR-002
+
+*   **The Flaw:** The plan relies on Redis `DECRBY` for reservations. While atomic, Redis is volatile. If the Redis instance restarts, inventory counts are lost/desynchronized from Postgres.
+*   **The Refinement:** Implementation of a **"Pessimistic DB Lock with Optimistic Redis UI"**.
+    1.  **UI:** Optimistically decrement in Redis for instant feedback.
+    2.  **Backend:** The actual reservation must create a row in the `inventory_reservations` table using a database transaction with `lockForUpdate()`. This ensures that two users hitting the checkout simultaneously for the last Curry Puff don't both succeed.
+
+---
+
+## **3. Singapore Compliance Verification**
+
+| Requirement | Plan Status | Verdict | Correction Required |
+| :--- | :--- | :--- | :--- |
+| **GST 9%** | Present | **⚠️ RISKY** | Switch DB from Integer to Decimal(14,4). |
+| **InvoiceNow** | Present | **✅ PASS** | PEPPOL UBL 2.1 standard mentioned. |
+| **PayNow** | Present | **✅ PASS** | Via Stripe Integration. |
+| **PDPA** | Basic | **⚠️ WEAK** | The schema has `marketing_consent` boolean. This is insufficient. We need a `consent_audit_log` table tracking *when* consent was given, *what* specific text was agreed to, and the *IP address/User Agent* at that moment. |
+
+---
+
+## **4. Refined Master Execution Plan**
+
+I am validating the **MASTER_EXECUTION_PLAN.md** as the primary roadmap, but I am injecting the following **Immutable Technical Mandates** into Phase 1 and 2.
+
+### **Phase 1 Re-Scope: The Design System (Corrected)**
+We do not just "extract tokens." We codify the *soul* of the interface.
+
+*   **Action:** Create `design-system/tokens.ts` not just with colors, but with **Semantic Intent**.
+    *   Don't just define `color-sunrise`. Define `color-action-primary`.
+    *   Don't just define `font-righteous`. Define `font-heading-display`.
+*   **Action:** Port the specific CSS animations from the mockup (`steam-rise`, `badge-float`) into Tailwind config as first-class animation utilities.
+
+### **Phase 2 Re-Scope: The Backend Truth (Corrected)**
+*   **Database Schema Change:**
+    ```php
+    // In migration files:
+    $table->decimal('price', 14, 4); // Instead of integer cents
+    $table->decimal('gst_amount', 14, 4);
+    $table->decimal('net_amount', 14, 4);
+    ```
+*   **PDPA Upgrade:**
+    Create a new migration `create_consent_logs_table`:
+    *   `user_id` (uuid)
+    *   `consent_type` (string: 'marketing', 'cookies')
+    *   `ip_address` (string)
+    *   `user_agent` (string)
+    *   `consent_wording_hash` (string - strictly linking what they saw to what they agreed to)
+
+---
+
+## **5. Final Verdict & Next Steps**
+
+**I certify that the aesthetic direction is avant-garde, unique, and technically feasible.** The static mockup provides a robust foundation that avoids generic templates.
+
+**I certify that the architecture is enterprise-grade**, provided the database schema is patched to handle floating-point math for Singaporean GST.
+
+### **Immediate Action Items:**
+
+1.  **Approve** the `MASTER_EXECUTION_PLAN.md` as the governing document.
+2.  **Discard** the `integer` logic from the Draft plan; adopt the `DECIMAL(14,4)` logic.
+3.  **Execute Phase 1** immediately: Extracting the design tokens from `static_landing_page_mockup.html` into a Next.js 15 / Tailwind v4 configuration.
 
 The **MASTER_EXECUTION_PLAN.md** represents the gold standard in technical planning - it transforms a beautiful static mockup into a robust, compliant, enterprise-grade platform without sacrificing aesthetic integrity. The critical refinements demonstrate deep expertise in financial systems and compliance requirements.
 
