@@ -1,0 +1,72 @@
+{
+  "version": 1,
+  "lastComputedDate": "2026-01-07",
+  "dailyActivity": [
+    {
+      "date": "2025-11-10",
+      "messageCount": 8,
+      "sessionCount": 1,
+      "toolCallCount": 0
+    },
+    {
+      "date": "2026-01-03",
+      "messageCount": 8,
+      "sessionCount": 1,
+      "toolCallCount": 0
+    },
+    {
+      "date": "2026-01-05",
+      "messageCount": 40,
+      "sessionCount": 3,
+      "toolCallCount": 8
+    }
+  ],
+  "dailyModelTokens": [
+    {
+      "date": "2026-01-03",
+      "tokensByModel": {
+        "gemini-3-pro-high": 36304
+      }
+    },
+    {
+      "date": "2026-01-05",
+      "tokensByModel": {
+        "claude-sonnet-4-5-thinking": 972704
+      }
+    }
+  ],
+  "modelUsage": {
+    "gemini-3-pro-high": {
+      "inputTokens": 36258,
+      "outputTokens": 46,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0,
+      "contextWindow": 0
+    },
+    "claude-sonnet-4-5-thinking": {
+      "inputTokens": 900755,
+      "outputTokens": 71949,
+      "cacheReadInputTokens": 828422,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0,
+      "contextWindow": 0
+    }
+  },
+  "totalSessions": 5,
+  "totalMessages": 56,
+  "longestSession": {
+    "sessionId": "30899982-14a0-4160-9826-4c2432618165",
+    "duration": 1881403,
+    "messageCount": 34,
+    "timestamp": "2026-01-05T03:53:23.006Z"
+  },
+  "firstSessionDate": "2025-11-10T05:02:40.352Z",
+  "hourCounts": {
+    "1": 1,
+    "11": 3,
+    "13": 1
+  }
+}
