@@ -1,0 +1,49 @@
+**This guide outlines a complete, agent-ready `CLAUDE.md` for your repo with practical prompting, API usage, safety, and agent-integration rules tailored for Singapore-based teams as of 21 Jan 2026; it draws on Anthropic’s developer guidance and Claude Code best practices to ensure safe, reproducible agent behavior**.
+
+## Purpose and Scope
+**What this file is for**  
+- **Agent role and trust boundaries**: define what Claude-powered agents may and may not change.  
+- **When to call Claude vs local logic**: decision rules for network calls.  
+- **Audit and observability expectations**: logging, request IDs, and retention.
+
+## Required Sections for CLAUDE.md
+- **Build and test commands**: exact commands to run the project, lint, and run a single test.  
+- **Prompting conventions**: templates, system vs user messages, temperature and max tokens defaults.  
+- **API usage and credentials**: where to store keys, rotation cadence, and least-privilege scopes.  
+- **Rate limits and batching**: recommended batching, backoff, and retry policies.  
+- **Safety and content filters**: disallowed content, red-team checks, and human-in-loop triggers.  
+- **Agent orchestration rules**: step limits, tool invocation patterns, and rollback behavior.  
+- **Cursor and Copilot rules inclusion**: include `.cursor/rules/`, `.cursorrules`, and `.github/copilot-instructions.md` if present.  
+- **Maintenance and changelog**: how to update prompts and model versions.
+
+## Prompting and Model Guidance
+- **System message templates**: canonical system prompts and variable placeholders.  
+- **Message batching and multi-turn state**: how to compress context and when to truncate.  
+- **Model selection and migration checklist**: guidance for switching Claude versions and testing regressions.  
+- **Prompt engineering best practices**: use examples, explicit constraints, and output schemas.
+
+> **Note**: Use Anthropic’s API docs and Claude Code best practices as baseline references for agentic coding and CLI workflows.
+
+## API Integration Patterns
+- **Authentication storage**: environment variables, secrets manager, and CI masking.  
+- **Request shaping**: default temperature, max tokens, and safety settings.  
+- **Error handling and retries**: exponential backoff, idempotency keys, and circuit breakers.  
+- **Observability**: log request/response metadata, not raw user content.
+
+## Safety, Compliance, and Testing
+- **Red-team tests**: adversarial prompts and regression suites.  
+- **Human escalation rules**: thresholds for manual review.  
+- **Data retention and PII rules**: scrub before logging and follow local regulations.
+
+## Example CLAUDE.md Template
+- Header with purpose and contact owner.  
+- **Quickstart commands**: build, lint, test, run single test example: `pytest tests/path/to/test_file.py::test_case_name`.  
+- Prompt templates and sample API call snippets.  
+- Safety checklist and update log.
+
+## Maintenance and Review
+- **Version pinning and migration tests**: lock model versions in CI and run smoke tests on upgrades.  
+- **Who reviews prompt changes**: code owners and security reviewers.
+
+---
+
