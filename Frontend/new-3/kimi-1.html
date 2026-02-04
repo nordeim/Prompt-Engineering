@@ -1,0 +1,1677 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="description" content="Singapore's Premier Baking Academy - Master sourdough, pâtisserie, and viennoiserie with world-class artisans.">
+    <meta name="theme-color" content="#2C1810">
+    
+    <title>L'Artisan Baking Atelier | Where Tradition Meets Digital Excellence</title>
+    
+    <!-- Preconnect for Performance -->
+    <link rel="preconnect" href="https://api.fontshare.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://images.unsplash.com">
+    
+    <!-- Typography: Playfair Display (Editorial) + Geist Sans (UI) -->
+    <link href="https://api.fontshare.com/v2/css?f[]=geist-sans@300,400,500,600,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <style>
+        /* ============================================================
+           DESIGN TOKENS & VARIABLES
+           ============================================================ */
+        :root {
+            /* Tactile Color Theory - Derived from Ingredients */
+            --color-bone: #FAF9F6;           /* Unbleached flour, warm white */
+            --color-bone-dark: #F5F3F0;      /* Shadowed flour */
+            --color-burnt: #2C1810;          /* Caramelized crust, near-black */
+            --color-burnt-light: #3D2418;    /* Lighter roast */
+            --color-sourdough: #C9A87C;      /* Golden-brown crust */
+            --color-sourdough-light: #DBC4A4; /* Fresh crumb */
+            --color-copper: #B87333;         /* Cookware, metallic accents */
+            --color-copper-dark: #8B5A2B;    /* Aged copper */
+            
+            /* Semantic Mapping */
+            --bg-primary: var(--color-bone);
+            --bg-secondary: var(--color-burnt);
+            --text-primary: var(--color-burnt);
+            --text-secondary: var(--color-sourdough);
+            --accent: var(--color-copper);
+            --border: rgba(44, 24, 16, 0.12);
+            
+            /* Typography Scale - Editorial Hierarchy */
+            --font-editorial: 'Playfair Display', Georgia, serif;
+            --font-ui: 'Geist Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            
+            --text-xs: clamp(0.75rem, 0.7rem + 0.25vw, 0.875rem);
+            --text-sm: clamp(0.875rem, 0.8rem + 0.35vw, 1rem);
+            --text-base: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
+            --text-lg: clamp(1.125rem, 1rem + 0.5vw, 1.375rem);
+            --text-xl: clamp(1.5rem, 1.25rem + 1vw, 2rem);
+            --text-2xl: clamp(2rem, 1.5rem + 2vw, 3.5rem);
+            --text-3xl: clamp(2.5rem, 2rem + 2.5vw, 5rem);
+            --text-4xl: clamp(3rem, 2.5rem + 3vw, 7rem);
+            
+            /* Spacing - Asymmetric Rhythm */
+            --space-xs: clamp(0.5rem, 0.4rem + 0.5vw, 0.75rem);
+            --space-sm: clamp(0.75rem, 0.6rem + 0.75vw, 1.25rem);
+            --space-md: clamp(1.5rem, 1rem + 2vw, 3rem);
+            --space-lg: clamp(3rem, 2rem + 4vw, 6rem);
+            --space-xl: clamp(4rem, 3rem + 5vw, 10rem);
+            
+            /* Motion - Spring Physics (Dough Decompression) */
+            --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+            --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+            --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+            
+            --duration-instant: 150ms;
+            --duration-fast: 300ms;
+            --duration-normal: 500ms;
+            --duration-slow: 800ms;
+            
+            /* Layout */
+            --container-max: 1400px;
+            --grid-gap: clamp(1rem, 0.75rem + 1vw, 2rem);
+        }
+
+        /* ============================================================
+           RESET & BASE STYLES
+           ============================================================ */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+        }
+        
+        html {
+            scroll-behavior: smooth;
+            -webkit-text-size-adjust: 100%;
+            background-color: var(--bg-primary);
+        }
+        
+        body {
+            font-family: var(--font-ui);
+            font-size: var(--text-base);
+            line-height: 1.6;
+            color: var(--text-primary);
+            background-color: var(--bg-primary);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            overflow-x: hidden;
+        }
+        
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            object-fit: cover;
+        }
+        
+        /* ============================================================
+           TYPOGRAPHY - Editorial Architecture
+           ============================================================ */
+        .editorial-display {
+            font-family: var(--font-editorial);
+            font-weight: 500;
+            line-height: 1.1;
+            letter-spacing: -0.02em;
+            text-wrap: balance;
+        }
+        
+        .editorial-italic {
+            font-style: italic;
+            font-weight: 400;
+        }
+        
+        .ui-text {
+            font-family: var(--font-ui);
+            font-weight: 400;
+            letter-spacing: 0.01em;
+        }
+        
+        .ui-text-bold {
+            font-weight: 600;
+            letter-spacing: -0.01em;
+        }
+        
+        /* ============================================================
+           UTILITY CLASSES
+           ============================================================ */
+        .visually-hidden {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: var(--container-max);
+            margin-inline: auto;
+            padding-inline: var(--space-md);
+        }
+        
+        /* ============================================================
+           COMPONENTS - Buttons (Tactile States)
+           ============================================================ */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--space-xs);
+            padding: var(--space-sm) var(--space-md);
+            font-family: var(--font-ui);
+            font-size: var(--text-sm);
+            font-weight: 600;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            border: 1.5px solid transparent;
+            border-radius: 2px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: 
+                transform var(--duration-fast) var(--ease-spring),
+                box-shadow var(--duration-fast) var(--ease-smooth),
+                background-color var(--duration-fast) var(--ease-smooth);
+            will-change: transform;
+        }
+        
+        .btn:active {
+            transform: scale(0.96);
+        }
+        
+        .btn:focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: 3px;
+        }
+        
+        .btn--primary {
+            background-color: var(--color-burnt);
+            color: var(--color-bone);
+            box-shadow: 0 4px 20px rgba(44, 24, 16, 0.15);
+        }
+        
+        .btn--primary:hover {
+            background-color: var(--color-burnt-light);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(44, 24, 16, 0.25);
+        }
+        
+        .btn--secondary {
+            background-color: transparent;
+            color: var(--color-burnt);
+            border-color: var(--color-burnt);
+        }
+        
+        .btn--secondary:hover {
+            background-color: var(--color-burnt);
+            color: var(--color-bone);
+            transform: translateY(-2px);
+        }
+        
+        .btn--accent {
+            background-color: var(--color-copper);
+            color: var(--color-bone);
+        }
+        
+        .btn--accent:hover {
+            background-color: var(--color-copper-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(184, 115, 51, 0.3);
+        }
+        
+        /* ============================================================
+           COMPONENTS - Forms
+           ============================================================ */
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-xs);
+        }
+        
+        .form-label {
+            font-size: var(--text-xs);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-primary);
+        }
+        
+        .form-input {
+            padding: var(--space-sm) var(--space-md);
+            font-family: var(--font-ui);
+            font-size: var(--text-base);
+            color: var(--text-primary);
+            background-color: transparent;
+            border: 1.5px solid var(--border);
+            border-radius: 2px;
+            transition: border-color var(--duration-fast) var(--ease-smooth),
+                        box-shadow var(--duration-fast) var(--ease-smooth);
+        }
+        
+        .form-input:hover {
+            border-color: var(--color-sourdough);
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(184, 115, 51, 0.1);
+        }
+        
+        /* ============================================================
+           ANIMATION UTILITIES (Intersection Observer)
+           ============================================================ */
+        .reveal {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: 
+                opacity var(--duration-slow) var(--ease-out-expo),
+                transform var(--duration-slow) var(--ease-spring);
+            will-change: opacity, transform;
+        }
+        
+        .reveal.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .reveal-delay-1 { transition-delay: 100ms; }
+        .reveal-delay-2 { transition-delay: 200ms; }
+        .reveal-delay-3 { transition-delay: 300ms; }
+        
+        /* ============================================================
+           NAVIGATION - Minimal Editorial
+           ============================================================ */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            padding: var(--space-md) 0;
+            background: rgba(250, 249, 246, 0.8);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border-bottom: 1px solid transparent;
+            transition: border-color var(--duration-fast) var(--ease-smooth),
+                        box-shadow var(--duration-fast) var(--ease-smooth);
+        }
+        
+        .nav.is-scrolled {
+            border-color: var(--border);
+            box-shadow: 0 4px 20px rgba(44, 24, 16, 0.05);
+        }
+        
+        .nav__inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .nav__logo {
+            font-family: var(--font-editorial);
+            font-size: var(--text-xl);
+            font-weight: 600;
+            color: var(--text-primary);
+            text-decoration: none;
+            letter-spacing: -0.03em;
+            transition: color var(--duration-fast) var(--ease-smooth);
+        }
+        
+        .nav__logo:hover {
+            color: var(--accent);
+        }
+        
+        .nav__menu {
+            display: flex;
+            gap: var(--space-lg);
+            list-style: none;
+        }
+        
+        .nav__link {
+            font-size: var(--text-xs);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-primary);
+            text-decoration: none;
+            position: relative;
+            padding: var(--space-xs) 0;
+        }
+        
+        .nav__link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background-color: currentColor;
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform var(--duration-fast) var(--ease-out-expo);
+        }
+        
+        .nav__link:hover::after {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+        
+        .nav__mobile-toggle {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: var(--space-xs);
+        }
+        
+        /* ============================================================
+           HERO SECTION - Asymmetric Editorial Layout
+           ============================================================ */
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            min-height: 100dvh;
+            display: grid;
+            align-items: center;
+            padding-top: calc(var(--space-xl) * 1.5);
+            padding-bottom: var(--space-xl);
+            overflow: hidden;
+        }
+        
+        .hero__grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: var(--space-lg);
+            align-items: center;
+        }
+        
+        @media (min-width: 1024px) {
+            .hero__grid {
+                grid-template-columns: 1.2fr 1fr;
+                gap: var(--space-xl);
+            }
+        }
+        
+        .hero__content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .hero__eyebrow {
+            display: inline-block;
+            font-size: var(--text-xs);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--accent);
+            margin-bottom: var(--space-md);
+            position: relative;
+            padding-left: var(--space-md);
+        }
+        
+        .hero__eyebrow::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: var(--space-sm);
+            height: 1px;
+            background-color: var(--accent);
+        }
+        
+        .hero__title {
+            font-size: var(--text-4xl);
+            margin-bottom: var(--space-md);
+            color: var(--text-primary);
+            line-height: 1.05;
+        }
+        
+        .hero__title span {
+            display: block;
+        }
+        
+        .hero__subtitle {
+            font-size: var(--text-lg);
+            color: var(--text-primary);
+            opacity: 0.8;
+            max-width: 40ch;
+            margin-bottom: var(--space-lg);
+            line-height: 1.7;
+        }
+        
+        .hero__cta-group {
+            display: flex;
+            gap: var(--space-md);
+            flex-wrap: wrap;
+        }
+        
+        .hero__visual {
+            position: relative;
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            gap: var(--space-md);
+            height: 100%;
+            min-height: 500px;
+        }
+        
+        .hero__image-main {
+            grid-row: 1 / -1;
+            grid-column: 1 / 2;
+            border-radius: 2px;
+            overflow: hidden;
+            position: relative;
+            background-color: var(--color-bone-dark);
+        }
+        
+        .hero__image-secondary {
+            grid-row: 1 / 2;
+            grid-column: 2 / 3;
+            border-radius: 2px;
+            overflow: hidden;
+            background-color: var(--color-sourdough-light);
+        }
+        
+        .hero__image-tertiary {
+            grid-row: 2 / 3;
+            grid-column: 2 / 3;
+            border-radius: 2px;
+            overflow: hidden;
+            background-color: var(--color-copper);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: var(--space-md);
+        }
+        
+        .hero__image {
+            width: 100%;
+            height: 100%;
+            transition: transform var(--duration-slow) var(--ease-smooth);
+        }
+        
+        .hero__image-main:hover .hero__image,
+        .hero__image-secondary:hover .hero__image {
+            transform: scale(1.05);
+        }
+        
+        .hero__stat {
+            text-align: center;
+            color: var(--color-bone);
+        }
+        
+        .hero__stat-number {
+            font-family: var(--font-editorial);
+            font-size: var(--text-2xl);
+            font-weight: 600;
+            display: block;
+            line-height: 1;
+        }
+        
+        .hero__stat-label {
+            font-size: var(--text-xs);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            opacity: 0.9;
+            margin-top: var(--space-xs);
+        }
+        
+        /* Background texture element */
+        .hero__texture {
+            position: absolute;
+            top: 10%;
+            right: -5%;
+            width: 40%;
+            height: 80%;
+            background: linear-gradient(135deg, transparent 0%, rgba(201, 168, 124, 0.03) 100%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* ============================================================
+           COURSES SECTION - Bento Grid Architecture
+           ============================================================ */
+        .courses {
+            padding: var(--space-xl) 0;
+            background-color: var(--color-bone-dark);
+            position: relative;
+        }
+        
+        .courses__header {
+            max-width: 60ch;
+            margin-bottom: var(--space-lg);
+        }
+        
+        .courses__eyebrow {
+            font-size: var(--text-xs);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--accent);
+            margin-bottom: var(--space-sm);
+            display: block;
+        }
+        
+        .courses__title {
+            font-size: var(--text-3xl);
+            margin-bottom: var(--space-md);
+        }
+        
+        .courses__description {
+            font-size: var(--text-lg);
+            opacity: 0.8;
+            line-height: 1.7;
+        }
+        
+        /* Bento Grid Layout */
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(1, 1fr);
+            grid-auto-rows: minmax(300px, auto);
+            gap: var(--grid-gap);
+        }
+        
+        @media (min-width: 640px) {
+            .bento-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (min-width: 1024px) {
+            .bento-grid {
+                grid-template-columns: repeat(12, 1fr);
+                grid-template-rows: repeat(3, 280px);
+            }
+            
+            .bento-item--large {
+                grid-column: span 7;
+                grid-row: span 2;
+            }
+            
+            .bento-item--tall {
+                grid-column: span 5;
+                grid-row: span 2;
+            }
+            
+            .bento-item--wide {
+                grid-column: span 7;
+                grid-row: span 1;
+            }
+            
+            .bento-item--small {
+                grid-column: span 5;
+                grid-row: span 1;
+            }
+        }
+        
+        .bento-item {
+            position: relative;
+            background-color: var(--color-bone);
+            border-radius: 2px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: transform var(--duration-fast) var(--ease-spring),
+                        box-shadow var(--duration-fast) var(--ease-smooth);
+            cursor: pointer;
+            border: 1px solid var(--border);
+        }
+        
+        .bento-item:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(44, 24, 16, 0.1);
+        }
+        
+        .bento-item__image {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+        
+        .bento-item__image::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(44, 24, 16, 0.9) 0%, transparent 60%);
+            opacity: 0.8;
+            transition: opacity var(--duration-fast) var(--ease-smooth);
+        }
+        
+        .bento-item:hover .bento-item__image::after {
+            opacity: 0.9;
+        }
+        
+        .bento-item__content {
+            position: relative;
+            z-index: 1;
+            margin-top: auto;
+            padding: var(--space-md);
+            color: var(--color-bone);
+        }
+        
+        .bento-item__category {
+            font-size: var(--text-xs);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--color-sourdough);
+            margin-bottom: var(--space-xs);
+            display: block;
+        }
+        
+        .bento-item__title {
+            font-family: var(--font-editorial);
+            font-size: var(--text-xl);
+            font-weight: 500;
+            margin-bottom: var(--space-xs);
+            line-height: 1.2;
+        }
+        
+        .bento-item__meta {
+            font-size: var(--text-sm);
+            opacity: 0.8;
+            display: flex;
+            gap: var(--space-md);
+        }
+        
+        /* ============================================================
+           LEAD MAGNET SECTION - Asymmetric Split
+           ============================================================ */
+        .lead-magnet {
+            padding: var(--space-xl) 0;
+            background-color: var(--color-burnt);
+            color: var(--color-bone);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .lead-magnet::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 80%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(184, 115, 51, 0.1) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        
+        .lead-magnet__grid {
+            display: grid;
+            gap: var(--space-xl);
+            align-items: center;
+        }
+        
+        @media (min-width: 1024px) {
+            .lead-magnet__grid {
+                grid-template-columns: 1.2fr 1fr;
+                gap: var(--space-xl);
+            }
+        }
+        
+        .lead-magnet__content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .lead-magnet__eyebrow {
+            font-size: var(--text-xs);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--color-sourdough);
+            margin-bottom: var(--space-md);
+            display: block;
+        }
+        
+        .lead-magnet__title {
+            font-size: var(--text-3xl);
+            margin-bottom: var(--space-md);
+            color: var(--color-bone);
+            line-height: 1.1;
+        }
+        
+        .lead-magnet__description {
+            font-size: var(--text-lg);
+            opacity: 0.9;
+            margin-bottom: var(--space-lg);
+            max-width: 50ch;
+            line-height: 1.7;
+        }
+        
+        .lead-magnet__features {
+            list-style: none;
+            margin-bottom: var(--space-lg);
+        }
+        
+        .lead-magnet__feature {
+            display: flex;
+            align-items: flex-start;
+            gap: var(--space-sm);
+            margin-bottom: var(--space-md);
+            font-size: var(--text-base);
+        }
+        
+        .lead-magnet__feature::before {
+            content: '—';
+            color: var(--color-copper);
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+        
+        .lead-magnet__form {
+            display: flex;
+            gap: var(--space-sm);
+            flex-wrap: wrap;
+        }
+        
+        .lead-magnet__input {
+            flex: 1;
+            min-width: 250px;
+            background-color: rgba(250, 249, 246, 0.1);
+            border-color: rgba(250, 249, 246, 0.2);
+            color: var(--color-bone);
+        }
+        
+        .lead-magnet__input::placeholder {
+            color: rgba(250, 249, 246, 0.5);
+        }
+        
+        .lead-magnet__input:hover,
+        .lead-magnet__input:focus {
+            border-color: var(--color-copper);
+            background-color: rgba(250, 249, 246, 0.15);
+        }
+        
+        .lead-magnet__visual {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .lead-magnet__book {
+            width: 100%;
+            max-width: 400px;
+            aspect-ratio: 3/4;
+            background: linear-gradient(135deg, var(--color-bone) 0%, var(--color-bone-dark) 100%);
+            border-radius: 4px 12px 12px 4px;
+            position: relative;
+            box-shadow: 
+                0 25px 50px -12px rgba(0, 0, 0, 0.5),
+                inset 4px 0 10px rgba(0,0,0,0.1);
+            transform: perspective(1000px) rotateY(-15deg) rotateX(5deg);
+            transition: transform var(--duration-slow) var(--ease-spring);
+            display: flex;
+            flex-direction: column;
+            padding: var(--space-lg);
+            color: var(--color-burnt);
+        }
+        
+        .lead-magnet__book:hover {
+            transform: perspective(1000px) rotateY(-5deg) rotateX(2deg) translateY(-10px);
+        }
+        
+        .lead-magnet__book-spine {
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 12px;
+            background: linear-gradient(to right, rgba(0,0,0,0.2), transparent);
+            border-radius: 4px 0 0 4px;
+        }
+        
+        .lead-magnet__book-title {
+            font-family: var(--font-editorial);
+            font-size: var(--text-2xl);
+            font-weight: 600;
+            margin-bottom: var(--space-sm);
+            line-height: 1.2;
+        }
+        
+        .lead-magnet__book-subtitle {
+            font-size: var(--text-sm);
+            opacity: 0.8;
+            margin-bottom: auto;
+        }
+        
+        .lead-magnet__book-badge {
+            display: inline-block;
+            background-color: var(--color-copper);
+            color: var(--color-bone);
+            padding: var(--space-xs) var(--space-sm);
+            font-size: var(--text-xs);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            align-self: flex-start;
+            border-radius: 2px;
+        }
+
+        /* ============================================================
+           MENTORS SECTION - Editorial Asymmetry
+           ============================================================ */
+        .mentors {
+            padding: var(--space-xl) 0;
+            background-color: var(--bg-primary);
+        }
+        
+        .mentors__header {
+            text-align: center;
+            max-width: 60ch;
+            margin: 0 auto var(--space-xl);
+        }
+        
+        .mentors__eyebrow {
+            font-size: var(--text-xs);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--accent);
+            margin-bottom: var(--space-sm);
+            display: block;
+        }
+        
+        .mentors__title {
+            font-size: var(--text-3xl);
+            margin-bottom: var(--space-md);
+        }
+        
+        .mentors__description {
+            font-size: var(--text-lg);
+            opacity: 0.8;
+        }
+        
+        .mentors__grid {
+            display: grid;
+            grid-template-columns: repeat(1, 1fr);
+            gap: var(--space-lg);
+        }
+        
+        @media (min-width: 768px) {
+            .mentors__grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+        
+        .mentor-card {
+            position: relative;
+            display: grid;
+            grid-template-rows: auto 1fr;
+            gap: var(--space-md);
+        }
+        
+        @media (min-width: 1024px) {
+            .mentor-card:nth-child(2) {
+                transform: translateY(40px);
+            }
+        }
+        
+        .mentor-card__image {
+            aspect-ratio: 3/4;
+            border-radius: 2px;
+            overflow: hidden;
+            background-color: var(--color-bone-dark);
+            position: relative;
+        }
+        
+        .mentor-card__image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(20%) contrast(1.1);
+            transition: 
+                filter var(--duration-slow) var(--ease-smooth),
+                transform var(--duration-slow) var(--ease-smooth);
+        }
+        
+        .mentor-card:hover .mentor-card__image img {
+            filter: grayscale(0%) contrast(1);
+            transform: scale(1.05);
+        }
+        
+        .mentor-card__content {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-xs);
+        }
+        
+        .mentor-card__name {
+            font-family: var(--font-editorial);
+            font-size: var(--text-xl);
+            font-weight: 600;
+        }
+        
+        .mentor-card__role {
+            font-size: var(--text-sm);
+            color: var(--accent);
+            font-weight: 600;
+        }
+        
+        .mentor-card__bio {
+            font-size: var(--text-sm);
+            opacity: 0.8;
+            line-height: 1.6;
+            margin-top: var(--space-xs);
+        }
+
+        /* ============================================================
+           TESTIMONIALS - Masonry Asymmetry
+           ============================================================ */
+        .testimonials {
+            padding: var(--space-xl) 0;
+            background-color: var(--color-bone-dark);
+            position: relative;
+        }
+        
+        .testimonials__header {
+            text-align: center;
+            margin-bottom: var(--space-xl);
+        }
+        
+        .testimonials__eyebrow {
+            font-size: var(--text-xs);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--accent);
+            margin-bottom: var(--space-sm);
+            display: block;
+        }
+        
+        .testimonials__title {
+            font-size: var(--text-3xl);
+        }
+        
+        .testimonials__grid {
+            display: grid;
+            grid-template-columns: repeat(1, 1fr);
+            gap: var(--grid-gap);
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        @media (min-width: 768px) {
+            .testimonials__grid {
+                grid-template-columns: repeat(2, 1fr);
+                grid-template-rows: auto auto;
+            }
+            
+            .testimonial--featured {
+                grid-row: span 2;
+            }
+        }
+        
+        .testimonial {
+            background-color: var(--color-bone);
+            padding: var(--space-lg);
+            border-radius: 2px;
+            border: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            transition: transform var(--duration-fast) var(--ease-spring),
+                        box-shadow var(--duration-fast) var(--ease-smooth);
+        }
+        
+        .testimonial:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(44, 24, 16, 0.08);
+        }
+        
+        .testimonial__quote {
+            font-family: var(--font-editorial);
+            font-size: var(--text-lg);
+            font-style: italic;
+            line-height: 1.6;
+            margin-bottom: var(--space-md);
+            flex: 1;
+            position: relative;
+            padding-left: var(--space-md);
+        }
+        
+        .testimonial__quote::before {
+            content: '"';
+            position: absolute;
+            left: 0;
+            top: -0.2em;
+            font-size: 3em;
+            color: var(--color-sourdough);
+            opacity: 0.3;
+            line-height: 1;
+        }
+        
+        .testimonial__author {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+            margin-top: auto;
+            padding-top: var(--space-md);
+            border-top: 1px solid var(--border);
+        }
+        
+        .testimonial__avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background-color: var(--color-sourdough-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: var(--color-burnt);
+            flex-shrink: 0;
+        }
+        
+        .testimonial__name {
+            font-weight: 600;
+            font-size: var(--text-sm);
+            display: block;
+            margin-bottom: 2px;
+        }
+        
+        .testimonial__meta {
+            font-size: var(--text-xs);
+            opacity: 0.7;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* ============================================================
+           CTA SECTION - Impact Moment
+           ============================================================ */
+        .cta {
+            padding: calc(var(--space-xl) * 1.5) 0;
+            background-color: var(--color-burnt);
+            color: var(--color-bone);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .cta::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(184, 115, 51, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 50%, rgba(201, 168, 124, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+        }
+        
+        .cta__content {
+            position: relative;
+            z-index: 1;
+            max-width: 70ch;
+            margin: 0 auto;
+        }
+        
+        .cta__title {
+            font-size: var(--text-3xl);
+            margin-bottom: var(--space-md);
+            line-height: 1.1;
+        }
+        
+        .cta__description {
+            font-size: var(--text-lg);
+            opacity: 0.9;
+            margin-bottom: var(--space-lg);
+            line-height: 1.7;
+        }
+        
+        .cta__stats {
+            display: flex;
+            justify-content: center;
+            gap: var(--space-xl);
+            margin-bottom: var(--space-lg);
+            flex-wrap: wrap;
+        }
+        
+        .cta__stat {
+            text-align: center;
+        }
+        
+        .cta__stat-number {
+            font-family: var(--font-editorial);
+            font-size: var(--text-3xl);
+            font-weight: 600;
+            color: var(--color-sourdough);
+            display: block;
+            line-height: 1;
+        }
+        
+        .cta__stat-label {
+            font-size: var(--text-xs);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            opacity: 0.8;
+            margin-top: var(--space-xs);
+        }
+        
+        .cta__actions {
+            display: flex;
+            gap: var(--space-md);
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* ============================================================
+           FOOTER - Minimal Elegance
+           ============================================================ */
+        .footer {
+            padding: var(--space-lg) 0;
+            background-color: var(--color-burnt);
+            color: var(--color-bone);
+            border-top: 1px solid rgba(250, 249, 246, 0.1);
+        }
+        
+        .footer__inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: var(--space-md);
+        }
+        
+        .footer__copyright {
+            font-size: var(--text-sm);
+            opacity: 0.7;
+        }
+        
+        .footer__links {
+            display: flex;
+            gap: var(--space-md);
+            list-style: none;
+        }
+        
+        .footer__link {
+            color: var(--color-bone);
+            text-decoration: none;
+            font-size: var(--text-sm);
+            opacity: 0.7;
+            transition: opacity var(--duration-fast) var(--ease-smooth);
+        }
+        
+        .footer__link:hover {
+            opacity: 1;
+            color: var(--color-sourdough);
+        }
+
+        /* ============================================================
+           MOBILE RESPONSIVE ADJUSTMENTS
+           ============================================================ */
+        @media (max-width: 768px) {
+            .nav__menu {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: var(--color-bone);
+                padding: var(--space-md);
+                flex-direction: column;
+                gap: var(--space-md);
+                border-bottom: 1px solid var(--border);
+                box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            }
+            
+            .nav__menu.is-active {
+                display: flex;
+            }
+            
+            .nav__mobile-toggle {
+                display: block;
+            }
+            
+            .hero__visual {
+                min-height: 400px;
+                order: -1;
+            }
+            
+            .bento-item {
+                min-height: 300px;
+            }
+            
+            .lead-magnet__book {
+                max-width: 280px;
+                transform: perspective(1000px) rotateY(-10deg) rotateX(5deg);
+            }
+        }
+        
+        /* Utility for reduced motion */
+        @media (prefers-reduced-motion: reduce) {
+            .reveal {
+                opacity: 1;
+                transform: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav class="nav" id="nav" role="navigation" aria-label="Main navigation">
+        <div class="container nav__inner">
+            <a href="#" class="nav__logo" aria-label="L'Artisan Baking Atelier Home">L'Artisan</a>
+            
+            <button class="nav__mobile-toggle" id="menuToggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="navMenu">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <line x1="3" y1="12" x2="21" y2="12"></line>
+                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                    <line x1="3" y1="18" x2="21" y2="18"></line>
+                </svg>
+            </button>
+            
+            <ul class="nav__menu" id="navMenu" role="menubar">
+                <li role="none"><a href="#courses" class="nav__link" role="menuitem">Courses</a></li>
+                <li role="none"><a href="#mentors" class="nav__link" role="menuitem">Mentors</a></li>
+                <li role="none"><a href="#testimonials" class="nav__link" role="menuitem">Stories</a></li>
+                <li role="none"><a href="#guide" class="nav__link" role="menuitem">Free Guide</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="hero" id="hero">
+        <div class="hero__texture" aria-hidden="true"></div>
+        <div class="container hero__grid">
+            <div class="hero__content">
+                <span class="hero__eyebrow reveal">Singapore's Premier Baking Academy</span>
+                <h1 class="hero__title editorial-display reveal reveal-delay-1">
+                    <span>Master the</span>
+                    <span class="editorial-italic">Art of Baking</span>
+                </h1>
+                <p class="hero__subtitle ui-text reveal reveal-delay-2">
+                    Learn from world-class master instructors with 20+ years of experience. From sourdough artistry to delicate pâtisserie — transform your passion into mastery.
+                </p>
+                <div class="hero__cta-group reveal reveal-delay-3">
+                    <a href="#courses" class="btn btn--primary">Explore Courses</a>
+                    <a href="#guide" class="btn btn--secondary">Get Free Guide</a>
+                </div>
+            </div>
+            
+            <div class="hero__visual reveal reveal-delay-2">
+                <div class="hero__image-main">
+                    <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?w=800&auto=format&fit=crop&q=80" 
+                         alt="Artisan sourdough bread with golden crust" 
+                         class="hero__image"
+                         loading="eager"
+                         width="600"
+                         height="800">
+                </div>
+                <div class="hero__image-secondary">
+                    <img src="https://images.unsplash.com/photo-1555507036-ab1f4038808a?w=400&auto=format&fit=crop&q=80" 
+                         alt="Hands kneading dough" 
+                         class="hero__image"
+                         loading="lazy"
+                         width="300"
+                         height="300">
+                </div>
+                <div class="hero__image-tertiary">
+                    <div class="hero__stat">
+                        <span class="hero__stat-number">15k+</span>
+                        <span class="hero__stat-label">Students</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Courses Section - Bento Grid -->
+    <section class="courses" id="courses" aria-labelledby="courses-heading">
+        <div class="container">
+            <header class="courses__header reveal">
+                <span class="courses__eyebrow">Our Courses</span>
+                <h2 id="courses-heading" class="courses__title editorial-display">Discover Your Baking Journey</h2>
+                <p class="courses__description ui-text">From beginner fundamentals to advanced techniques — curated paths designed by master artisans.</p>
+            </header>
+            
+            <div class="bento-grid">
+                <!-- Large Item -->
+                <article class="bento-item bento-item--large reveal">
+                    <div class="bento-item__image">
+                        <img src="https://images.unsplash.com/photo-1549931319-a545dcf3bc73?w=1200&auto=format&fit=crop&q=80" 
+                             alt="Sourdough bread scoring patterns" 
+                             loading="lazy">
+                    </div>
+                    <div class="bento-item__content">
+                        <span class="bento-item__category">Fundamentals</span>
+                        <h3 class="bento-item__title">Sourdough Mastery</h3>
+                        <div class="bento-item__meta">
+                            <span>12 Weeks</span>
+                            <span>•</span>
+                            <span>Beginner to Advanced</span>
+                        </div>
+                    </div>
+                </article>
+                
+                <!-- Tall Item -->
+                <article class="bento-item bento-item--tall reveal reveal-delay-1">
+                    <div class="bento-item__image">
+                        <img src="https://images.unsplash.com/photo-1558326434-7598fb43e772?w=800&auto=format&fit=crop&q=80" 
+                             alt="Layered croissant cross-section" 
+                             loading="lazy">
+                    </div>
+                    <div class="bento-item__content">
+                        <span class="bento-item__category">Viennoiserie</span>
+                        <h3 class="bento-item__title">Laminated Doughs</h3>
+                        <div class="bento-item__meta">
+                            <span>8 Weeks</span>
+                            <span>•</span>
+                            <span>Intermediate</span>
+                        </div>
+                    </div>
+                </article>
+                
+                <!-- Wide Item -->
+                <article class="bento-item bento-item--wide reveal">
+                    <div class="bento-item__image">
+                        <img src="https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?w=1200&auto=format&fit=crop&q=80" 
+                             alt="French macarons in pastel colors" 
+                             loading="lazy">
+                    </div>
+                    <div class="bento-item__content">
+                        <span class="bento-item__category">Pâtisserie</span>
+                        <h3 class="bento-item__title">Macaron Perfection</h3>
+                        <div class="bento-item__meta">
+                            <span>6 Weeks</span>
+                            <span>•</span>
+                            <span>Advanced</span>
+                        </div>
+                    </div>
+                </article>
+                
+                <!-- Small Item -->
+                <article class="bento-item bento-item--small reveal reveal-delay-1">
+                    <div class="bento-item__image">
+                        <img src="https://images.unsplash.com/photo-1517433670267-08bbd4be890f?w=800&auto=format&fit=crop&q=80" 
+                             alt="Decorative cake piping techniques" 
+                             loading="lazy">
+                    </div>
+                    <div class="bento-item__content">
+                        <span class="bento-item__category">Decoration</span>
+                        <h3 class="bento-item__title">Cake Architecture</h3>
+                        <div class="bento-item__meta">
+                            <span>4 Weeks</span>
+                            <span>•</span>
+                            <span>All Levels</span>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- Lead Magnet Section -->
+    <section class="lead-magnet" id="guide" aria-labelledby="guide-heading">
+        <div class="container lead-magnet__grid">
+            <div class="lead-magnet__content reveal">
+                <span class="lead-magnet__eyebrow">Free Download</span>
+                <h2 id="guide-heading" class="lead-magnet__title editorial-display">Start Your Sourdough Journey Today</h2>
+                <p class="lead-magnet__description">Get our comprehensive 32-page guide covering starter creation, feeding schedules, troubleshooting tips, and your first loaf recipe — completely free.</p>
+                
+                <ul class="lead-magnet__features" role="list">
+                    <li class="lead-magnet__feature">Step-by-step starter cultivation</li>
+                    <li class="lead-magnet__feature">Common mistakes & how to fix them</li>
+                    <li class="lead-magnet__feature">Pro tips from our master bakers</li>
+                </ul>
+                
+                <form class="lead-magnet__form" onsubmit="event.preventDefault(); alert('Thank you! Check your email for the guide.');" aria-label="Email signup for free guide">
+                    <label for="email" class="visually-hidden">Email address</label>
+                    <input type="email" 
+                           id="email" 
+                           name="email" 
+                           class="form-input lead-magnet__input" 
+                           placeholder="Enter your email" 
+                           required 
+                           aria-required="true">
+                    <button type="submit" class="btn btn--accent">Get Free Guide</button>
+                </form>
+            </div>
+            
+            <div class="lead-magnet__visual reveal reveal-delay-1">
+                <div class="lead-magnet__book" role="img" aria-label="Digital mockup of the Sourdough Mastery guide book">
+                    <div class="lead-magnet__book-spine" aria-hidden="true"></div>
+                    <h3 class="lead-magnet__book-title editorial-display">Sourdough<br>Mastery</h3>
+                    <p class="lead-magnet__book-subtitle">The Complete Starter Guide</p>
+                    <span class="lead-magnet__book-badge">Free</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mentors Section -->
+    <section class="mentors" id="mentors" aria-labelledby="mentors-heading">
+        <div class="container">
+            <header class="mentors__header reveal">
+                <span class="mentors__eyebrow">Your Mentors</span>
+                <h2 id="mentors-heading" class="mentors__title editorial-display">Learn From World-Class Artisans</h2>
+                <p class="mentors__description">Our instructors bring 20+ years of professional experience from Michelin-starred kitchens and award-winning bakeries.</p>
+            </header>
+            
+            <div class="mentors__grid">
+                <article class="mentor-card reveal">
+                    <div class="mentor-card__image">
+                        <img src="https://images.unsplash.com/photo-1583394293214-28ez7l31ed2?w=600&auto=format&fit=crop&q=80" 
+                             alt="Chef Marie portrait" 
+                             loading="lazy">
+                    </div>
+                    <div class="mentor-card__content">
+                        <h3 class="mentor-card__name editorial-display">Chef Marie Laurent</h3>
+                        <p class="mentor-card__role">Lead Sourdough Instructor</p>
+                        <p class="mentor-card__bio">Former head baker at Tartine Bakery, San Francisco. Specializes in wild fermentation and heritage grains.</p>
+                    </div>
+                </article>
+                
+                <article class="mentor-card reveal reveal-delay-1">
+                    <div class="mentor-card__image">
+                        <img src="https://images.unsplash.com/photo-1577219491135-ce391730fb2c?w=600&auto=format&fit=crop&q=80" 
+                             alt="Chef Kenji portrait" 
+                             loading="lazy">
+                    </div>
+                    <div class="mentor-card__content">
+                        <h3 class="mentor-card__name editorial-display">Chef Kenji Sato</h3>
+                        <p class="mentor-card__role">Viennoiserie Master</p>
+                        <p class="mentor-card__bio">Trained in Lyon and Tokyo. Won gold at the Coupe du Monde de la Boulangerie for croissant excellence.</p>
+                    </div>
+                </article>
+                
+                <article class="mentor-card reveal reveal-delay-2">
+                    <div class="mentor-card__image">
+                        <img src="https://images.unsplash.com/photo-1595273670150-bd0c3c392e46?w=600&auto=format&fit=crop&q=80" 
+                             alt="Chef Sarah portrait" 
+                             loading="lazy">
+                    </div>
+                    <div class="mentor-card__content">
+                        <h3 class="mentor-card__name editorial-display">Chef Sarah Chen</h3>
+                        <p class="mentor-card__role">Pâtisserie Director</p>
+                        <p class="mentor-card__bio">Michelin-starred pastry chef specializing in modern interpretations of classical French techniques.</p>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials" id="testimonials" aria-labelledby="testimonials-heading">
+        <div class="container">
+            <header class="testimonials__header reveal">
+                <span class="testimonials__eyebrow">Transforming Bakers Worldwide</span>
+                <h2 id="testimonials-heading" class="testimonials__title editorial-display">Stories from Our Community</h2>
+            </header>
+            
+            <div class="testimonials__grid">
+                <blockquote class="testimonial testimonial--featured reveal">
+                    <p class="testimonial__quote">"The Sourdough Mastery course completely transformed my understanding of fermentation. My loaves now rival bakery quality, and my family can't get enough! The depth of knowledge shared here is unmatched."</p>
+                    <footer class="testimonial__author">
+                        <div class="testimonial__avatar" aria-hidden="true">SM</div>
+                        <div>
+                            <cite class="testimonial__name">Sarah Mitchell</cite>
+                            <span class="testimonial__meta">Home Baker • Melbourne, AU</span>
+                        </div>
+                    </footer>
+                </blockquote>
+                
+                <blockquote class="testimonial reveal reveal-delay-1">
+                    <p class="testimonial__quote">"After taking the Viennoiserie course, I opened my own croissant café. The lamination techniques taught here are professional-grade."</p>
+                    <footer class="testimonial__author">
+                        <div class="testimonial__avatar" aria-hidden="true">JK</div>
+                        <div>
+                            <cite class="testimonial__name">James Kim</cite>
+                            <span class="testimonial__meta">Café Owner • Singapore</span>
+                        </div>
+                    </footer>
+                </blockquote>
+                
+                <blockquote class="testimonial reveal reveal-delay-2">
+                    <p class="testimonial__quote">"The community forum is incredible — I've connected with bakers from 30+ countries. The live Q&A sessions with instructors are a game changer."</p>
+                    <footer class="testimonial__author">
+                        <div class="testimonial__avatar" aria-hidden="true">EP</div>
+                        <div>
+                            <cite class="testimonial__name">Elena Petrova</cite>
+                            <span class="testimonial__meta">Pastry Chef • Berlin, DE</span>
+                        </div>
+                    </footer>
+                </blockquote>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA Section -->
+    <section class="cta" aria-labelledby="cta-heading">
+        <div class="container cta__content">
+            <h2 id="cta-heading" class="cta__title editorial-display reveal">Ready to Begin Your Baking Journey?</h2>
+            <p class="cta__description reveal reveal-delay-1">Join 15,000+ students mastering the art of baking. Start with our free guide or dive into a full course today.</p>
+            
+            <div class="cta__stats reveal reveal-delay-1" role="list" aria-label="Statistics">
+                <div class="cta__stat" role="listitem">
+                    <span class="cta__stat-number">15k+</span>
+                    <span class="cta__stat-label">Active Students</span>
+                </div>
+                <div class="cta__stat" role="listitem">
+                    <span class="cta__stat-number">98%</span>
+                    <span class="cta__stat-label">Success Rate</span>
+                </div>
+                <div class="cta__stat" role="listitem">
+                    <span class="cta__stat-number">4.9</span>
+                    <span class="cta__stat-label">Average Rating</span>
+                </div>
+            </div>
+            
+            <div class="cta__actions reveal reveal-delay-2">
+                <a href="#courses" class="btn btn--accent">Explore Courses</a>
+                <a href="#guide" class="btn btn--secondary" style="color: var(--color-bone); border-color: var(--color-bone);">Get Free Guide</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer" role="contentinfo">
+        <div class="container footer__inner">
+            <p class="footer__copyright">&copy; 2024 L'Artisan Baking Atelier. All rights reserved.</p>
+            <nav aria-label="Footer navigation">
+                <ul class="footer__links" role="list">
+                    <li><a href="#" class="footer__link">Privacy</a></li>
+                    <li><a href="#" class="footer__link">Terms</a></li>
+                    <li><a href="#" class="footer__link">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </footer>
+
+    <!-- JavaScript for Interactions -->
+    <script>
+        // Navigation scroll effect
+        const nav = document.getElementById('nav');
+        let lastScroll = 0;
+        
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.pageYOffset;
+            
+            if (currentScroll > 50) {
+                nav.classList.add('is-scrolled');
+            } else {
+                nav.classList.remove('is-scrolled');
+            }
+            
+            lastScroll = currentScroll;
+        }, { passive: true });
+        
+        // Mobile menu toggle
+        const menuToggle = document.getElementById('menuToggle');
+        const navMenu = document.getElementById('navMenu');
+        
+        menuToggle.addEventListener('click', () => {
+            const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
+            menuToggle.setAttribute('aria-expanded', !isExpanded);
+            navMenu.classList.toggle('is-active');
+        });
+        
+        // Close mobile menu on link click
+        document.querySelectorAll('.nav__link').forEach(link => {
+            link.addEventListener('click', () => {
+                menuToggle.setAttribute('aria-expanded', 'false');
+                navMenu.classList.remove('is-active');
+            });
+        });
+        
+        // Intersection Observer for reveal animations
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px 0px -50px 0px',
+            threshold: 0.1
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    // Unobserve after revealing to prevent re-animation
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+        
+        document.querySelectorAll('.reveal').forEach(el => {
+            observer.observe(el);
+        });
+        
+        // Smooth scroll polyfill for Safari
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
