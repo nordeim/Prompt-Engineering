@@ -1,0 +1,284 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>L'Artisan Baking Atelier — Where Tradition Meets Digital Excellence</title>
+
+  <!-- Google Fonts: Playfair Display for headings, Manrope as Geist Sans substitute -->
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;600;700;800&family=Playfair+Display:wght@400;700;900&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CDN for quick prototype -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    :root{
+      --bone:#F7F5F0;    /* flour */
+      --burnt:#3B2B2A;   /* caramelized crust */
+      --sourdough:#CFA26B; /* golden-brown */
+      --copper:#A75A3B;  /* cookware */
+      --muted:#8B8581;
+      --glass: rgba(255,255,255,0.65);
+    }
+
+    /* Typography tokens */
+    :root{font-family: 'Manrope', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;}
+    h1,h2,h3{font-family: 'Playfair Display', serif}
+
+    /* Decorative asymmetric layout helpers */
+    .tilt {
+      transform: rotate(-2.5deg);
+    }
+
+    /* Soft card shadow */
+    .soft-shadow{box-shadow: 0 10px 30px rgba(17,17,17,0.08);}
+
+    /* Micro-interaction focus */
+    .focus-ring:focus{outline: 3px solid rgba(167,90,59,0.12); outline-offset: 3px}
+
+    /* Simple spring-like intro animation (approximation) */
+    .spring-in{opacity:0; transform: translateY(18px) scale(0.995);}
+  </style>
+</head>
+<body class="bg-[color:var(--bone)] text-[color:var(--burnt)] antialiased leading-relaxed">
+  <main class="max-w-7xl mx-auto px-6 lg:px-8 py-12">
+
+    <!-- Header -->
+    <header class="flex items-center justify-between mb-12">
+      <div class="flex items-center gap-4">
+        <div class="w-12 h-12 rounded-2xl bg-[color:var(--sourdough)] flex items-center justify-center soft-shadow" aria-hidden>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" class="text-white" xmlns="http://www.w3.org/2000/svg">
+            <path d="M3 12c0-4.418 5-8 9-8s9 3.582 9 8-5 8-9 8S3 16.418 3 12z" fill="white" opacity="0.06"/>
+            <path d="M7 12c1.333-2.667 4.667-4 7-2 2 1.75 2 5 0 7-2.333 2-5.667.667-7-2z" fill="white"/>
+          </svg>
+        </div>
+        <div>
+          <div class="text-sm font-medium tracking-wide">L'Artisan</div>
+          <div class="text-xs text-[color:var(--muted)] -mt-0.5">Baking Atelier</div>
+        </div>
+      </div>
+
+      <nav class="hidden md:flex items-center gap-6 text-sm text-[color:var(--burnt)]">
+        <a href="#courses" class="hover:underline focus-ring">Courses</a>
+        <a href="#mentors" class="hover:underline focus-ring">Mentors</a>
+        <a href="#testimonials" class="hover:underline focus-ring">Community</a>
+        <a href="#guide" class="px-3 py-2 rounded-md border border-[color:var(--sourdough)] text-[color:var(--burnt)] focus-ring">Get Free Guide</a>
+      </nav>
+    </header>
+
+    <!-- Hero: Asymmetric two-column composition -->
+    <section class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center mb-16">
+
+      <!-- Left content (narrow, editorial column) -->
+      <div class="lg:col-span-5 space-y-6 order-2 lg:order-1 spring-in" id="hero-copy">
+        <p class="uppercase text-xs tracking-widest text-[color:var(--muted)]">Singapore's Premier Baking Academy</p>
+        <h1 class="text-4xl md:text-5xl leading-tight font-extrabold">Master the Art of Baking</h1>
+        <p class="text-[1.05rem] text-[color:var(--burnt)]/85">Learn from world-class master instructors with 20+ years of experience. From sourdough artistry to delicate pâtisserie — transform your passion into mastery.</p>
+
+        <div class="flex gap-4 items-center">
+          <a href="#courses" class="inline-flex items-center gap-3 px-5 py-3 rounded-xl shadow-md soft-shadow bg-[color:var(--sourdough)] text-white font-semibold hover:translate-y-[-2px] transition-transform focus-ring" aria-label="Explore courses">Explore Courses</a>
+          <a href="#guide" class="inline-flex items-center gap-2 px-4 py-3 rounded-lg border border-[color:var(--sourdough)] text-[color:var(--burnt)] focus-ring">Get Free Guide</a>
+        </div>
+
+        <div class="mt-4 text-sm text-[color:var(--muted)]">
+          <strong>Join</strong> <span class="font-medium">15,000+</span> students mastering the art of baking.
+        </div>
+      </div>
+
+      <!-- Right visual (large, dramatic) -->
+      <div class="lg:col-span-7 order-1 lg:order-2 relative spring-in" aria-hidden>
+        <div class="relative">
+          <!-- Background panel with tilt for editorial feel -->
+          <div class="absolute -right-8 top-6 w-[62%] h-[78%] rounded-3xl bg-gradient-to-br from-[color:var(--bone)] to-[color:var(--sourdough)] soft-shadow tilt" style="z-index:0;"></div>
+
+          <!-- Main image/card -->
+          <figure class="relative rounded-3xl overflow-hidden soft-shadow" style="z-index:10;">
+            <img src="https://images.unsplash.com/photo-1506368249639-73a05d6f6488?q=80&w=1600&auto=format&fit=crop&ixlib=rb-4.0.3&s=placeholder" alt="Artisanal baked goods spread" class="w-full h-[420px] object-cover md:object-right" />
+
+            <!-- overlay linen panel -->
+            <figcaption class="absolute left-6 bottom-6 p-6 rounded-xl bg-[color:var(--glass)] backdrop-blur-md border border-white/10 max-w-sm">
+              <div class="text-xs text-[color:var(--muted)] uppercase">Featured Course</div>
+              <h3 class="text-lg font-semibold">Sourdough Mastery — 8-week intensive</h3>
+              <p class="mt-2 text-sm text-[color:var(--burnt)]/90">Fermentation, shaping and scoring — from starter to stunning loaves.</p>
+              <div class="mt-4 flex items-center gap-3">
+                <a href="#" class="px-3 py-2 rounded-md bg-white text-[color:var(--burnt)] font-medium soft-shadow">Enroll</a>
+                <a href="#" class="text-sm text-[color:var(--muted)]">Curriculum</a>
+              </div>
+            </figcaption>
+          </figure>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- Courses Section -->
+    <section id="courses" class="mb-12">
+      <div class="flex items-baseline justify-between mb-6">
+        <div>
+          <h2 class="text-2xl font-bold">Our Courses</h2>
+          <p class="text-sm text-[color:var(--muted)]">From beginner fundamentals to advanced techniques — curated paths designed by master artisans.</p>
+        </div>
+        <div class="text-sm text-[color:var(--muted)]">Curated paths • Certificates • Live Q&amp;A</div>
+      </div>
+
+      <!-- Bento-style asymmetric grid -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <article class="rounded-2xl p-6 bg-white soft-shadow">
+          <div class="text-xs uppercase text-[color:var(--muted)]">Beginner</div>
+          <h3 class="mt-2 font-semibold text-lg">Foundations of Baking</h3>
+          <p class="mt-3 text-sm text-[color:var(--burnt)]/85">Techniques, measurements, and foundational recipes you can rely on every day.</p>
+          <div class="mt-4 flex items-center gap-3">
+            <a class="text-sm font-medium" href="#">View course</a>
+            <span class="ml-auto text-xs text-[color:var(--muted)]">6 weeks</span>
+          </div>
+        </article>
+
+        <article class="rounded-2xl p-6 bg-[color:var(--bone)] border border-[color:var(--sourdough)] transform translate-y-8 soft-shadow">
+          <div class="text-xs uppercase text-[color:var(--muted)]">Signature</div>
+          <h3 class="mt-2 font-semibold text-lg">Sourdough Mastery</h3>
+          <p class="mt-3 text-sm text-[color:var(--burnt)]/85">Deep fermentation science, advanced handling, and artisanal scoring techniques.</p>
+          <div class="mt-4 flex items-center gap-3">
+            <a class="text-sm font-medium" href="#">View course</a>
+            <span class="ml-auto text-xs text-[color:var(--muted)]">8 weeks</span>
+          </div>
+        </article>
+
+        <article class="rounded-2xl p-6 bg-white soft-shadow">
+          <div class="text-xs uppercase text-[color:var(--muted)]">Advanced</div>
+          <h3 class="mt-2 font-semibold text-lg">Viennoiserie &amp; Lamination</h3>
+          <p class="mt-3 text-sm text-[color:var(--burnt)]/85">Master lamination, butter handling and professional shaping for croissants &amp; pain au chocolat.</p>
+          <div class="mt-4 flex items-center gap-3">
+            <a class="text-sm font-medium" href="#">View course</a>
+            <span class="ml-auto text-xs text-[color:var(--muted)]">10 weeks</span>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Free Guide CTA -->
+    <section id="guide" class="rounded-2xl p-8 bg-white soft-shadow mb-12">
+      <div class="md:flex md:items-center md:justify-between">
+        <div class="md:flex-1">
+          <h3 class="text-xl font-semibold">Start Your Sourdough Journey Today</h3>
+          <p class="mt-2 text-sm text-[color:var(--muted)]">Get our comprehensive 32-page guide covering starter creation, feeding schedules, troubleshooting tips, and your first loaf recipe — completely free.</p>
+        </div>
+
+        <form class="mt-4 md:mt-0 md:w-1/2 flex gap-3" onsubmit="return handleSignup(event)">
+          <label for="email" class="sr-only">Email address</label>
+          <input id="email" type="email" required placeholder="Enter your email" class="flex-1 px-4 py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-[color:var(--sourdough)] focus:ring-offset-1 focus-ring" />
+          <button class="px-5 py-3 rounded-lg bg-[color:var(--copper)] text-white font-semibold" type="submit">Get Free Guide</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- Mentors -->
+    <section id="mentors" class="mb-12">
+      <h3 class="text-2xl font-semibold mb-4">Your Mentors</h3>
+      <p class="text-sm text-[color:var(--muted)] mb-6">Our instructors bring 20+ years of professional experience from Michelin-starred kitchens and award-winning bakeries.</p>
+
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+        <figure class="p-6 rounded-2xl bg-white soft-shadow text-center">
+          <img src="https://images.unsplash.com/photo-1548004951-6b5a5f3d61d6?q=80&w=800&auto=format&fit=crop&ixlib=rb-4.0.3&s=placeholder" alt="Chef portrait" class="w-24 h-24 rounded-full mx-auto object-cover" />
+          <figcaption class="mt-4">
+            <div class="font-semibold">Chef Antoine Marchand</div>
+            <div class="text-xs text-[color:var(--muted)]">Pastry Director • Paris</div>
+          </figcaption>
+        </figure>
+
+        <figure class="p-6 rounded-2xl bg-[color:var(--bone)] border border-[color:var(--sourdough)] soft-shadow text-center">
+          <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=800&auto=format&fit=crop&ixlib=rb-4.0.3&s=placeholder" alt="Chef portrait" class="w-24 h-24 rounded-full mx-auto object-cover" />
+          <figcaption class="mt-4">
+            <div class="font-semibold">Chef Mei Ling</div>
+            <div class="text-xs text-[color:var(--muted)]">Sourdough Specialist • Singapore</div>
+          </figcaption>
+        </figure>
+
+        <figure class="p-6 rounded-2xl bg-white soft-shadow text-center">
+          <img src="https://images.unsplash.com/photo-1533777324565-a040eb52fac2?q=80&w=800&auto=format&fit=crop&ixlib=rb-4.0.3&s=placeholder" alt="Chef portrait" class="w-24 h-24 rounded-full mx-auto object-cover" />
+          <figcaption class="mt-4">
+            <div class="font-semibold">Chef Lorenzo Rossi</div>
+            <div class="text-xs text-[color:var(--muted)]">Viennoiserie Master • Milan</div>
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section id="testimonials" class="mb-12">
+      <h3 class="text-2xl font-semibold mb-4">Transforming Bakers Worldwide</h3>
+
+      <div class="space-y-6">
+        <blockquote class="p-6 bg-white rounded-2xl soft-shadow">
+          <p class="text-[color:var(--burnt)]/95">“The Sourdough Mastery course completely transformed my understanding of fermentation. My loaves now rival bakery quality, and my family can't get enough!”</p>
+          <footer class="mt-4 text-sm text-[color:var(--muted)]">— Sarah Mitchell, Home Baker • Melbourne, AU</footer>
+        </blockquote>
+
+        <blockquote class="p-6 bg-[color:var(--bone)] rounded-2xl border border-[color:var(--sourdough)] soft-shadow">
+          <p class="text-[color:var(--burnt)]/95">“After taking the Viennoiserie course, I opened my own croissant café. The lamination techniques taught here are professional-grade. Worth every penny.”</p>
+          <footer class="mt-4 text-sm text-[color:var(--muted)]">— James Kim, Café Owner • Singapore</footer>
+        </blockquote>
+
+        <blockquote class="p-6 bg-white rounded-2xl soft-shadow">
+          <p class="text-[color:var(--burnt)]/95">“The community forum is incredible — I've connected with bakers from 30+ countries. The live Q&amp;A sessions with instructors are a game changer.”</p>
+          <footer class="mt-4 text-sm text-[color:var(--muted)]">— Elena Petrova, Pastry Chef • Berlin, DE</footer>
+        </blockquote>
+      </div>
+    </section>
+
+    <!-- Final CTA -->
+    <section class="rounded-2xl p-8 bg-[color:var(--sourdough)] text-white flex flex-col md:flex-row items-center justify-between gap-6">
+      <div>
+        <h4 class="text-xl font-semibold">Ready to Begin Your Baking Journey?</h4>
+        <p class="text-sm opacity-90 mt-1">Join 15,000+ students mastering the art of baking. Start with our free guide or dive into a full course today.</p>
+      </div>
+      <div class="flex gap-3">
+        <a href="#courses" class="px-4 py-3 rounded-lg bg-white text-[color:var(--burnt)] font-semibold">Explore Courses</a>
+        <a href="#guide" class="px-4 py-3 rounded-lg border border-white/40">Get Free Guide</a>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="mt-10 text-sm text-[color:var(--muted)]">
+      <div class="flex flex-col md:flex-row md:justify-between md:items-center gap-4">
+        <div>© <strong>L'Artisan Baking Atelier</strong> — All rights reserved.</div>
+        <div class="flex gap-4">
+          <a href="#" class="hover:underline">Privacy</a>
+          <a href="#" class="hover:underline">Terms</a>
+        </div>
+      </div>
+    </footer>
+
+  </main>
+
+  <script>
+    // Progressive reveal for elements with .spring-in
+    document.addEventListener('DOMContentLoaded', ()=>{
+      document.querySelectorAll('.spring-in').forEach((el,i)=>{
+        setTimeout(()=>{
+          el.animate([
+            {opacity:0, transform:'translateY(18px) scale(0.995)'},
+            {opacity:1, transform:'translateY(0) scale(1)'}
+          ],{duration:580, easing:'cubic-bezier(.2,.9,.3,1)', fill:'forwards'});
+        }, 120*i);
+      });
+    });
+
+    // Simple form handler (prototype)
+    function handleSignup(e){
+      e.preventDefault();
+      const email = document.getElementById('email').value.trim();
+      if(!email) return alert('Please enter an email');
+      // Mock feedback for prototype
+      const button = e.target.querySelector('button');
+      const orig = button.innerText;
+      button.disabled = true; button.innerText = 'Sending…';
+      setTimeout(()=>{
+        button.innerText = 'Guide sent!';
+        setTimeout(()=>{button.disabled=false; button.innerText=orig; e.target.reset()},1200);
+      },900);
+      return false;
+    }
+  </script>
+
+</body>
+</html>
