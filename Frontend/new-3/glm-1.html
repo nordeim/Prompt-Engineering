@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>L'Artisan Baking Atelier | Tradition Meets Digital Excellence</title>
+    
+    <!-- Typography: Playfair Display (Editorial) & Inter (UI) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,800;1,400&display=swap" rel="stylesheet">
+
+    <style>
+        /* 
+         * =========================================
+         * DESIGN TOKENS & RESET
+         * =========================================
+         */
+        :root {
+            /* Palette: Ingredients & Tactile Materials */
+            --color-bone: #F9F7F2;       /* Background: Flour/Dough */
+            --color-flour: #F0ECE3;      /* Secondary Background */
+            --color-charcoal: #1C1917;   /* Text: Burnt Crust */
+            --color-stone: #57534E;      /* Secondary Text */
+            --color-copper: #B45309;     /* Accent: Copper Pans */
+            --color-gold: #D97706;       /* Highlight: Sourdough Crumb */
+            --color-white: #FFFFFF;
+            
+            /* Typography */
+            --font-heading: 'Playfair Display', serif;
+            --font-body: 'Inter', sans-serif;
+            
+            /* Spacing */
+            --space-xs: 0.5rem;
+            --space-sm: 1rem;
+            --space-md: 2rem;
+            --space-lg: 4rem;
+            --space-xl: 8rem;
+
+            /* UI Elements */
+            --border-thin: 1px solid rgba(28, 25, 23, 0.1);
+            --radius-sm: 4px;
+            --radius-md: 8px;
+            --shadow-soft: 0 4px 20px rgba(0,0,0,0.03);
+            --transition-spring: all 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            font-size: 16px;
+        }
+
+        body {
+            background-color: var(--color-bone);
+            color: var(--color-charcoal);
+            font-family: var(--font-body);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+            /* Subtle grain texture for "Tactile" feel */
+            background-image: radial-gradient(#d6d3d1 1px, transparent 1px);
+            background-size: 24px 24px;
+        }
+
+        /* 
+         * =========================================
+         * UTILITIES & TYPOGRAPHY
+         * =========================================
+         */
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--space-sm);
+        }
+
+        h1, h2, h3, h4 {
+            font-family: var(--font-heading);
+            font-weight: 600;
+            line-height: 1.1;
+            letter-spacing: -0.02em;
+        }
+
+        h1 { font-size: clamp(3rem, 5vw, 5.5rem); }
+        h2 { font-size: clamp(2rem, 4vw, 3.5rem); margin-bottom: var(--space-md); }
+        h3 { font-size: 1.5rem; margin-bottom: var(--space-sm); }
+        
+        p {
+            font-size: 1.125rem;
+            color: var(--color-stone);
+            margin-bottom: var(--space-md);
+            max-width: 65ch;
+        }
+
+        .text-center { text-align: center; }
+        .text-justify { text-align: justify; }
+        .serif-italic { font-family: var(--font-heading); font-style: italic; color: var(--color-copper); }
+
+        /* 
+         * =========================================
+         * COMPONENTS
+         * =========================================
+         */
+        
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem 2rem;
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            text-decoration: none;
+            transition: var(--transition-spring);
+            border: 1px solid var(--color-charcoal);
+            background: transparent;
+            color: var(--color-charcoal);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary {
+            background-color: var(--color-charcoal);
+            color: var(--color-bone);
+            border-color: var(--color-charcoal);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--color-copper);
+            border-color: var(--color-copper);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--color-flour);
+        }
+
+        /* Inputs */
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-sm);
+            margin-bottom: var(--space-md);
+        }
+
+        input[type="email"] {
+            background: transparent;
+            border: none;
+            border-bottom: 2px solid var(--color-charcoal);
+            padding: var(--space-sm) 0;
+            font-family: var(--font-body);
+            font-size: 1.25rem;
+            color: var(--color-charcoal);
+            width: 100%;
+            transition: border-color 0.3s ease;
+        }
+
+        input[type="email"]:focus {
+            outline: none;
+            border-color: var(--color-copper);
+        }
+
+        input::placeholder { color: rgba(28, 25, 23, 0.3); }
+
+        /* 
+         * =========================================
+         * LAYOUT SECTIONS
+         * =========================================
+         */
+
+        /* Header */
+        header {
+            padding: var(--space-md) 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(249, 247, 242, 0.9);
+            backdrop-filter: blur(10px);
+            border-bottom: var(--border-thin);
+        }
+
+        .nav-wrapper {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: var(--font-heading);
+            font-weight: 800;
+            font-size: 1.5rem;
+            letter-spacing: -0.03em;
+            color: var(--color-charcoal);
+            text-decoration: none;
+        }
+
+        nav ul {
+            display: none; /* Mobile first hidden */
+            list-style: none;
+            gap: var(--space-md);
+        }
+
+        @media (min-width: 768px) {
+            nav ul { display: flex; align-items: center; }
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--color-charcoal);
+            font-size: 0.9rem;
+            font-weight: 500;
+            position: relative;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0%;
+            height: 1px;
+            background: var(--color-copper);
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover::after { width: 100%; }
+
+        /* Hero Section */
+        .hero {
+            padding: var(--space-xl) 0;
+            min-height: 85vh;
+            display: flex;
+            align-items: center;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: var(--space-lg);
+            align-items: center;
+        }
+
+        @media (min-width: 992px) {
+            .hero-grid { grid-template-columns: 1.2fr 0.8fr; }
+        }
+
+        .hero-content {
+            z-index: 2;
+        }
+
+        .hero-tagline {
+            display: block;
+            margin-bottom: var(--space-sm);
+            color: var(--color-copper);
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            font-size: 0.875rem;
+        }
+
+        .hero-visual {
+            position: relative;
+            height: 500px;
+            width: 100%;
+            background-color: var(--color-flour);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+        }
+
+        .hero-visual img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: sepia(0.2) contrast(1.1);
+            transition: transform 1.2s ease;
+        }
+
+        .hero-visual:hover img { transform: scale(1.05); }
+
+        /* Marquee Strip */
+        .marquee-strip {
+            background-color: var(--color-charcoal);
+            color: var(--color-bone);
+            padding: var(--space-sm) 0;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+        .marquee-content {
+            display: inline-block;
+            animation: scroll 20s linear infinite;
+            font-family: var(--font-heading);
+            font-size: 1.25rem;
+            opacity: 0.8;
+        }
+
+        @keyframes scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* Courses Section (Bento Grid) */
+        .courses { padding: var(--space-xl) 0; }
+        
+        .section-header {
+            margin-bottom: var(--space-lg);
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-xs);
+        }
+
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--space-md);
+            grid-auto-rows: 400px;
+        }
+
+        .card {
+            position: relative;
+            background: var(--color-white);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: var(--space-md);
+            transition: var(--transition-spring);
+            border: var(--border-thin);
+        }
+
+        /* Bento Spans */
+        .span-2 { grid-column: span 1; }
+        @media (min-width: 768px) { .span-2 { grid-column: span 2; } }
+
+        .card-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 1;
+            transition: transform 0.8s ease;
+        }
+
+        .card:hover .card-bg { transform: scale(1.05); }
+
+        .card-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to top, rgba(28,25,23,0.9), rgba(28,25,23,0));
+            z-index: 2;
+        }
+
+        .card-content {
+            position: relative;
+            z-index: 3;
+            color: var(--color-white);
+        }
+
+        .card-content h3 { color: var(--color-white); font-family: var(--font-heading); font-size: 2rem; margin-bottom: 0.5rem; }
+        .card-content p { color: rgba(255,255,255,0.8); font-size: 1rem; margin-bottom: 1.5rem; }
+        .card-link { color: var(--color-gold); text-decoration: none; font-weight: 600; font-size: 0.9rem; display: flex; align-items: center; gap: 0.5rem; }
+
+        /* Mentors Section */
+        .mentors {
+            background-color: var(--color-flour);
+            padding: var(--space-xl) 0;
+        }
+
+        .mentor-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--space-lg);
+            margin-top: var(--space-lg);
+        }
+
+        .mentor-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .mentor-img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: var(--space-sm);
+            border: 2px solid var(--color-bone);
+            box-shadow: var(--shadow-soft);
+        }
+
+        .mentor-name {
+            font-family: var(--font-heading);
+            font-size: 1.25rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .mentor-title {
+            font-size: 0.875rem;
+            color: var(--color-copper);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* Testimonials (Editorial Style) */
+        .testimonials { padding: var(--space-xl) 0; }
+
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: var(--space-md);
+            margin-top: var(--space-lg);
+        }
+
+        @media(min-width: 768px) {
+            .testimonial-grid { grid-template-columns: repeat(3, 1fr); }
+        }
+
+        .quote-card {
+            background: var(--color-white);
+            padding: var(--space-md);
+            border-top: 4px solid var(--color-copper);
+            box-shadow: var(--shadow-soft);
+        }
+
+        .quote-text {
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            font-style: italic;
+            color: var(--color-charcoal);
+            margin-bottom: var(--space-md);
+            line-height: 1.3;
+        }
+
+        .quote-author {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+        }
+
+        .author-info h4 { font-size: 1rem; margin-bottom: 0; }
+        .author-info span { font-size: 0.8rem; color: var(--color-stone); }
+
+        /* Lead Magnet (Dark Section) */
+        .lead-magnet {
+            background-color: var(--color-charcoal);
+            color: var(--color-bone);
+            padding: var(--space-xl) 0;
+        }
+
+        .lead-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: var(--space-lg);
+            align-items: center;
+        }
+
+        @media (min-width: 992px) {
+            .lead-grid { grid-template-columns: 1fr 1fr; }
+        }
+
+        .lead-content h2 { color: var(--color-white); }
+        .lead-content p { color: rgba(249, 247, 242, 0.7); }
+        
+        .feature-list {
+            list-style: none;
+            margin-bottom: var(--space-lg);
+        }
+        
+        .feature-list li {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            font-size: 1.125rem;
+        }
+
+        .feature-list li::before {
+            content: '✓';
+            color: var(--color-gold);
+            font-weight: bold;
+        }
+
+        .lead-form {
+            background: rgba(255,255,255,0.05);
+            padding: var(--space-lg);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: var(--radius-md);
+        }
+
+        .input-group label {
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--color-gold);
+        }
+
+        input[type="email"] {
+            background: transparent;
+            border: none;
+            border-bottom: 1px solid rgba(255,255,255,0.3);
+            color: var(--color-white);
+            padding: 0.5rem 0;
+        }
+
+        input[type="email"]:focus {
+            border-color: var(--color-gold);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--color-bone);
+            border-top: var(--border-thin);
+            padding: var(--space-lg) 0 var(--space-md);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--space-lg);
+            margin-bottom: var(--space-lg);
+        }
+
+        .footer-col h5 {
+            font-family: var(--font-heading);
+            font-size: 1.25rem;
+            margin-bottom: var(--space-md);
+        }
+
+        .footer-col ul { list-style: none; }
+        .footer-col li { margin-bottom: 0.5rem; }
+        .footer-col a { text-decoration: none; color: var(--color-stone); transition: color 0.2s; }
+        .footer-col a:hover { color: var(--color-copper); }
+
+        .copyright {
+            text-align: center;
+            font-size: 0.875rem;
+            color: var(--color-stone);
+            padding-top: var(--space-md);
+            border-top: var(--border-thin);
+        }
+
+        /* Animation Classes */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeIn 0.8s forwards;
+        }
+
+        .delay-1 { animation-delay: 0.2s; }
+        .delay-2 { animation-delay: 0.4s; }
+        .delay-3 { animation-delay: 0.6s; }
+
+        @keyframes fadeIn {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="container nav-wrapper">
+            <a href="#" class="logo">L'Artisan.</a>
+            <nav>
+                <ul>
+                    <li><a href="#courses">Courses</a></li>
+                    <li><a href="#mentors">Mentors</a></li>
+                    <li><a href="#testimonials">Stories</a></li>
+                    <li><a href="#lead-magnet" class="btn btn-primary" style="padding: 0.5rem 1.5rem; font-size: 0.8rem;">Get Free Guide</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="container hero-grid">
+                <div class="hero-content fade-in">
+                    <span class="hero-tagline">Where Tradition Meets Digital Excellence</span>
+                    <h1>Master the Art of Baking.</h1>
+                    <p>Learn from world-class master instructors with 20+ years of experience. From sourdough artistry to delicate pâtisserie — transform your passion into mastery.</p>
+                    <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                        <a href="#courses" class="btn btn-primary">Explore Courses</a>
+                        <a href="#lead-magnet" class="btn btn-secondary">Download Syllabus</a>
+                    </div>
+                </div>
+                <div class="hero-visual fade-in delay-2">
+                    <!-- High quality baking placeholder -->
+                    <img src="https://picsum.photos/seed/baking2/800/800" alt="Artisan Sourdough Bread being scored">
+                </div>
+            </div>
+        </section>
+
+        <!-- Marquee Strip -->
+        <div class="marquee-strip">
+            <div class="marquee-content">
+                FERMENTATION • LAMINATION • PRECISION • TASTE • COMMUNITY • CRAFT • FERMENTATION • LAMINATION • PRECISION • TASTE • COMMUNITY • CRAFT
+            </div>
+        </div>
+
+        <!-- Courses Section -->
+        <section id="courses" class="courses">
+            <div class="container">
+                <div class="section-header">
+                    <span class="serif-italic">Curated Paths</span>
+                    <h2>Discover Your Journey</h2>
+                    <p>From beginner fundamentals to advanced techniques — designed by master artisans.</p>
+                </div>
+
+                <div class="bento-grid">
+                    <!-- Card 1: Large Span -->
+                    <article class="card span-2">
+                        <img src="https://picsum.photos/seed/sourdough/800/600" alt="Sourdough Loaf" class="card-bg">
+                        <div class="card-overlay"></div>
+                        <div class="card-content">
+                            <h3>Sourdough Mastery</h3>
+                            <p>The science of fermentation. Build, maintain, and bake with a robust starter culture.</p>
+                            <a href="#" class="card-link">View Syllabus &rarr;</a>
+                        </div>
+                    </article>
+
+                    <!-- Card 2: Standard -->
+                    <article class="card">
+                        <img src="https://picsum.photos/seed/croissant/600/800" alt="Croissant" class="card-bg">
+                        <div class="card-overlay"></div>
+                        <div class="card-content">
+                            <h3>Viennoiserie</h3>
+                            <p>Perfect the lamination technique for buttery, flaky layers.</p>
+                            <a href="#" class="card-link">View Syllabus &rarr;</a>
+                        </div>
+                    </article>
+
+                    <!-- Card 3: Standard -->
+                    <article class="card">
+                        <img src="https://picsum.photos/seed/pastry/600/800" alt="Pastry Chef" class="card-bg">
+                        <div class="card-overlay"></div>
+                        <div class="card-content">
+                            <h3>Pâtisserie Fundamentals</h3>
+                            <p>Creams, tarts, and gateaux. The building blocks of French pastry.</p>
+                            <a href="#" class="card-link">View Syllabus &rarr;</a>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Mentors Section -->
+        <section id="mentors" class="mentors">
+            <div class="container">
+                <div class="section-header">
+                    <span class="serif-italic">Expert Guidance</span>
+                    <h2>Your Mentors</h2>
+                    <p>Learn from World-Class Artisans with experience from Michelin-starred kitchens.</p>
+                </div>
+
+                <div class="mentor-grid">
+                    <div class="mentor-card">
+                        <img src="https://picsum.photos/seed/chef1/200/200" alt="Chef" class="mentor-img">
+                        <h4 class="mentor-name">Jean-Luc Rousseau</h4>
+                        <span class="mentor-title">Master Baker</span>
+                    </div>
+                    <div class="mentor-card">
+                        <img src="https://picsum.photos/seed/chef2/200/200" alt="Chef" class="mentor-img">
+                        <h4 class="mentor-name">Elena Costa</h4>
+                        <span class="mentor-title">Pastry Chef</span>
+                    </div>
+                    <div class="mentor-card">
+                        <img src="https://picsum.photos/seed/chef3/200/200" alt="Chef" class="mentor-img">
+                        <h4 class="mentor-name">David Chen</h4>
+                        <span class="mentor-title">Bread Specialist</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonials Section -->
+        <section id="testimonials" class="testimonials">
+            <div class="container">
+                <h2>Transforming Bakers Worldwide</h2>
+                <div class="testimonial-grid">
+                    <!-- Review 1 -->
+                    <div class="quote-card">
+                        <p class="quote-text">"The Sourdough Mastery course completely transformed my understanding of fermentation. My loaves now rival bakery quality."</p>
+                        <div class="quote-author">
+                            <div class="author-info">
+                                <h4>Sarah Mitchell</h4>
+                                <span>Home Baker • Melbourne, AU</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Review 2 -->
+                    <div class="quote-card">
+                        <p class="quote-text">"After taking the Viennoiserie course, I opened my own croissant café. The lamination techniques taught here are professional-grade."</p>
+                        <div class="quote-author">
+                            <div class="author-info">
+                                <h4>James Kim</h4>
+                                <span>Café Owner • Singapore</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Review 3 -->
+                    <div class="quote-card">
+                        <p class="quote-text">"The community forum is incredible — I've connected with bakers from 30+ countries. The live Q&A sessions are a game changer."</p>
+                        <div class="quote-author">
+                            <div class="author-info">
+                                <h4>Elena Petrova</h4>
+                                <span>Pastry Chef • Berlin, DE</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Lead Magnet / CTA -->
+        <section id="lead-magnet" class="lead-magnet">
+            <div class="container lead-grid">
+                <div class="lead-content">
+                    <span style="color: var(--color-gold); font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; font-size: 0.875rem;">Free Download</span>
+                    <h2>Start Your Sourdough Journey Today</h2>
+                    <p>Get our comprehensive 32-page guide covering starter creation, feeding schedules, troubleshooting tips, and your first loaf recipe — completely free.</p>
+                    <ul class="feature-list">
+                        <li>Step-by-step starter cultivation</li>
+                        <li>Common mistakes & how to fix them</li>
+                        <li>Pro tips from our master bakers</li>
+                    </ul>
+                </div>
+                <div class="lead-form">
+                    <form onsubmit="event.preventDefault(); alert('Thank you! Your guide is on its way.');">
+                        <div class="input-group">
+                            <label for="email">Email address</label>
+                            <input type="email" id="email" placeholder="Enter your email" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary" style="width: 100%; border-color: var(--color-gold); background: var(--color-gold); color: var(--color-charcoal);">Get Free Guide</button>
+                        <p style="font-size: 0.8rem; margin-top: 1rem; color: rgba(255,255,255,0.5);">No spam. Unsubscribe anytime.</p>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <a href="#" class="logo" style="display: block; margin-bottom: 1rem;">L'Artisan.</a>
+                    <p style="font-size: 0.9rem;">Elevating home baking to professional standards through digital education.</p>
+                </div>
+                <div class="footer-col">
+                    <h5>Explore</h5>
+                    <ul>
+                        <li><a href="#courses">All Courses</a></li>
+                        <li><a href="#mentors">Mentors</a></li>
+                        <li><a href="#">Workshops</a></li>
+                        <li><a href="#">Free Resources</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h5>Company</h5>
+                    <ul>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Press</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h5>Connect</h5>
+                    <ul>
+                        <li><a href="#">Instagram</a></li>
+                        <li><a href="#">YouTube</a></li>
+                        <li><a href="#">Pinterest</a></li>
+                        <li><a href="#">Twitter/X</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                &copy; 2023 L'Artisan Baking Atelier. All rights reserved. Designed with precision.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Minimal JS for optional enhancements if needed in future, currently CSS handles interaction -->
+    <script>
+        // Optional: Simple Intersection Observer for fade-in animations on scroll
+        document.addEventListener('DOMContentLoaded', () => {
+            const observerOptions = {
+                threshold: 0.1
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            // Select elements to animate
+            const animatedElements = document.querySelectorAll('.card, .quote-card, .mentor-card');
+            animatedElements.forEach((el, index) => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(20px)';
+                el.style.transition = `all 0.6s cubic-bezier(0.22, 1, 0.36, 1) ${index * 0.1}s`;
+                observer.observe(el);
+            });
+        });
+    </script>
+</body>
+</html>
