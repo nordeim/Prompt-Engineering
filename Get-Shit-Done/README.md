@@ -191,13 +191,13 @@ GSD is a **meta-prompting, context engineering, and spec-driven development syst
 
 ```mermaid
 graph TD
-    A[User: /gsd-plan-phase 1] --> B[Orchestrator]
-    B --> C[Load: STATE.md + PROJECT.md + CONTEXT.md]
-    B --> D[Spawn: 4x Research Agents<br/>(fresh 200K ctx each)]
-    D --> E[Research: stack, patterns, architecture, pitfalls]
-    E --> F[Synthesize findings → planner prompt]
-    B --> G[Spawn: Planner Agent<br/>(fresh 200K ctx)]
-    G --> H[Generate: XML-structured atomic plans]
+    A["User: /gsd-plan-phase 1"] --> B[Orchestrator]
+    B --> C["Load: STATE.md + PROJECT.md + CONTEXT.md"]
+    B --> D["Spawn: 4x Research Agents<br/>(fresh 200K ctx each)"]
+    D --> E["Research: stack, patterns, architecture, pitfalls"]
+    E --> F["Synthesize findings → planner prompt"]
+    B --> G["Spawn: Planner Agent<br/>(fresh 200K ctx)"]
+    G --> H["Generate: XML-structured atomic plans"]
     B --> I[Spawn: Plan Checker Agent]
     I --> J{Plan passes verification?}
     J -->|No| G
@@ -207,7 +207,7 @@ graph TD
     L --> N[Wave 2: Dependent executors]
     M & N --> O[Atomic Git commits per task]
     O --> P[Verifier Agent: Check deliverables]
-    P --> Q[Output: SUMMARY.md + VERIFICATION.md]
+    P --> Q["Output: SUMMARY.md + VERIFICATION.md"]
 ```
 
 [🔐 Security Lens]: Each agent spawn is a security boundary. The orchestrator validates all inputs before passing to subagents. Subagents cannot access each other's contexts or the orchestrator's full state — only curated, task-relevant artifacts.
