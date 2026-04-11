@@ -376,7 +376,3 @@ Research process details are in the `references/research/` directory (6 files, 2
 > "Stay Hungry. Stay Foolish." — from *Whole Earth Catalog*, Stanford 2005
 
 > "Oh wow. Oh wow. Oh wow." — last words, 2011.10.05
-
----
-
-If you want, I can continue and translate the remaining appended research dossiers in the same faithful, format-preserving style—tell me “continue (Part 2)” and confirm whether you want *everything* after this appendix translated as well.
