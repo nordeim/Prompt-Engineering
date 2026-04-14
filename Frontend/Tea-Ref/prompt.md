@@ -1,4 +1,15 @@
-Design a premium tea brand official website, blending tea heritage with modern lifestyle.
+# Task Request: Design a dynamic e-commerce website for a premium brand tea brand, blending tea heritage with modern lifestyle.
+
+## Tech Stack:
+- see attached `Frontend/Tea-Ref/tech-stack_considerations.md` for further consideration details.
+
+**Frontend:** Next.js 16+ (app router), React 19, TypeScript 5.9, Tailwind CSS v4,  Framer Motion 12, Radix UI, Shadcn UI components, Zod 4, BFF for API based Backend
+
+**Backend:** Python Django v6 + PostgreSQL 17
+
+**Caching:** Redis 7.4
+
+## Requirements:
 
 Visual Strategy:
 Imagery: tea garden, tea ceremony, tea leaf textures, tea ware.
@@ -26,7 +37,7 @@ Overall Vibe: elegant, traditional, culturally rich, lifestyle-oriented.
 
 ---
 
-Below is a reference design for your deep review and consideration for a fully crafted premium tea brand website — blending Eastern tea heritage with contemporary lifestyle design. Every section is functional with smooth interactions, hover effects, and a cohesive visual identity.
+Below is a sample template static HTML landing page mock-up to be used as your reference for consideration for a fully crafted premium tea brand website — blending Eastern tea heritage with contemporary lifestyle design. Every section is functional with smooth interactions, hover effects, and a cohesive visual identity.
 
 ```html
 <!DOCTYPE html>
