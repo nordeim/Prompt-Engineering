@@ -214,4 +214,477 @@ Even within the custom full-stack path, there are architectural nuances that aff
 
 ---
 
-**Once you confirm these points, I will proceed to the PLAN phase with a detailed, phased task breakdown including specific files, API endpoints, and success criteria. Please let me know your preferences.**
+# Master Execution Plan: Cha Yuan Premium Tea E-Commerce Platform
+
+This document outlines the comprehensive implementation plan for building the Cha Yuan platform using **Approach C3 – BFF with Server-Managed Cart (Redis)**. The plan is structured into distinct phases with clear deliverables, file structures, API endpoints, and success criteria. All phases align with the six-step workflow: **Analyze → Plan → Validate → Implement → Verify → Deliver**.
+
+---
+
+## Phase 0: Environment & Project Initialization (Days 1–3)
+
+### Objectives
+- Establish version-controlled monorepo structure.
+- Configure backend and frontend environments with all dependencies.
+- Set up local development services (PostgreSQL, Redis).
+
+### Deliverables
+
+| Deliverable | Description | Success Criteria |
+|-------------|-------------|------------------|
+| Monorepo Structure | `cha-yuan/` with `backend/` and `frontend/` directories | Git initialized, `.gitignore` configured |
+| Django Backend Skeleton | Django 6 project named `chayuan` with app `core` and `api` | `python manage.py runserver` loads welcome page |
+| PostgreSQL & Redis | Docker Compose file for local services | `docker-compose up` starts Postgres 17 and Redis 7.4 |
+| Next.js Frontend Skeleton | Next.js 16 App Router with TypeScript, Tailwind v4, Shadcn UI | `npm run dev` serves on `localhost:3000` |
+| Environment Variables | `.env.local` (frontend) and `.env` (backend) templates | Secrets not committed; documented in README |
+
+### File Tree (Key Additions)
+
+```
+cha-yuan/
+├── backend/
+│   ├── chayuan/
+│   │   ├── __init__.py
+│   │   ├── settings.py
+│   │   ├── urls.py
+│   │   └── asgi.py
+│   ├── core/
+│   │   ├── models.py
+│   │   ├── admin.py
+│   │   └── migrations/
+│   ├── api/
+│   │   ├── urls.py
+│   │   ├── authentication.py
+│   │   └── v1/
+│   ├── manage.py
+│   ├── requirements.txt
+│   └── Dockerfile
+├── frontend/
+│   ├── app/
+│   │   ├── layout.tsx
+│   │   ├── page.tsx
+│   │   ├── globals.css
+│   │   └── api/proxy/[...path]/route.ts
+│   ├── components/
+│   ├── lib/
+│   ├── hooks/
+│   ├── types/
+│   ├── next.config.js
+│   ├── tailwind.config.ts
+│   ├── package.json
+│   └── tsconfig.json
+├── docker-compose.yml
+└── README.md
+```
+
+### Implementation Steps
+
+1. **Backend**:
+   - Create virtual environment, install `Django==6.0`, `django-ninja==1.0`, `psycopg2-binary`, `djangorestframework-simplejwt`, `redis`, `stripe`.
+   - Run `django-admin startproject chayuan .` and `python manage.py startapp core`.
+   - Configure `settings.py` for PostgreSQL and Redis cache.
+   - Set up custom user model (email as username).
+
+2. **Frontend**:
+   - Run `npx create-next-app@16 frontend --typescript --tailwind --app`.
+   - Install `@shadcn/ui`, `framer-motion`, `@tanstack/react-query`, `zustand`, `zod`, `react-hook-form`.
+   - Initialize Shadcn with Tailwind v4 configuration.
+
+3. **Docker Compose**:
+   - Define services for `postgres` (v17) and `redis` (v7.4).
+
+---
+
+## Phase 1: Authentication & BFF Foundation (Week 1)
+
+### Objectives
+- Implement JWT authentication with `HttpOnly` cookies.
+- Create Next.js BFF proxy route for secure API communication.
+- Build reusable authenticated fetch utility.
+
+### Backend Tasks
+
+| Task | Files | API Endpoints | Success Criteria |
+|------|-------|---------------|------------------|
+| Custom User Model | `core/models.py` | N/A | User model uses email; migrations applied |
+| JWT Cookie Endpoints | `api/v1/auth.py` | `POST /api/v1/auth/login/`, `POST /api/v1/auth/logout/`, `POST /api/v1/auth/refresh/`, `GET /api/v1/auth/me/` | Tokens set as `HttpOnly` cookies; refresh rotation works |
+| Authentication Backend | `api/authentication.py` | N/A | Custom `JWTAuth` class for Django Ninja |
+| CORS Configuration | `chayuan/settings.py` | N/A | Frontend origin allowed; credentials enabled |
+
+**Sample `api/v1/auth.py`**:
+```python
+from ninja import Router
+from django.contrib.auth import authenticate
+from rest_framework_simplejwt.tokens import RefreshToken
+from django.middleware.csrf import get_token
+
+router = Router()
+
+@router.post("/login")
+def login(request, email: str, password: str):
+    user = authenticate(email=email, password=password)
+    if user:
+        refresh = RefreshToken.for_user(user)
+        response = {"detail": "success"}
+        response.set_cookie(
+            key="refresh_token",
+            value=str(refresh),
+            httponly=True,
+            secure=True,
+            samesite="Lax",
+            path="/api/auth/refresh"
+        )
+        response.set_cookie(
+            key="access_token",
+            value=str(refresh.access_token),
+            httponly=True,
+            secure=True,
+            samesite="Lax"
+        )
+        return response
+    return {"detail": "Invalid credentials"}, 401
+```
+
+### Frontend Tasks
+
+| Task | Files | Success Criteria |
+|------|-------|------------------|
+| Proxy Route Handler | `app/api/proxy/[...path]/route.ts` | Forwards requests to Django backend with cookie attached |
+| Auth Fetch Utility | `lib/auth-fetch.ts` | Detects server/client, reads token on server, uses proxy on client |
+| Login/Signup Pages | `app/(auth)/login/page.tsx`, `app/(auth)/signup/page.tsx` | Form validation with Zod, successful login sets cookie |
+| Auth Context/Provider | `components/providers/auth-provider.tsx` | Provides user state via React Context + TanStack Query |
+| Protected Route Middleware | `proxy.ts` (Next.js 16) | Redirects unauthenticated users from protected routes |
+
+**Key Code: `app/api/proxy/[...path]/route.ts`** (BFF Proxy):
+```typescript
+import { cookies } from 'next/headers';
+import { NextRequest, NextResponse } from 'next/server';
+
+export async function ALL(request: NextRequest) {
+  const path = request.nextUrl.pathname.replace('/api/proxy', '');
+  const backendUrl = `${process.env.BACKEND_URL}${path}`;
+
+  const cookieStore = await cookies();
+  const accessToken = cookieStore.get('access_token')?.value;
+
+  const headers = new Headers(request.headers);
+  headers.set('Content-Type', 'application/json');
+  if (accessToken) {
+    headers.set('Authorization', `Bearer ${accessToken}`);
+  }
+
+  const response = await fetch(backendUrl, {
+    method: request.method,
+    headers,
+    body: request.method !== 'GET' ? await request.text() : undefined,
+  });
+
+  const data = await response.json();
+  return NextResponse.json(data, { status: response.status });
+}
+```
+
+### Success Criteria (Phase 1)
+- Users can sign up, log in, and log out.
+- JWT tokens are stored in secure `HttpOnly` cookies.
+- Server Components can fetch protected data via `authFetch`.
+- Client Components can fetch data via TanStack Query hitting `/api/proxy`.
+
+---
+
+## Phase 2: Core Data Models & Admin Customization (Week 1–2)
+
+### Objectives
+- Define Django models for products, categories, origins, reviews, quiz, subscriptions, orders, cart.
+- Customize Django Admin for content managers.
+
+### Backend Tasks
+
+| Model | Fields Summary | Admin Features |
+|-------|----------------|----------------|
+| `Origin` | name, description, image, slug | Search, list display |
+| `TeaCategory` | name (Green, Oolong, etc.), fermentation_level, description | Filter sidebar |
+| `Product` | name, slug, description, price, stock, origin (FK), category (FK), images (multiple), brewing_temp, brewing_time, tasting_notes, harvest_season, is_subscription_eligible | Inline images, rich text for description, auto-slug |
+| `ProductImage` | product (FK), image, alt, is_primary | Inline in Product admin |
+| `Review` | user (FK), product (FK), rating (1-5), comment, created_at | List filter by product, moderation actions |
+| `QuizQuestion` | question_text, order | Inline for `QuizChoice` |
+| `QuizChoice` | question (FK), choice_text, value (JSON for preference mapping) | Inline |
+| `UserPreference` | user (FK), preferences (JSON), quiz_completed (bool) | Readonly in User admin |
+| `SubscriptionPlan` | name, slug, price, description, interval (monthly), stripe_price_id | List display |
+| `UserSubscription` | user (FK), plan (FK), status, current_period_start/end, stripe_subscription_id | Actions: cancel, reactivate |
+| `Order` | user (FK), status, total, shipping_address, stripe_payment_intent_id, created_at | Readonly, list display |
+| `OrderItem` | order (FK), product (FK), quantity, price_at_time | Inline in Order admin |
+| `Cart` (Redis-backed) | Not a Django model; managed via Redis | N/A |
+| `Article` | title, slug, content (Markdown), author, published_at, category (Brewing/Tasting/History) | Rich text editor (e.g., django-markdownx) |
+
+### API Endpoints (Django Ninja)
+
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| `/api/v1/products/` | GET | List products with filtering (origin, category, season, fermentation) |
+| `/api/v1/products/{slug}/` | GET | Product detail |
+| `/api/v1/categories/` | GET | List tea categories |
+| `/api/v1/origins/` | GET | List origins |
+| `/api/v1/reviews/` | GET, POST | List reviews for product; authenticated POST |
+| `/api/v1/quiz/questions/` | GET | Fetch all quiz questions with choices |
+| `/api/v1/quiz/submit/` | POST | Save user preferences |
+| `/api/v1/subscriptions/plans/` | GET | List available plans |
+| `/api/v1/articles/` | GET | List culture articles |
+| `/api/v1/articles/{slug}/` | GET | Article detail |
+
+### Admin Customization
+- Override `ProductAdmin` to include inline images and a preview of slug.
+- Add custom actions for bulk updating stock.
+- Use `django-import-export` for product CSV import.
+- Customize dashboard with recent orders, low stock alerts.
+
+### Success Criteria (Phase 2)
+- All models created and migrated.
+- Admin interface allows full CRUD on products, categories, articles, quiz questions.
+- API endpoints return properly serialized data (tested via Swagger UI at `/api/docs`).
+
+---
+
+## Phase 3: Product Catalog & Tea Culture Frontend (Week 2–3)
+
+### Objectives
+- Implement public-facing product listing and detail pages.
+- Build Tea Culture (blog) section.
+- Apply visual design from HTML template using Tailwind and Framer Motion.
+
+### Frontend Tasks
+
+| Page/Component | File Path | Features |
+|----------------|-----------|----------|
+| Homepage | `app/page.tsx` | Hero, Philosophy, Featured Products (reusable components) |
+| Product Listing | `app/products/page.tsx` | Filter by origin, category, fermentation, season; sort options |
+| Product Detail | `app/products/[slug]/page.tsx` | Image gallery, description, brewing guide, reviews, add to cart |
+| Tea Culture Index | `app/culture/page.tsx` | Grid of articles |
+| Article Detail | `app/culture/[slug]/page.tsx` | Rendered Markdown content |
+| Search | `app/search/page.tsx` | Client-side search via API |
+| Components | `components/product-card.tsx`, `components/product-tabs.tsx`, `components/review-list.tsx`, `components/add-review-form.tsx` | Shadcn UI + Framer Motion animations |
+
+### Data Fetching Strategy
+- **Server Components**: Fetch initial product list/detail using `authFetch` (server-side) for SEO.
+- **Client Components**: Use TanStack Query for filters, pagination, and user-specific actions (reviews, cart).
+
+### API Integration
+- Create typed API client in `lib/api-client.ts` using `authFetch`.
+- Define Zod schemas for product, category, review in `types/schemas.ts`.
+
+### Animations
+- Replace CSS reveal classes with Framer Motion `whileInView` and `variants`.
+- Implement page transitions with `AnimatePresence` in `layout.tsx`.
+
+### Success Criteria (Phase 3)
+- Product listing with working filters and pagination.
+- Product detail page displays all information, including brewing parameters.
+- Tea culture section renders articles from Django.
+- UI matches the design language of the HTML template (colors, typography, spacing).
+
+---
+
+## Phase 4: Shopping Cart (Redis-Backed) & Checkout (Week 3–4)
+
+### Objectives
+- Implement server-managed cart using Redis.
+- Integrate Stripe Checkout for payments.
+- Create order confirmation flow.
+
+### Backend Tasks
+
+| Task | Endpoints | Implementation Notes |
+|------|-----------|----------------------|
+| Cart Service (Redis) | `api/v1/cart.py` | `GET /cart/`, `POST /cart/add/`, `PATCH /cart/item/{id}/`, `DELETE /cart/item/{id}/` |
+| Cart Data Structure | Redis hash: `cart:{session_id}` with fields `product_id:quantity` | Use `uuid.uuid4()` for anonymous carts, store `cart_id` in cookie |
+| Merge Cart on Login | Middleware to migrate anonymous cart to user cart after authentication | |
+| Stripe Checkout Session | `POST /api/v1/checkout/create-session/` | Creates Stripe Checkout session with line items from cart |
+| Stripe Webhook | `POST /api/v1/webhooks/stripe/` | Handles `checkout.session.completed` to create Order, clear cart |
+| Order API | `GET /api/v1/orders/`, `GET /api/v1/orders/{id}/` | For user dashboard |
+
+**Cart API Example**:
+```python
+@router.get("/cart")
+def get_cart(request):
+    cart_id = request.COOKIES.get("cart_id")
+    if not cart_id:
+        return {"items": [], "total": 0}
+    cart_data = redis_client.hgetall(f"cart:{cart_id}")
+    # Convert to list of items with product details
+    ...
+
+@router.post("/cart/add")
+def add_to_cart(request, product_id: int, quantity: int = 1):
+    cart_id = request.COOKIES.get("cart_id") or str(uuid.uuid4())
+    redis_client.hincrby(f"cart:{cart_id}", product_id, quantity)
+    response = {"success": True}
+    if not request.COOKIES.get("cart_id"):
+        response.set_cookie("cart_id", cart_id, httponly=True, max_age=60*60*24*30)
+    return response
+```
+
+### Frontend Tasks
+
+| Component | File | Functionality |
+|-----------|------|---------------|
+| Cart Provider | `components/providers/cart-provider.tsx` | Zustand store for UI state (drawer open) + TanStack Query for cart data |
+| Cart Drawer | `components/cart/cart-drawer.tsx` | Slide-out panel showing items, quantity adjust, remove |
+| Cart Page | `app/cart/page.tsx` | Full-page cart with summary and checkout button |
+| Checkout Flow | `app/checkout/page.tsx` | Redirects to Stripe Checkout; handles success/cancel |
+| Order Confirmation | `app/checkout/success/page.tsx` | Displays order summary from Stripe session |
+
+### Stripe Integration Flow
+1. User clicks "Checkout" → frontend calls `POST /api/proxy/checkout/create-session/`.
+2. Backend creates Stripe Checkout session with line items, success/cancel URLs.
+3. Frontend redirects to `session.url`.
+4. Stripe redirects to success URL → frontend shows order confirmation.
+5. Webhook updates order status and clears cart.
+
+### Success Criteria (Phase 4)
+- Users can add/remove items to cart; cart persists across page refreshes.
+- Anonymous carts are merged upon login.
+- Checkout completes successfully with Stripe test mode.
+- Orders appear in user dashboard and Django Admin.
+
+---
+
+## Phase 5: User Accounts, Reviews & Preference Quiz (Week 5–6)
+
+### Objectives
+- Build user dashboard for order history, subscriptions, profile.
+- Implement product reviews.
+- Create one-time onboarding preference quiz.
+
+### Backend Tasks
+
+| Task | Endpoints | Description |
+|------|-----------|-------------|
+| User Profile | `GET /api/v1/users/me/`, `PATCH /api/v1/users/me/` | Update name, email, password |
+| Order History | `GET /api/v1/users/me/orders/` | Paginated list of user orders |
+| Subscription Management | `GET /api/v1/users/me/subscription/`, `POST /api/v1/users/me/subscription/cancel/` | View active sub, cancel |
+| Review Submission | `POST /api/v1/products/{slug}/reviews/` | Authenticated users only; one review per product |
+| Quiz Questions | `GET /api/v1/quiz/questions/` | Returns list of questions with choices |
+| Quiz Submission | `POST /api/v1/quiz/submit/` | Saves preferences to `UserPreference` |
+
+### Frontend Tasks
+
+| Page/Component | File Path | Features |
+|----------------|-----------|----------|
+| Dashboard Layout | `app/dashboard/layout.tsx` | Sidebar navigation (Orders, Subscription, Reviews, Profile) |
+| Orders List | `app/dashboard/orders/page.tsx` | Table of past orders with links to detail |
+| Order Detail | `app/dashboard/orders/[id]/page.tsx` | Shows items, total, status |
+| Subscription Panel | `app/dashboard/subscription/page.tsx` | Displays current plan, next billing date, cancel button |
+| Reviews List | `app/dashboard/reviews/page.tsx` | User's submitted reviews with edit option |
+| Preference Quiz | `app/quiz/page.tsx` | Multi-step form using React Hook Form + Zod; saves results |
+
+### Quiz Flow
+- Protected route; redirect to quiz if not completed.
+- On completion, store preferences in backend; used later for product recommendations.
+
+### Success Criteria (Phase 5)
+- Authenticated users can view order history, manage subscription, write reviews.
+- Quiz can be taken once; results saved.
+- User dashboard is polished and responsive.
+
+---
+
+## Phase 6: Subscription Service with Auto-Selection Rules (Week 6–7)
+
+### Objectives
+- Implement recurring subscriptions via Stripe Billing.
+- Build automated monthly box curation based on user preferences and history.
+
+### Backend Tasks
+
+| Task | Implementation | Success Criteria |
+|------|----------------|------------------|
+| Stripe Product/Price Sync | Management command to sync Django `SubscriptionPlan` with Stripe | Plans created in Stripe dashboard |
+| Subscription Creation | `POST /api/v1/subscriptions/create/` | Creates Stripe subscription; webhook confirms activation |
+| Monthly Curation Job | Celery beat task (or Django Tasks) | Runs monthly; selects 3-5 teas per subscriber based on rules |
+| Curation Rules Engine | `core/curation.py` | Implements "seasonal teas not previously sent to user" logic; considers quiz preferences |
+| Shipping Label Generation | Integration with shipping carrier (e.g., Shippo) | Generated after curation |
+| Subscription Shipment Model | `SubscriptionShipment` (user_sub, products, status, tracking) | Admin can view/manage shipments |
+
+**Curation Logic Snippet**:
+```python
+def curate_box(user):
+    # Get user preferences from quiz
+    prefs = UserPreference.objects.get(user=user).preferences
+    # Get all subscription-eligible teas
+    eligible = Product.objects.filter(is_subscription_eligible=True, stock__gt=0)
+    # Exclude teas user has received in past shipments
+    past_ids = SubscriptionShipment.objects.filter(
+        subscription__user=user
+    ).values_list('products__id', flat=True)
+    candidates = eligible.exclude(id__in=past_ids)
+    # Filter by season (current season)
+    current_season = get_current_season()
+    candidates = candidates.filter(harvest_season=current_season)
+    # Score candidates based on preference match (e.g., category preference)
+    # Select top 4
+    selected = score_and_select(candidates, prefs, limit=4)
+    return selected
+```
+
+### Frontend Tasks
+
+| Page | Features |
+|------|----------|
+| Subscription Signup | `app/subscribe/page.tsx` | Displays plans, links to checkout (Stripe) |
+| Subscription Dashboard | Enhanced with shipment history, upcoming box preview | |
+
+### Success Criteria (Phase 6)
+- Users can subscribe to a plan; recurring billing works.
+- Admin can trigger monthly curation (or it runs automatically).
+- Subscribers see their shipment history and next box contents.
+
+---
+
+## Phase 7: Polish, Testing & Deployment (Week 7–8)
+
+### Objectives
+- Optimize performance, accessibility, and SEO.
+- Write comprehensive tests.
+- Deploy to production.
+
+### Tasks
+
+| Area | Actions | Success Criteria |
+|------|---------|------------------|
+| Frontend Optimization | Add Next.js `Image` for all images; lazy load; implement `next/font` | Lighthouse score > 95 |
+| SEO | Metadata API for all pages; generate sitemap; structured data (Product schema) | Google Rich Results Test passes |
+| Accessibility | Audit with axe DevTools; ensure keyboard navigation | WCAG 2.1 AA compliant |
+| Backend Tests | Unit tests for models, API endpoints (pytest) | Coverage > 80% |
+| Frontend Tests | Component tests with React Testing Library; E2E with Playwright for critical flows | Key user journeys pass |
+| Deployment | Frontend to Vercel; Backend to Railway/AWS; Redis to Upstash; Postgres to managed service | Production URL accessible |
+| CI/CD | GitHub Actions for lint, test, build on PR; auto-deploy on main | Green pipeline |
+
+### Deployment Checklist
+- Set environment variables (Stripe keys, secret keys).
+- Configure custom domain and SSL.
+- Set up monitoring (Sentry, Logtail).
+- Enable Stripe live mode.
+
+---
+
+## Success Metrics Summary
+
+| Phase | Key Deliverable | Success Indicator |
+|-------|-----------------|-------------------|
+| 0 | Environment setup | Local dev runs without errors |
+| 1 | Auth + BFF | Users can sign in; protected API calls work |
+| 2 | Data models + Admin | Admin can manage all content types |
+| 3 | Catalog + Culture | Product pages render with filters; articles display |
+| 4 | Cart + Checkout | Successful test purchase via Stripe |
+| 5 | User dashboard | Order history, reviews, quiz functional |
+| 6 | Subscriptions | Recurring billing; curated boxes generated |
+| 7 | Production deployment | Site live with SSL, monitoring |
+
+---
+
+## Next Steps
+
+1. **Validate**: Review this master plan and confirm scope, timeline, and any adjustments.
+2. **Implement**: Once validated, I will begin Phase 0 execution, providing regular progress updates.
+3. **Verify**: Each phase includes success criteria; I will run tests and request your verification before proceeding.
+
+# https://chat.deepseek.com/share/vazgkj0x3jijc7ye8h
