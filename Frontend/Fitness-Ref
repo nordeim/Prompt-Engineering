@@ -1,0 +1,1407 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FORGE — Elite Fitness Studio</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            forge: {
+              black: '#0A0A0A',
+              dark: '#111111',
+              gray: '#1A1A1A',
+              mid: '#2A2A2A',
+              silver: '#B8B8B8',
+              silverLight: '#D4D4D4',
+              silverDark: '#6B6B6B',
+              orange: '#FF5E00',
+              orangeLight: '#FF7A2E',
+              orangeDark: '#CC4B00',
+            }
+          },
+          fontFamily: {
+            heading: ['Oswald', 'sans-serif'],
+            body: ['Inter', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    ::selection { background: #FF5E00; color: #0A0A0A; }
+    body { font-family: 'Inter', sans-serif; background: #0A0A0A; color: #E0E0E0; }
+
+    /* Texture overlay */
+    .texture-overlay {
+      position: relative;
+    }
+    .texture-overlay::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* Custom scrollbar */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #0A0A0A; }
+    ::-webkit-scrollbar-thumb { background: #FF5E00; border-radius: 3px; }
+
+    /* Animations */
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    @keyframes slideInLeft {
+      from { opacity: 0; transform: translateX(-40px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+    @keyframes pulse-glow {
+      0%, 100% { box-shadow: 0 0 20px rgba(255, 94, 0, 0.3); }
+      50% { box-shadow: 0 0 40px rgba(255, 94, 0, 0.6); }
+    }
+    @keyframes marquee {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    @keyframes countUp {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes grain {
+      0%, 100% { transform: translate(0,0); }
+      10% { transform: translate(-5%,-10%); }
+      30% { transform: translate(3%,-15%); }
+      50% { transform: translate(12%,9%); }
+      70% { transform: translate(9%,4%); }
+      90% { transform: translate(-1%,7%); }
+    }
+
+    .animate-fadeInUp { animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+    .animate-fadeIn { animation: fadeIn 0.6s ease forwards; }
+    .animate-slideInLeft { animation: slideInLeft 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+    .delay-100 { animation-delay: 100ms; }
+    .delay-200 { animation-delay: 200ms; }
+    .delay-300 { animation-delay: 300ms; }
+    .delay-400 { animation-delay: 400ms; }
+    .delay-500 { animation-delay: 500ms; }
+
+    .marquee-track {
+      animation: marquee 25s linear infinite;
+    }
+    .marquee-track:hover {
+      animation-play-state: paused;
+    }
+
+    .glow-btn {
+      animation: pulse-glow 2s ease-in-out infinite;
+    }
+
+    /* Hero image treatment */
+    .hero-img {
+      filter: grayscale(100%) contrast(1.3) brightness(0.7);
+      transition: filter 0.7s ease;
+    }
+    .hero-img:hover {
+      filter: grayscale(40%) contrast(1.15) brightness(0.85);
+    }
+
+    .coach-img {
+      filter: grayscale(100%) contrast(1.2) brightness(0.75);
+      transition: all 0.5s ease;
+    }
+    .coach-card:hover .coach-img {
+      filter: grayscale(30%) contrast(1.1) brightness(0.9);
+      transform: scale(1.05);
+    }
+
+    .story-img {
+      filter: grayscale(100%) contrast(1.2);
+      transition: filter 0.5s ease;
+    }
+    .story-card:hover .story-img {
+      filter: grayscale(0%) contrast(1.1);
+    }
+
+    /* Orange accent line */
+    .accent-line {
+      width: 60px;
+      height: 3px;
+      background: linear-gradient(90deg, #FF5E00, #FF7A2E);
+    }
+
+    /* Stat counter */
+    .stat-number {
+      background: linear-gradient(135deg, #FF5E00, #FF7A2E);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* Program card hover */
+    .program-card {
+      transition: all 0.3s ease;
+      border: 1px solid rgba(255,255,255,0.05);
+    }
+    .program-card:hover {
+      border-color: rgba(255, 94, 0, 0.4);
+      transform: translateY(-4px);
+      box-shadow: 0 20px 40px rgba(255, 94, 0, 0.1);
+    }
+
+    /* Navigation active state */
+    .nav-link {
+      position: relative;
+    }
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: #FF5E00;
+      transition: width 0.3s ease;
+    }
+    .nav-link:hover::after {
+      width: 100%;
+    }
+
+    /* Mobile menu */
+    .mobile-menu {
+      transform: translateX(100%);
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .mobile-menu.open {
+      transform: translateX(0);
+    }
+
+    /* Form styling */
+    .form-input {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      transition: all 0.3s ease;
+    }
+    .form-input:focus {
+      border-color: #FF5E00;
+      box-shadow: 0 0 0 3px rgba(255, 94, 0, 0.15);
+      outline: none;
+    }
+
+    /* Toast */
+    .toast {
+      animation: fadeInUp 0.4s ease forwards;
+    }
+    .toast.hide {
+      animation: fadeIn 0.3s ease reverse forwards;
+    }
+  </style>
+</head>
+<body class="texture-overlay">
+
+  <!-- Navigation -->
+  <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300" style="background: rgba(10,10,10,0.85); backdrop-filter: blur(12px);">
+    <div class="max-w-7xl mx-auto px-4 md:px-6">
+      <div class="flex items-center justify-between h-16 md:h-20">
+        <!-- Logo -->
+        <a href="#" class="flex items-center gap-2 group">
+          <div class="w-8 h-8 bg-forge-orange flex items-center justify-center">
+            <span class="font-heading font-bold text-forge-black text-lg leading-none">F</span>
+          </div>
+          <span class="font-heading font-bold text-xl tracking-wider text-white uppercase">Forge</span>
+        </a>
+
+        <!-- Desktop Nav -->
+        <div class="hidden lg:flex items-center gap-8">
+          <a href="#programs" class="nav-link text-xs font-semibold uppercase tracking-[0.2em] text-forge-silver hover:text-white transition-colors">Programs</a>
+          <a href="#coaches" class="nav-link text-xs font-semibold uppercase tracking-[0.2em] text-forge-silver hover:text-white transition-colors">Coaches</a>
+          <a href="#stories" class="nav-link text-xs font-semibold uppercase tracking-[0.2em] text-forge-silver hover:text-white transition-colors">Stories</a>
+          <a href="#schedule" class="nav-link text-xs font-semibold uppercase tracking-[0.2em] text-forge-silver hover:text-white transition-colors">Schedule</a>
+          <a href="#contact" class="nav-link text-xs font-semibold uppercase tracking-[0.2em] text-forge-silver hover:text-white transition-colors">Contact</a>
+        </div>
+
+        <!-- CTA + Mobile Toggle -->
+        <div class="flex items-center gap-4">
+          <a href="#book" class="hidden md:inline-flex items-center gap-2 bg-forge-orange hover:bg-forge-orangeLight text-forge-black text-xs font-bold uppercase tracking-wider px-6 py-3 transition-all duration-200">
+            <span>Book Trial</span>
+            <span class="iconify" data-icon="lucide:arrow-right" data-width="14"></span>
+          </a>
+          <button id="menuToggle" class="lg:hidden w-10 h-10 flex items-center justify-center text-white hover:text-forge-orange transition-colors">
+            <span class="iconify" data-icon="lucide:menu" data-width="24" id="menuIcon"></span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div id="mobileMenu" class="mobile-menu fixed top-0 right-0 w-80 max-w-full h-screen bg-forge-black border-l border-white/5 z-50">
+      <div class="p-6">
+        <div class="flex justify-end mb-10">
+          <button id="menuClose" class="w-10 h-10 flex items-center justify-center text-white hover:text-forge-orange transition-colors">
+            <span class="iconify" data-icon="lucide:x" data-width="24"></span>
+          </button>
+        </div>
+        <div class="flex flex-col gap-6">
+          <a href="#programs" class="mobile-link font-heading text-2xl font-bold uppercase tracking-wider text-white hover:text-forge-orange transition-colors">Programs</a>
+          <a href="#coaches" class="mobile-link font-heading text-2xl font-bold uppercase tracking-wider text-white hover:text-forge-orange transition-colors">Coaches</a>
+          <a href="#stories" class="mobile-link font-heading text-2xl font-bold uppercase tracking-wider text-white hover:text-forge-orange transition-colors">Stories</a>
+          <a href="#schedule" class="mobile-link font-heading text-2xl font-bold uppercase tracking-wider text-white hover:text-forge-orange transition-colors">Schedule</a>
+          <a href="#contact" class="mobile-link font-heading text-2xl font-bold uppercase tracking-wider text-white hover:text-forge-orange transition-colors">Contact</a>
+          <div class="mt-6 pt-6 border-t border-white/10">
+            <a href="#book" class="mobile-link flex items-center justify-center gap-2 bg-forge-orange text-forge-black text-sm font-bold uppercase tracking-wider px-6 py-4 w-full hover:bg-forge-orangeLight transition-colors">
+              <span>Book Free Trial</span>
+              <span class="iconify" data-icon="lucide:arrow-right" data-width="16"></span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Mobile menu overlay -->
+  <div id="menuOverlay" class="fixed inset-0 bg-black/60 z-40 hidden" style="backdrop-filter:blur(4px);"></div>
+
+  <!-- Hero Section -->
+  <section class="relative min-h-screen flex items-center overflow-hidden">
+    <!-- Background Image -->
+    <div class="absolute inset-0">
+      <img src="https://picsum.photos/seed/forge-hero-gym/1920/1080.jpg" alt="Athlete training" class="hero-img w-full h-full object-cover">
+      <div class="absolute inset-0 bg-gradient-to-r from-forge-black via-forge-black/90 to-forge-black/50"></div>
+      <div class="absolute inset-0 bg-gradient-to-t from-forge-black via-transparent to-forge-black/40"></div>
+    </div>
+
+    <div class="relative z-10 max-w-7xl mx-auto px-4 md:px-6 pt-32 pb-20 md:pt-40 md:pb-28 w-full">
+      <div class="grid lg:grid-cols-12 gap-6 items-center">
+        <!-- Left Content -->
+        <div class="lg:col-span-7">
+          <!-- Tag -->
+          <div class="animate-fadeInUp opacity-0 flex items-center gap-3 mb-6">
+            <div class="accent-line"></div>
+            <span class="text-[10px] font-bold uppercase tracking-[0.3em] text-forge-orange">Elite Training Facility — Est. 2019</span>
+          </div>
+
+          <!-- Main Heading -->
+          <h1 class="animate-fadeInUp opacity-0 delay-100 font-heading text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold uppercase leading-[0.9] tracking-tight text-white mb-6">
+            Break<br>
+            <span class="relative inline-block">
+              Your
+              <span class="absolute -bottom-1 left-0 w-full h-1 bg-forge-orange"></span>
+            </span><br>
+            Limits
+          </h1>
+
+          <!-- Subtext -->
+          <p class="animate-fadeInUp opacity-0 delay-200 text-sm md:text-base text-forge-silver max-w-lg leading-relaxed mb-8">
+            Where discipline meets community. FORGE is not just a gym—it's a brotherhood of iron. 
+            Professional coaching, proven results, and an environment designed to push you beyond what you thought possible.
+          </p>
+
+          <!-- Stats Row -->
+          <div class="animate-fadeInUp opacity-0 delay-300 flex flex-wrap gap-8 mb-10">
+            <div>
+              <div class="stat-number font-heading text-3xl md:text-4xl font-bold">2,400+</div>
+              <div class="text-[10px] uppercase tracking-[0.2em] text-forge-silverDark mt-1">Active Members</div>
+            </div>
+            <div class="w-px bg-white/10"></div>
+            <div>
+              <div class="stat-number font-heading text-3xl md:text-4xl font-bold">98%</div>
+              <div class="text-[10px] uppercase tracking-[0.2em] text-forge-silverDark mt-1">Goal Achievement</div>
+            </div>
+            <div class="w-px bg-white/10"></div>
+            <div>
+              <div class="stat-number font-heading text-3xl md:text-4xl font-bold">15+</div>
+              <div class="text-[10px] uppercase tracking-[0.2em] text-forge-silverDark mt-1">Elite Coaches</div>
+            </div>
+          </div>
+
+          <!-- CTAs -->
+          <div class="animate-fadeInUp opacity-0 delay-400 flex flex-wrap gap-4">
+            <a href="#book" class="glow-btn inline-flex items-center gap-2 bg-forge-orange hover:bg-forge-orangeLight text-forge-black text-xs font-bold uppercase tracking-wider px-8 py-4 transition-all duration-200">
+              <span>Start Your Transformation</span>
+              <span class="iconify" data-icon="lucide:arrow-right" data-width="16"></span>
+            </a>
+            <a href="#programs" class="inline-flex items-center gap-2 border border-white/20 hover:border-forge-orange/50 text-white text-xs font-bold uppercase tracking-wider px-8 py-4 transition-all duration-200 hover:bg-white/5">
+              <span>Explore Programs</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Right: Coach Thumbnails -->
+        <div class="lg:col-span-5 animate-fadeInUp opacity-0 delay-300">
+          <div class="relative">
+            <!-- Main Coach Image -->
+            <div class="relative overflow-hidden rounded-sm">
+              <img src="https://picsum.photos/seed/forge-coach-main/600/750.jpg" alt="Head Coach" class="hero-img w-full h-[400px] md:h-[500px] object-cover object-top">
+              <div class="absolute inset-0 bg-gradient-to-t from-forge-black via-transparent to-transparent"></div>
+              <!-- Coach Label -->
+              <div class="absolute bottom-0 left-0 right-0 p-5">
+                <div class="flex items-end justify-between">
+                  <div>
+                    <div class="text-[10px] font-bold uppercase tracking-[0.3em] text-forge-orange mb-1">Head Coach</div>
+                    <div class="font-heading text-xl font-bold text-white uppercase">Marcus Chen</div>
+                    <div class="text-xs text-forge-silver mt-0.5">NSCA-CSCS • 12 Years Experience</div>
+                  </div>
+                  <div class="flex items-center gap-1.5">
+                    <div class="w-2 h-2 rounded-full bg-forge-orange animate-pulse"></div>
+                    <span class="text-[10px] uppercase tracking-wider text-forge-orange font-semibold">Available</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Mini Coach Row -->
+            <div class="flex gap-2 mt-2">
+              <div class="relative flex-1 overflow-hidden rounded-sm h-24">
+                <img src="https://picsum.photos/seed/forge-coach-2/300/200.jpg" alt="Coach" class="coach-img w-full h-full object-cover">
+                <div class="absolute inset-0 bg-forge-black/40"></div>
+                <div class="absolute bottom-1.5 left-2 text-[9px] font-bold uppercase tracking-wider text-white">Sarah K.</div>
+              </div>
+              <div class="relative flex-1 overflow-hidden rounded-sm h-24">
+                <img src="https://picsum.photos/seed/forge-coach-3/300/200.jpg" alt="Coach" class="coach-img w-full h-full object-cover">
+                <div class="absolute inset-0 bg-forge-black/40"></div>
+                <div class="absolute bottom-1.5 left-2 text-[9px] font-bold uppercase tracking-wider text-white">James R.</div>
+              </div>
+              <div class="relative flex-1 overflow-hidden rounded-sm h-24">
+                <img src="https://picsum.photos/seed/forge-coach-4/300/200.jpg" alt="Coach" class="coach-img w-full h-full object-cover">
+                <div class="absolute inset-0 bg-forge-black/40"></div>
+                <div class="absolute bottom-1.5 left-2 text-[9px] font-bold uppercase tracking-wider text-white">Mia L.</div>
+              </div>
+              <a href="#coaches" class="relative flex-1 overflow-hidden rounded-sm h-24 bg-forge-gray flex items-center justify-center group cursor-pointer border border-white/5 hover:border-forge-orange/30 transition-all">
+                <div class="text-center">
+                  <div class="font-heading text-lg font-bold text-white group-hover:text-forge-orange transition-colors">12+</div>
+                  <div class="text-[8px] uppercase tracking-wider text-forge-silver">View All</div>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scroll Indicator -->
+    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2 animate-bounce">
+      <span class="text-[9px] uppercase tracking-[0.3em] text-forge-silverDark">Scroll</span>
+      <span class="iconify text-forge-orange" data-icon="lucide:chevron-down" data-width="16"></span>
+    </div>
+  </section>
+
+  <!-- Marquee Banner -->
+  <div class="relative bg-forge-orange py-3 overflow-hidden z-10">
+    <div class="flex whitespace-nowrap">
+      <div class="marquee-track flex items-center gap-8">
+        <span class="font-heading text-sm font-bold uppercase tracking-wider text-forge-black">Strength Training</span>
+        <span class="text-forge-orangeDark">◆</span>
+        <span class="font-heading text-sm font-bold uppercase tracking-wider text-forge-black">HIIT Conditioning</span>
+        <span class="text-forge-orangeDark">◆</span>
+        <span class="font-heading text-sm font-bold uppercase tracking-wider text-forge-black">Functional Fitness</span>
+        <span class="text-forge-orangeDark">◆</span>
+        <span class="font-heading text-sm font-bold uppercase tracking-wider text-forge-black">Body Recomposition</span>
+        <span class="text-forge-orangeDark">◆</span>
+        <span class="font-heading text-sm font-bold uppercase tracking-wider text-forge-black">Athletic Performance</span>
+        <span class="text-forge-orangeDark">◆</span>
+        <span class="font-heading text-sm font-bold uppercase tracking-wider text-forge-black">Olympic Lifting</span>
+        <span class="text-forge-orangeDark">◆</span>
+        <span class="font-heading text-sm font-bold uppercase tracking-wider text-forge-black">Strength Training</span>
+        <span class="text-forge-orangeDark">◆</span>
+        <span class="font-heading text-sm font-bold uppercase tracking-wider text-forge-black">HIIT Conditioning</span>
+        <span class="text-forge-orangeDark">◆</span>
+        <span class="font-heading text-sm font-bold uppercase tracking-wider text-forge-black">Functional Fitness</span>
+        <span class="text-forge-orangeDark">◆</span>
+        <span class="font-heading text-sm font-bold uppercase tracking-wider text-forge-black">Body Recomposition</span>
+        <span class="text-forge-orangeDark">◆</span>
+        <span class="font-heading text-sm font-bold uppercase tracking-wider text-forge-black">Athletic Performance</span>
+        <span class="text-forge-orangeDark">◆</span>
+        <span class="font-heading text-sm font-bold uppercase tracking-wider text-forge-black">Olympic Lifting</span>
+        <span class="text-forge-orangeDark">◆</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Programs Section -->
+  <section id="programs" class="relative py-20 md:py-28 bg-forge-black">
+    <div class="max-w-7xl mx-auto px-4 md:px-6">
+      <!-- Section Header -->
+      <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-14">
+        <div>
+          <div class="flex items-center gap-3 mb-4">
+            <div class="accent-line"></div>
+            <span class="text-[10px] font-bold uppercase tracking-[0.3em] text-forge-orange">Training Programs</span>
+          </div>
+          <h2 class="font-heading text-4xl md:text-5xl font-bold uppercase tracking-tight text-white">
+            Train With<br>Purpose
+          </h2>
+        </div>
+        <p class="text-sm text-forge-silver max-w-md leading-relaxed">
+          Every program is engineered for results. No fluff, no gimmicks—just science-backed training methodologies delivered by world-class coaches.
+        </p>
+      </div>
+
+      <!-- Program Cards -->
+      <div class="grid md:grid-cols-3 gap-4">
+        <!-- Muscle Gain -->
+        <div class="program-card relative bg-forge-gray overflow-hidden group cursor-pointer">
+          <div class="relative h-64 overflow-hidden">
+            <img src="https://picsum.photos/seed/forge-muscle/600/400.jpg" alt="Muscle Gain" class="story-img w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+            <div class="absolute inset-0 bg-gradient-to-t from-forge-gray via-forge-gray/50 to-transparent"></div>
+            <!-- Intensity Badge -->
+            <div class="absolute top-4 left-4 flex items-center gap-1.5 bg-forge-black/80 px-3 py-1.5" style="backdrop-filter:blur(4px);">
+              <div class="w-1.5 h-1.5 rounded-full bg-red-500"></div>
+              <span class="text-[9px] font-bold uppercase tracking-wider text-white">High Intensity</span>
+            </div>
+          </div>
+          <div class="p-6">
+            <div class="flex items-center gap-2 mb-3">
+              <span class="iconify text-forge-orange" data-icon="lucide:dumbbell" data-width="18"></span>
+              <h3 class="font-heading text-xl font-bold uppercase tracking-wide text-white">Muscle Gain</h3>
+            </div>
+            <p class="text-xs text-forge-silver leading-relaxed mb-4">
+              Progressive overload methodology. Compound movements + accessory isolation for maximum hypertrophy. 4-5 days/week split programming.
+            </p>
+            <div class="flex flex-wrap gap-2 mb-5">
+              <span class="text-[9px] font-semibold uppercase tracking-wider bg-white/5 text-forge-silver px-2.5 py-1">Hypertrophy</span>
+              <span class="text-[9px] font-semibold uppercase tracking-wider bg-white/5 text-forge-silver px-2.5 py-1">Strength</span>
+              <span class="text-[9px] font-semibold uppercase tracking-wider bg-white/5 text-forge-silver px-2.5 py-1">4-5 Days</span>
+              <span class="text-[9px] font-semibold uppercase tracking-wider bg-white/5 text-forge-silver px-2.5 py-1">Nutrition Plan</span>
+            </div>
+            <div class="flex items-center justify-between pt-4 border-t border-white/5">
+              <div>
+                <span class="font-heading text-2xl font-bold text-white">$199</span>
+                <span class="text-xs text-forge-silverDark ml-1">/month</span>
+              </div>
+              <a href="#book" class="inline-flex items-center gap-1.5 text-forge-orange text-xs font-bold uppercase tracking-wider hover:gap-3 transition-all">
+                <span>Learn More</span>
+                <span class="iconify" data-icon="lucide:arrow-right" data-width="14"></span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Fat Loss -->
+        <div class="program-card relative bg-forge-gray overflow-hidden group cursor-pointer">
+          <div class="relative h-64 overflow-hidden">
+            <img src="https://picsum.photos/seed/forge-fatloss/600/400.jpg" alt="Fat Loss" class="story-img w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+            <div class="absolute inset-0 bg-gradient-to-t from-forge-gray via-forge-gray/50 to-transparent"></div>
+            <div class="absolute top-4 left-4 flex items-center gap-1.5 bg-forge-black/80 px-3 py-1.5" style="backdrop-filter:blur(4px);">
+              <div class="w-1.5 h-1.5 rounded-full bg-forge-orange"></div>
+              <span class="text-[9px] font-bold uppercase tracking-wider text-white">Medium-High</span>
+            </div>
+            <!-- Popular Badge -->
+            <div class="absolute top-4 right-4 bg-forge-orange px-3 py-1.5">
+              <span class="text-[9px] font-bold uppercase tracking-wider text-forge-black">Most Popular</span>
+            </div>
+          </div>
+          <div class="p-6">
+            <div class="flex items-center gap-2 mb-3">
+              <span class="iconify text-forge-orange" data-icon="lucide:flame" data-width="18"></span>
+              <h3 class="font-heading text-xl font-bold uppercase tracking-wide text-white">Fat Loss</h3>
+            </div>
+            <p class="text-xs text-forge-silver leading-relaxed mb-4">
+              Metabolic conditioning + strategic cardio protocol. Torch body fat while preserving lean muscle. Calibrated nutrition guidance included.
+            </p>
+            <div class="flex flex-wrap gap-2 mb-5">
+              <span class="text-[9px] font-semibold uppercase tracking-wider bg-white/5 text-forge-silver px-2.5 py-1">HIIT</span>
+              <span class="text-[9px] font-semibold uppercase tracking-wider bg-white/5 text-forge-silver px-2.5 py-1">MetCon</span>
+              <span class="text-[9px] font-semibold uppercase tracking-wider bg-white/5 text-forge-silver px-2.5 py-1">3-5 Days</span>
+              <span class="text-[9px] font-semibold uppercase tracking-wider bg-white/5 text-forge-silver px-2.5 py-1">Meal Prep</span>
+            </div>
+            <div class="flex items-center justify-between pt-4 border-t border-white/5">
+              <div>
+                <span class="font-heading text-2xl font-bold text-white">$179</span>
+                <span class="text-xs text-forge-silverDark ml-1">/month</span>
+              </div>
+              <a href="#book" class="inline-flex items-center gap-1.5 text-forge-orange text-xs font-bold uppercase tracking-wider hover:gap-3 transition-all">
+                <span>Learn More</span>
+                <span class="iconify" data-icon="lucide:arrow-right" data-width="14"></span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- General Fitness -->
+        <div class="program-card relative bg-forge-gray overflow-hidden group cursor-pointer">
+          <div class="relative h-64 overflow-hidden">
+            <img src="https://picsum.photos/seed/forge-fitness/600/400.jpg" alt="General Fitness" class="story-img w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+            <div class="absolute inset-0 bg-gradient-to-t from-forge-gray via-forge-gray/50 to-transparent"></div>
+            <div class="absolute top-4 left-4 flex items-center gap-1.5 bg-forge-black/80 px-3 py-1.5" style="backdrop-filter:blur(4px);">
+              <div class="w-1.5 h-1.5 rounded-full bg-green-500"></div>
+              <span class="text-[9px] font-bold uppercase tracking-wider text-white">All Levels</span>
+            </div>
+          </div>
+          <div class="p-6">
+            <div class="flex items-center gap-2 mb-3">
+              <span class="iconify text-forge-orange" data-icon="lucide:heart-pulse" data-width="18"></span>
+              <h3 class="font-heading text-xl font-bold uppercase tracking-wide text-white">Total Fitness</h3>
+            </div>
+            <p class="text-xs text-forge-silver leading-relaxed mb-4">
+              Balanced programming for overall health and vitality. Strength, mobility, endurance, and flexibility in one comprehensive package.
+            </p>
+            <div class="flex flex-wrap gap-2 mb-5">
+              <span class="text-[9px] font-semibold uppercase tracking-wider bg-white/5 text-forge-silver px-2.5 py-1">Functional</span>
+              <span class="text-[9px] font-semibold uppercase tracking-wider bg-white/5 text-forge-silver px-2.5 py-1">Mobility</span>
+              <span class="text-[9px] font-semibold uppercase tracking-wider bg-white/5 text-forge-silver px-2.5 py-1">3-4 Days</span>
+              <span class="text-[9px] font-semibold uppercase tracking-wider bg-white/5 text-forge-silver px-2.5 py-1">Lifestyle</span>
+            </div>
+            <div class="flex items-center justify-between pt-4 border-t border-white/5">
+              <div>
+                <span class="font-heading text-2xl font-bold text-white">$149</span>
+                <span class="text-xs text-forge-silverDark ml-1">/month</span>
+              </div>
+              <a href="#book" class="inline-flex items-center gap-1.5 text-forge-orange text-xs font-bold uppercase tracking-wider hover:gap-3 transition-all">
+                <span>Learn More</span>
+                <span class="iconify" data-icon="lucide:arrow-right" data-width="14"></span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Info Bar -->
+      <div class="mt-6 grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-forge-gray p-4 flex items-center gap-3 border border-white/5">
+          <span class="iconify text-forge-orange" data-icon="lucide:clock" data-width="20"></span>
+          <div>
+            <div class="text-xs font-bold text-white">60-90 Min</div>
+            <div class="text-[10px] text-forge-silverDark">Session Duration</div>
+          </div>
+        </div>
+        <div class="bg-forge-gray p-4 flex items-center gap-3 border border-white/5">
+          <span class="iconify text-forge-orange" data-icon="lucide:users" data-width="20"></span>
+          <div>
+            <div class="text-xs font-bold text-white">Max 8:1</div>
+            <div class="text-[10px] text-forge-silverDark">Coach Ratio</div>
+          </div>
+        </div>
+        <div class="bg-forge-gray p-4 flex items-center gap-3 border border-white/5">
+          <span class="iconify text-forge-orange" data-icon="lucide:scan-line" data-width="20"></span>
+          <div>
+            <div class="text-xs font-bold text-white">InBody Scan</div>
+            <div class="text-[10px] text-forge-silverDark">Monthly Assessment</div>
+          </div>
+        </div>
+        <div class="bg-forge-gray p-4 flex items-center gap-3 border border-white/5">
+          <span class="iconify text-forge-orange" data-icon="lucide:salad" data-width="20"></span>
+          <div>
+            <div class="text-xs font-bold text-white">Nutrition</div>
+            <div class="text-[10px] text-forge-silverDark">Plan Included</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Coaches Section -->
+  <section id="coaches" class="relative py-20 md:py-28 bg-forge-dark">
+    <div class="max-w-7xl mx-auto px-4 md:px-6">
+      <!-- Section Header -->
+      <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-14">
+        <div>
+          <div class="flex items-center gap-3 mb-4">
+            <div class="accent-line"></div>
+            <span class="text-[10px] font-bold uppercase tracking-[0.3em] text-forge-orange">Expert Coaching Staff</span>
+          </div>
+          <h2 class="font-heading text-4xl md:text-5xl font-bold uppercase tracking-tight text-white">
+            Led By<br>The Best
+          </h2>
+        </div>
+        <p class="text-sm text-forge-silver max-w-md leading-relaxed">
+          Every FORGE coach holds nationally recognized certifications and has a minimum of 5 years experience in strength & conditioning.
+        </p>
+      </div>
+
+      <!-- Coach Grid -->
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <!-- Coach 1 -->
+        <div class="coach-card group cursor-pointer">
+          <div class="relative overflow-hidden aspect-[3/4] bg-forge-gray">
+            <img src="https://picsum.photos/seed/forge-marcus/400/533.jpg" alt="Marcus Chen" class="coach-img w-full h-full object-cover">
+            <div class="absolute inset-0 bg-gradient-to-t from-forge-black via-transparent to-transparent"></div>
+            <!-- Social Links -->
+            <div class="absolute top-4 right-4 flex flex-col gap-2 opacity-0 group-hover:opacity-100 translate-x-4 group-hover:translate-x-0 transition-all duration-300">
+              <a href="#" class="w-8 h-8 bg-forge-black/70 flex items-center justify-center hover:bg-forge-orange transition-colors" style="backdrop-filter:blur(4px);">
+                <span class="iconify text-white" data-icon="lucide:instagram" data-width="14"></span>
+              </a>
+              <a href="#" class="w-8 h-8 bg-forge-black/70 flex items-center justify-center hover:bg-forge-orange transition-colors" style="backdrop-filter:blur(4px);">
+                <span class="iconify text-white" data-icon="lucide:linkedin" data-width="14"></span>
+              </a>
+            </div>
+            <div class="absolute bottom-0 left-0 right-0 p-5">
+              <div class="text-[9px] font-bold uppercase tracking-[0.2em] text-forge-orange mb-1">Head Coach / Founder</div>
+              <div class="font-heading text-lg font-bold text-white uppercase">Marcus Chen</div>
+            </div>
+          </div>
+          <div class="mt-3 space-y-1.5">
+            <div class="flex items-center gap-2">
+              <span class="iconify text-forge-orange" data-icon="lucide:award" data-width="12"></span>
+              <span class="text-[10px] text-forge-silver">NSCA-CSCS, NASM-CPT</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="iconify text-forge-orange" data-icon="lucide:timer" data-width="12"></span>
+              <span class="text-[10px] text-forge-silver">12 Years Experience</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="iconify text-forge-orange" data-icon="lucide:target" data-width="12"></span>
+              <span class="text-[10px] text-forge-silver">Strength & Hypertrophy</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Coach 2 -->
+        <div class="coach-card group cursor-pointer">
+          <div class="relative overflow-hidden aspect-[3/4] bg-forge-gray">
+            <img src="https://picsum.photos/seed/forge-sarah/400/533.jpg" alt="Sarah Kim" class="coach-img w-full h-full object-cover">
+            <div class="absolute inset-0 bg-gradient-to-t from-forge-black via-transparent to-transparent"></div>
+            <div class="absolute top-4 right-4 flex flex-col gap-2 opacity-0 group-hover:opacity-100 translate-x-4 group-hover:translate-x-0 transition-all duration-300">
+              <a href="#" class="w-8 h-8 bg-forge-black/70 flex items-center justify-center hover:bg-forge-orange transition-colors" style="backdrop-filter:blur(4px);">
+                <span class="iconify text-white" data-icon="lucide:instagram" data-width="14"></span>
+              </a>
+              <a href="#" class="w-8 h-8 bg-forge-black/70 flex items-center justify-center hover:bg-forge-orange transition-colors" style="backdrop-filter:blur(4px);">
+                <span class="iconify text-white" data-icon="lucide:linkedin" data-width="14"></span>
+              </a>
+            </div>
+            <div class="absolute bottom-0 left-0 right-0 p-5">
+              <div class="text-[9px] font-bold uppercase tracking-[0.2em] text-forge-orange mb-1">Performance Coach</div>
+              <div class="font-heading text-lg font-bold text-white uppercase">Sarah Kim</div>
+            </div>
+          </div>
+          <div class="mt-3 space-y-1.5">
+            <div class="flex items-center gap-2">
+              <span class="iconify text-forge-orange" data-icon="lucide:award" data-width="12"></span>
+              <span class="text-[10px] text-forge-silver">ACSM-EP, Precision L2</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="iconify text-forge-orange" data-icon="lucide:timer" data-width="12"></span>
+              <span class="text-[10px] text-forge-silver">8 Years Experience</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="iconify text-forge-orange" data-icon="lucide:target" data-width="12"></span>
+              <span class="text-[10px] text-forge-silver">Fat Loss & MetCon</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Coach 3 -->
+        <div class="coach-card group cursor-pointer">
+          <div class="relative overflow-hidden aspect-[3/4] bg-forge-gray">
+            <img src="https://picsum.photos/seed/forge-james/400/533.jpg" alt="James Rivera" class="coach-img w-full h-full object-cover">
+            <div class="absolute inset-0 bg-gradient-to-t from-forge-black via-transparent to-transparent"></div>
+            <div class="absolute top-4 right-4 flex flex-col gap-2 opacity-0 group-hover:opacity-100 translate-x-4 group-hover:translate-x-0 transition-all duration-300">
+              <a href="#" class="w-8 h-8 bg-forge-black/70 flex items-center justify-center hover:bg-forge-orange transition-colors" style="backdrop-filter:blur(4px);">
+                <span class="iconify text-white" data-icon="lucide:instagram" data-width="14"></span>
+              </a>
+              <a href="#" class="w-8 h-8 bg-forge-black/70 flex items-center justify-center hover:bg-forge-orange transition-colors" style="backdrop-filter:blur(4px);">
+                <span class="iconify text-white" data-icon="lucide:linkedin" data-width="14"></span>
+              </a>
+            </div>
+            <div class="absolute bottom-0 left-0 right-0 p-5">
+              <div class="text-[9px] font-bold uppercase tracking-[0.2em] text-forge-orange mb-1">Strength Coach</div>
+              <div class="font-heading text-lg font-bold text-white uppercase">James Rivera</div>
+            </div>
+          </div>
+          <div class="mt-3 space-y-1.5">
+            <div class="flex items-center gap-2">
+              <span class="iconify text-forge-orange" data-icon="lucide:award" data-width="12"></span>
+              <span class="text-[10px] text-forge-silver">USAW, CSCS, FMS L2</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="iconify text-forge-orange" data-icon="lucide:timer" data-width="12"></span>
+              <span class="text-[10px] text-forge-silver">10 Years Experience</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="iconify text-forge-orange" data-icon="lucide:target" data-width="12"></span>
+              <span class="text-[10px] text-forge-silver">Olympic Lifting</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Coach 4 -->
+        <div class="coach-card group cursor-pointer">
+          <div class="relative overflow-hidden aspect-[3/4] bg-forge-gray">
+            <img src="https://picsum.photos/seed/forge-mia/400/533.jpg" alt="Mia Liu" class="coach-img w-full h-full object-cover">
+            <div class="absolute inset-0 bg-gradient-to-t from-forge-black via-transparent to-transparent"></div>
+            <div class="absolute top-4 right-4 flex flex-col gap-2 opacity-0 group-hover:opacity-100 translate-x-4 group-hover:translate-x-0 transition-all duration-300">
+              <a href="#" class="w-8 h-8 bg-forge-black/70 flex items-center justify-center hover:bg-forge-orange transition-colors" style="backdrop-filter:blur(4px);">
+                <span class="iconify text-white" data-icon="lucide:instagram" data-width="14"></span>
+              </a>
+              <a href="#" class="w-8 h-8 bg-forge-black/70 flex items-center justify-center hover:bg-forge-orange transition-colors" style="backdrop-filter:blur(4px);">
+                <span class="iconify text-white" data-icon="lucide:linkedin" data-width="14"></span>
+              </a>
+            </div>
+            <div class="absolute bottom-0 left-0 right-0 p-5">
+              <div class="text-[9px] font-bold uppercase tracking-[0.2em] text-forge-orange mb-1">Recovery Specialist</div>
+              <div class="font-heading text-lg font-bold text-white uppercase">Mia Liu</div>
+            </div>
+          </div>
+          <div class="mt-3 space-y-1.5">
+            <div class="flex items-center gap-2">
+              <span class="iconify text-forge-orange" data-icon="lucide:award" data-width="12"></span>
+              <span class="text-[10px] text-forge-silver">NASM-CES, RYT-500</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="iconify text-forge-orange" data-icon="lucide:timer" data-width="12"></span>
+              <span class="text-[10px] text-forge-silver">7 Years Experience</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="iconify text-forge-orange" data-icon="lucide:target" data-width="12"></span>
+              <span class="text-[10px] text-forge-silver">Mobility & Recovery</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Schedule Section -->
+  <section id="schedule" class="relative py-16 md:py-20 bg-forge-black border-y border-white/5">
+    <div class="max-w-7xl mx-auto px-4 md:px-6">
+      <div class="flex items-center gap-3 mb-8">
+        <div class="accent-line"></div>
+        <span class="text-[10px] font-bold uppercase tracking-[0.3em] text-forge-orange">Weekly Schedule</span>
+      </div>
+
+      <!-- Schedule Tabs -->
+      <div class="flex gap-2 mb-6 overflow-x-auto pb-2">
+        <button onclick="showDay(this, 'mon')" class="schedule-tab active whitespace-nowrap text-[10px] font-bold uppercase tracking-wider px-4 py-2 bg-forge-orange text-forge-black transition-all">Mon</button>
+        <button onclick="showDay(this, 'tue')" class="schedule-tab whitespace-nowrap text-[10px] font-bold uppercase tracking-wider px-4 py-2 bg-forge-gray text-forge-silver hover:text-white transition-all">Tue</button>
+        <button onclick="showDay(this, 'wed')" class="schedule-tab whitespace-nowrap text-[10px] font-bold uppercase tracking-wider px-4 py-2 bg-forge-gray text-forge-silver hover:text-white transition-all">Wed</button>
+        <button onclick="showDay(this, 'thu')" class="schedule-tab whitespace-nowrap text-[10px] font-bold uppercase tracking-wider px-4 py-2 bg-forge-gray text-forge-silver hover:text-white transition-all">Thu</button>
+        <button onclick="showDay(this, 'fri')" class="schedule-tab whitespace-nowrap text-[10px] font-bold uppercase tracking-wider px-4 py-2 bg-forge-gray text-forge-silver hover:text-white transition-all">Fri</button>
+        <button onclick="showDay(this, 'sat')" class="schedule-tab whitespace-nowrap text-[10px] font-bold uppercase tracking-wider px-4 py-2 bg-forge-gray text-forge-silver hover:text-white transition-all">Sat</button>
+        <button onclick="showDay(this, 'sun')" class="schedule-tab whitespace-nowrap text-[10px] font-bold uppercase tracking-wider px-4 py-2 bg-forge-gray text-forge-silver hover:text-white transition-all">Sun</button>
+      </div>
+
+      <!-- Schedule Content -->
+      <div id="schedule-content" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+        <!-- Dynamically filled by JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Member Stories Section -->
+  <section id="stories" class="relative py-20 md:py-28 bg-forge-dark">
+    <div class="max-w-7xl mx-auto px-4 md:px-6">
+      <!-- Section Header -->
+      <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-14">
+        <div>
+          <div class="flex items-center gap-3 mb-4">
+            <div class="accent-line"></div>
+            <span class="text-[10px] font-bold uppercase tracking-[0.3em] text-forge-orange">Real Transformations</span>
+          </div>
+          <h2 class="font-heading text-4xl md:text-5xl font-bold uppercase tracking-tight text-white">
+            Their Words,<br>Our Proof
+          </h2>
+        </div>
+        <p class="text-sm text-forge-silver max-w-md leading-relaxed">
+          No Photoshop. No exaggeration. Real members, real dedication, real results. These are the stories that define FORGE.
+        </p>
+      </div>
+
+      <!-- Stories Grid -->
+      <div class="grid md:grid-cols-3 gap-4">
+        <!-- Story 1 -->
+        <div class="story-card group">
+          <div class="relative overflow-hidden bg-forge-gray">
+            <div class="grid grid-cols-2">
+              <div class="relative">
+                <img src="https://picsum.photos/seed/forge-before-1/300/400.jpg" alt="Before" class="story-img w-full h-64 object-cover">
+                <div class="absolute bottom-2 left-2 bg-forge-black/80 px-2 py-1">
+                  <span class="text-[9px] font-bold uppercase tracking-wider text-white">Before</span>
+                </div>
+              </div>
+              <div class="relative">
+                <img src="https://picsum.photos/seed/forge-after-1/300/400.jpg" alt="After" class="w-full h-64 object-cover">
+                <div class="absolute bottom-2 left-2 bg-forge-orange/90 px-2 py-1">
+                  <span class="text-[9px] font-bold uppercase tracking-wider text-forge-black">After</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="mt-4 space-y-3">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 bg-forge-orange/20 border border-forge-orange/30 flex items-center justify-center rounded-full">
+                <span class="font-heading font-bold text-forge-orange text-sm">DK</span>
+              </div>
+              <div>
+                <div class="text-sm font-bold text-white">David Kim</div>
+                <div class="text-[10px] text-forge-silverDark">Software Engineer • 34 yrs</div>
+              </div>
+              <div class="ml-auto text-right">
+                <div class="text-xs font-bold text-forge-orange">-18 kg</div>
+                <div class="text-[10px] text-forge-silverDark">6 months</div>
+              </div>
+            </div>
+            <p class="text-xs text-forge-silver leading-relaxed italic">
+              "I walked in at 96kg with zero confidence. FORGE didn't just change my body—they changed how I see myself. The coaches held me accountable when I wanted to quit."
+            </p>
+            <div class="flex gap-2">
+              <span class="text-[9px] font-semibold uppercase tracking-wider bg-forge-orange/10 text-forge-orange px-2 py-0.5">Fat Loss</span>
+              <span class="text-[9px] font-semibold uppercase tracking-wider bg-forge-orange/10 text-forge-orange px-2 py-0.5">Muscle Gain</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Story 2 -->
+        <div class="story-card group">
+          <div class="relative overflow-hidden bg-forge-gray">
+            <div class="grid grid-cols-2">
+              <div class="relative">
+                <img src="https://picsum.photos/seed/forge-before-2/300/400.jpg" alt="Before" class="story-img w-full h-64 object-cover">
+                <div class="absolute bottom-2 left-2 bg-forge-black/80 px-2 py-1">
+                  <span class="text-[9px] font-bold uppercase tracking-wider text-white">Before</span>
+                </div>
+              </div>
+              <div class="relative">
+                <img src="https://picsum.photos/seed/forge-after-2/300/400.jpg" alt="After" class="w-full h-64 object-cover">
+                <div class="absolute bottom-2 left-2 bg-forge-orange/90 px-2 py-1">
+                  <span class="text-[9px] font-bold uppercase tracking-wider text-forge-black">After</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="mt-4 space-y-3">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 bg-forge-orange/20 border border-forge-orange/30 flex items-center justify-center rounded-full">
+                <span class="font-heading font-bold text-forge-orange text-sm">AL</span>
+              </div>
+              <div>
+                <div class="text-sm font-bold text-white">Amanda Lin</div>
+                <div class="text-[10px] text-forge-silverDark">Marketing Director • 29 yrs</div>
+              </div>
+              <div class="ml-auto text-right">
+                <div class="text-xs font-bold text-forge-orange">-12 kg</div>
+                <div class="text-[10px] text-forge-silverDark">4 months</div>
+              </div>
+            </div>
+            <p class="text-xs text-forge-silver leading-relaxed italic">
+              "As a woman, I was intimidated by the hardcore gym culture. FORGE proved me wrong. The community here is incredibly supportive. I deadlifted 100kg last month!"
+            </p>
+            <div class="flex gap-2">
+              <span class="text-[9px] font-semibold uppercase tracking-wider bg-forge-orange/10 text-forge-orange px-2 py-0.5">Strength</span>
+              <span class="text-[9px] font-semibold uppercase tracking-wider bg-forge-orange/10 text-forge-orange px-2 py-0.5">Body Recomp</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Story 3 -->
+        <div class="story-card group">
+          <div class="relative overflow-hidden bg-forge-gray">
+            <div class="grid grid-cols-2">
+              <div class="relative">
+                <img src="https://picsum.photos/seed/forge-before-3/300/400.jpg" alt="Before" class="story-img w-full h-64 object-cover">
+                <div class="absolute bottom-2 left-2 bg-forge-black/80 px-2 py-1">
+                  <span class="text-[9px] font-bold uppercase tracking-wider text-white">Before</span>
+                </div>
+              </div>
+              <div class="relative">
+                <img src="https://picsum.photos/seed/forge-after-3/300/400.jpg" alt="After" class="w-full h-64 object-cover">
+                <div class="absolute bottom-2 left-2 bg-forge-orange/90 px-2 py-1">
+                  <span class="text-[9px] font-bold uppercase tracking-wider text-forge-black">After</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="mt-4 space-y-3">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 bg-forge-orange/20 border border-forge-orange/30 flex items-center justify-center rounded-full">
+                <span class="font-heading font-bold text-forge-orange text-sm">RP</span>
+              </div>
+              <div>
+                <div class="text-sm font-bold text-white">Ryan Park</div>
+                <div class="text-[10px] text-forge-silverDark">Entrepreneur • 41 yrs</div>
+              </div>
+              <div class="ml-auto text-right">
+                <div class="text-xs font-bold text-forge-orange">+8 kg</div>
+                <div class="text-[10px] text-forge-silverDark">8 months</div>
+              </div>
+            </div>
+            <p class="text-xs text-forge-silver leading-relaxed italic">
+              "At 41, I thought my best physical days were behind me. Marcus and the team proved me wrong. I'm stronger now than I was in my 20s. The data doesn't lie."
+            </p>
+            <div class="flex gap-2">
+              <span class="text-[9px] font-semibold uppercase tracking-wider bg-forge-orange/10 text-forge-orange px-2 py-0.5">Muscle Gain</span>
+              <span class="text-[9px] font-semibold uppercase tracking-wider bg-forge-orange/10 text-forge-orange px-2 py-0.5">Performance</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Book Trial Section -->
+  <section id="book" class="relative py-20 md:py-28 bg-forge-black overflow-hidden">
+    <!-- Background Accent -->
+    <div class="absolute top-0 right-0 w-1/2 h-full opacity-5">
+      <img src="https://picsum.photos/seed/forge-bg-cta/1000/800.jpg" alt="" class="w-full h-full object-cover" style="filter: grayscale(100%);">
+    </div>
+
+    <div class="relative z-10 max-w-7xl mx-auto px-4 md:px-6">
+      <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+        <!-- Left: CTA Content -->
+        <div>
+          <div class="flex items-center gap-3 mb-6">
+            <div class="accent-line"></div>
+            <span class="text-[10px] font-bold uppercase tracking-[0.3em] text-forge-orange">Start Today</span>
+          </div>
+          <h2 class="font-heading text-4xl md:text-5xl lg:text-6xl font-bold uppercase tracking-tight text-white mb-6">
+            Your First<br>Class Is <span class="text-forge-orange">Free</span>
+          </h2>
+          <p class="text-sm text-forge-silver leading-relaxed mb-8 max-w-lg">
+            No contracts. No commitments. Just show up and give us everything you've got for one hour. 
+            If FORGE isn't the hardest, most rewarding workout of your life—we'll eat our protein powder.
+          </p>
+
+          <!-- Benefits -->
+          <div class="grid grid-cols-2 gap-3 mb-8">
+            <div class="flex items-center gap-2.5">
+              <div class="w-6 h-6 bg-forge-orange/20 flex items-center justify-center flex-shrink-0">
+                <span class="iconify text-forge-orange" data-icon="lucide:check" data-width="12"></span>
+              </div>
+              <span class="text-xs text-forge-silverLight">Free InBody Assessment</span>
+            </div>
+            <div class="flex items-center gap-2.5">
+              <div class="w-6 h-6 bg-forge-orange/20 flex items-center justify-center flex-shrink-0">
+                <span class="iconify text-forge-orange" data-icon="lucide:check" data-width="12"></span>
+              </div>
+              <span class="text-xs text-forge-silverLight">1-on-1 Coach Consultation</span>
+            </div>
+            <div class="flex items-center gap-2.5">
+              <div class="w-6 h-6 bg-forge-orange/20 flex items-center justify-center flex-shrink-0">
+                <span class="iconify text-forge-orange" data-icon="lucide:check" data-width="12"></span>
+              </div>
+              <span class="text-xs text-forge-silverLight">Full Facility Access</span>
+            </div>
+            <div class="flex items-center gap-2.5">
+              <div class="w-6 h-6 bg-forge-orange/20 flex items-center justify-center flex-shrink-0">
+                <span class="iconify text-forge-orange" data-icon="lucide:check" data-width="12"></span>
+              </div>
+              <span class="text-xs text-forge-silverLight">Personalized Plan Preview</span>
+            </div>
+          </div>
+
+          <!-- Trust Indicators -->
+          <div class="flex items-center gap-4 pt-6 border-t border-white/5">
+            <div class="flex -space-x-2">
+              <img src="https://picsum.photos/seed/forge-avatar-1/40/40.jpg" class="w-8 h-8 rounded-full border-2 border-forge-black object-cover" alt="">
+              <img src="https://picsum.photos/seed/forge-avatar-2/40/40.jpg" class="w-8 h-8 rounded-full border-2 border-forge-black object-cover" alt="">
+              <img src="https://picsum.photos/seed/forge-avatar-3/40/40.jpg" class="w-8 h-8 rounded-full border-2 border-forge-black object-cover" alt="">
+              <img src="https://picsum.photos/seed/forge-avatar-4/40/40.jpg" class="w-8 h-8 rounded-full border-2 border-forge-black object-cover" alt="">
+              <div class="w-8 h-8 rounded-full border-2 border-forge-black bg-forge-orange flex items-center justify-center">
+                <span class="text-[8px] font-bold text-forge-black">2.4K</span>
+              </div>
+            </div>
+            <div>
+              <div class="flex items-center gap-1 mb-0.5">
+                <span class="iconify text-forge-orange" data-icon="lucide:star" data-width="12"></span>
+                <span class="iconify text-forge-orange" data-icon="lucide:star" data-width="12"></span>
+                <span class="iconify text-forge-orange" data-icon="lucide:star" data-width="12"></span>
+                <span class="iconify text-forge-orange" data-icon="lucide:star" data-width="12"></span>
+                <span class="iconify text-forge-orange" data-icon="lucide:star" data-width="12"></span>
+                <span class="text-xs font-bold text-white ml-1">4.9</span>
+              </div>
+              <div class="text-[10px] text-forge-silverDark">Based on 500+ reviews</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Booking Form -->
+        <div class="bg-forge-gray p-6 md:p-8 border border-white/5">
+          <h3 class="font-heading text-xl font-bold uppercase tracking-wide text-white mb-1">Book Your Free Trial</h3>
+          <p class="text-xs text-forge-silverDark mb-6">Fill out the form below and we'll get you started within 24 hours.</p>
+
+          <form id="bookingForm" class="space-y-4" onsubmit="return handleBooking(event)">
+            <div class="grid grid-cols-2 gap-4">
+              <div>
+                <label class="text-[10px] font-bold uppercase tracking-wider text-forge-silver mb-1.5 block">First Name *</label>
+                <input type="text" required class="form-input w-full px-4 py-3 text-sm text-white placeholder-forge-silverDark" placeholder="John">
+              </div>
+              <div>
+                <label class="text-[10px] font-bold uppercase tracking-wider text-forge-silver mb-1.5 block">Last Name *</label>
+                <input type="text" required class="form-input w-full px-4 py-3 text-sm text-white placeholder-forge-silverDark" placeholder="Doe">
+              </div>
+            </div>
+            <div>
+              <label class="text-[10px] font-bold uppercase tracking-wider text-forge-silver mb-1.5 block">Email *</label>
+              <input type="email" required class="form-input w-full px-4 py-3 text-sm text-white placeholder-forge-silverDark" placeholder="john@example.com">
+            </div>
+            <div>
+              <label class="text-[10px] font-bold uppercase tracking-wider text-forge-silver mb-1.5 block">Phone *</label>
+              <input type="tel" required class="form-input w-full px-4 py-3 text-sm text-white placeholder-forge-silverDark" placeholder="+1 (555) 000-0000">
+            </div>
+            <div>
+              <label class="text-[10px] font-bold uppercase tracking-wider text-forge-silver mb-1.5 block">Your Goal *</label>
+              <select required class="form-input w-full px-4 py-3 text-sm text-white appearance-none cursor-pointer" style="background-image: url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23B8B8B8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E&quot;); background-repeat: no-repeat; background-position: right 16px center;">
+                <option value="" disabled selected class="bg-forge-gray">Select your primary goal</option>
+                <option value="muscle" class="bg-forge-gray">Muscle Gain</option>
+                <option value="fatloss" class="bg-forge-gray">Fat Loss</option>
+                <option value="fitness" class="bg-forge-gray">General Fitness</option>
+                <option value="performance" class="bg-forge-gray">Athletic Performance</option>
+                <option value="recovery" class="bg-forge-gray">Recovery & Mobility</option>
+              </select>
+            </div>
+            <div>
+              <label class="text-[10px] font-bold uppercase tracking-wider text-forge-silver mb-1.5 block">Experience Level</label>
+              <div class="flex gap-2">
+                <label class="flex-1 cursor-pointer">
+                  <input type="radio" name="level" value="beginner" class="sr-only peer">
+                  <div class="text-center py-2.5 text-[10px] font-bold uppercase tracking-wider border border-white/10 text-forge-silver peer-checked:border-forge-orange peer-checked:text-forge-orange peer-checked:bg-forge-orange/10 transition-all hover:border-white/20">Beginner</div>
+                </label>
+                <label class="flex-1 cursor-pointer">
+                  <input type="radio" name="level" value="intermediate" class="sr-only peer">
+                  <div class="text-center py-2.5 text-[10px] font-bold uppercase tracking-wider border border-white/10 text-forge-silver peer-checked:border-forge-orange peer-checked:text-forge-orange peer-checked:bg-forge-orange/10 transition-all hover:border-white/20">Intermediate</div>
+                </label>
+                <label class="flex-1 cursor-pointer">
+                  <input type="radio" name="level" value="advanced" class="sr-only peer">
+                  <div class="text-center py-2.5 text-[10px] font-bold uppercase tracking-wider border border-white/10 text-forge-silver peer-checked:border-forge-orange peer-checked:text-forge-orange peer-checked:bg-forge-orange/10 transition-all hover:border-white/20">Advanced</div>
+                </label>
+              </div>
+            </div>
+            <button type="submit" id="submitBtn" class="w-full bg-forge-orange hover:bg-forge-orangeLight text-forge-black text-xs font-bold uppercase tracking-wider px-8 py-4 transition-all duration-200 flex items-center justify-center gap-2 mt-2">
+              <span>Claim Your Free Trial Class</span>
+              <span class="iconify" data-icon="lucide:arrow-right" data-width="16"></span>
+            </button>
+            <p class="text-[10px] text-forge-silverDark text-center">By signing up, you agree to our Terms of Service. No credit card required.</p>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact / Location Section -->
+  <section id="contact" class="relative py-16 md:py-20 bg-forge-dark border-t border-white/5">
+    <div class="max-w-7xl mx-auto px-4 md:px-6">
+      <div class="grid md:grid-cols-4 gap-6">
+        <!-- Address -->
+        <div class="md:col-span-1">
+          <div class="flex items-center gap-2 mb-4">
+            <span class="iconify text-forge-orange" data-icon="lucide:map-pin" data-width="16"></span>
+            <span class="text-[10px] font-bold uppercase tracking-[0.2em] text-forge-silver">Location</span>
+          </div>
+          <p class="text-sm text-white font-semibold mb-1">FORGE Fitness Studio</p>
+          <p class="text-xs text-forge-silver leading-relaxed">
+            234 Iron District Blvd<br>
+            Suite 500<br>
+            Los Angeles, CA 90015
+          </p>
+        </div>
+        <!-- Hours -->
+        <div class="md:col-span-1">
+          <div class="flex items-center gap-2 mb-4">
+            <span class="iconify text-forge-orange" data-icon="lucide:clock" data-width="16"></span>
+            <span class="text-[10px] font-bold uppercase tracking-[0.2em] text-forge-silver">Hours</span>
+          </div>
+          <div class="space-y-1.5">
+            <div class="flex justify-between text-xs">
+              <span class="text-forge-silver">Mon – Fri</span>
+              <span class="text-white font-semibold">5:00 AM – 11:00 PM</span>
+            </div>
+            <div class="flex justify-between text-xs">
+              <span class="text-forge-silver">Saturday</span>
+              <span class="text-white font-semibold">6:00 AM – 9:00 PM</span>
+            </div>
+            <div class="flex justify-between text-xs">
+              <span class="text-forge-silver">Sunday</span>
+              <span class="text-white font-semibold">7:00 AM – 7:00 PM</span>
+            </div>
+          </div>
+        </div>
+        <!-- Contact -->
+        <div class="md:col-span-1">
+          <div class="flex items-center gap-2 mb-4">
+            <span class="iconify text-forge-orange" data-icon="lucide:phone" data-width="16"></span>
+            <span class="text-[10px] font-bold uppercase tracking-[0.2em] text-forge-silver">Contact</span>
+          </div>
+          <div class="space-y-1.5">
+            <p class="text-xs text-white">(213) 555-FORGE</p>
+            <p class="text-xs text-forge-orange">hello@forgefitness.com</p>
+          </div>
+        </div>
+        <!-- Social -->
+        <div class="md:col-span-1">
+          <div class="flex items-center gap-2 mb-4">
+            <span class="iconify text-forge-orange" data-icon="lucide:share-2" data-width="16"></span>
+            <span class="text-[10px] font-bold uppercase tracking-[0.2em] text-forge-silver">Follow Us</span>
+          </div>
+          <div class="flex gap-2">
+            <a href="#" class="w-10 h-10 border border-white/10 flex items-center justify-center hover:bg-forge-orange hover:border-forge-orange hover:text-forge-black text-forge-silver transition-all">
+              <span class="iconify" data-icon="lucide:instagram" data-width="16"></span>
+            </a>
+            <a href="#" class="w-10 h-10 border border-white/10 flex items-center justify-center hover:bg-forge-orange hover:border-forge-orange hover:text-forge-black text-forge-silver transition-all">
+              <span class="iconify" data-icon="lucide:youtube" data-width="16"></span>
+            </a>
+            <a href="#" class="w-10 h-10 border border-white/10 flex items-center justify-center hover:bg-forge-orange hover:border-forge-orange hover:text-forge-black text-forge-silver transition-all">
+              <span class="iconify" data-icon="lucide:twitter" data-width="16"></span>
+            </a>
+            <a href="#" class="w-10 h-10 border border-white/10 flex items-center justify-center hover:bg-forge-orange hover:border-forge-orange hover:text-forge-black text-forge-silver transition-all">
+              <span class="iconify" data-icon="lucide:facebook" data-width="16"></span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="relative py-8 bg-forge-black border-t border-white/5">
+    <div class="max-w-7xl mx-auto px-4 md:px-6">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+        <div class="flex items-center gap-2">
+          <div class="w-6 h-6 bg-forge-orange flex items-center justify-center">
+            <span class="font-heading font-bold text-forge-black text-xs leading-none">F</span>
+          </div>
+          <span class="font-heading font-bold text-sm tracking-wider text-white uppercase">Forge</span>
+          <span class="text-[10px] text-forge-silverDark ml-2">© 2025 All Rights Reserved</span>
+        </div>
+        <div class="flex items-center gap-6">
+          <a href="#" class="text-[10px] uppercase tracking-wider text-forge-silverDark hover:text-white transition-colors">Privacy Policy</a>
+          <a href="#" class="text-[10px] uppercase tracking-wider text-forge-silverDark hover:text-white transition-colors">Terms of Service</a>
+          <a href="#" class="text-[10px] uppercase tracking-wider text-forge-silverDark hover:text-white transition-colors">Careers</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Toast Container -->
+  <div id="toastContainer" class="fixed bottom-6 right-6 z-[100] flex flex-col gap-3"></div>
+
+  <script>
+    // Mobile Menu
+    const menuToggle = document.getElementById('menuToggle');
+    const menuClose = document.getElementById('menuClose');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const menuOverlay = document.getElementById('menuOverlay');
+
+    function openMenu() {
+      mobileMenu.classList.add('open');
+      menuOverlay.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeMenu() {
+      mobileMenu.classList.remove('open');
+      menuOverlay.classList.add('hidden');
+      document.body.style.overflow = '';
+    }
+
+    menuToggle.addEventListener('click', openMenu);
+    menuClose.addEventListener('click', closeMenu);
+    menuOverlay.addEventListener('click', closeMenu);
+
+    document.querySelectorAll('.mobile-link').forEach(link => {
+      link.addEventListener('click', closeMenu);
+    });
+
+    // Navbar scroll effect
+    let lastScroll = 0;
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      const currentScroll = window.pageYOffset;
+      if (currentScroll > 100) {
+        navbar.style.borderBottom = '1px solid rgba(255,255,255,0.05)';
+      } else {
+        navbar.style.borderBottom = 'none';
+      }
+      lastScroll = currentScroll;
+    });
+
+    // Schedule Data
+    const scheduleData = {
+      mon: [
+        { time: '05:30', name: 'Morning Power Lift', coach: 'Marcus C.', level: 'Advanced', spots: 2 },
+        { time: '07:00', name: 'HIIT MetCon', coach: 'Sarah K.', level: 'All Levels', spots: 5 },
+        { time: '09:00', name: 'Functional Strength', coach: 'James R.', level: 'Intermediate', spots: 4 },
+        { time: '12:00', name: 'Express Lunch HIIT', coach: 'Sarah K.', level: 'All Levels', spots: 6 },
+        { time: '17:30', name: 'Hypertrophy Upper', coach: 'Marcus C.', level: 'Intermediate', spots: 3 },
+        { time: '19:00', name: 'Olympic Lifting', coach: 'James R.', level: 'Advanced', spots: 2 },
+        { time: '20:30', name: 'Mobility Flow', coach: 'Mia L.', level: 'All Levels', spots: 8 },
+      ],
+      tue: [
+        { time: '06:00', name: 'Lower Body Blast', coach: 'Marcus C.', level: 'Intermediate', spots: 3 },
+        { time: '08:00', name: 'Core & Conditioning', coach: 'Sarah K.', level: 'All Levels', spots: 6 },
+        { time: '10:00', name: 'Yoga for Lifters', coach: 'Mia L.', level: 'All Levels', spots: 8 },
+        { time: '17:00', name: 'Fat Furnace HIIT', coach: 'Sarah K.', level: 'Intermediate', spots: 4 },
+        { time: '18:30', name: 'Power Building', coach: 'James R.', level: 'Advanced', spots: 2 },
+        { time: '20:00', name: 'Recovery Stretch', coach: 'Mia L.', level: 'All Levels', spots: 10 },
+      ],
+      wed: [
+        { time: '05:30', name: 'Push/Pull Strength', coach: 'Marcus C.', level: 'Advanced', spots: 2 },
+        { time: '07:00', name: 'Total Body MetCon', coach: 'Sarah K.', level: 'All Levels', spots: 5 },
+        { time: '09:30', name: 'Beginner Strength', coach: 'James R.', level: 'Beginner', spots: 8 },
+        { time: '12:00', name: 'Express Lunch Burn', coach: 'Sarah K.', level: 'All Levels', spots: 6 },
+        { time: '17:30', name: 'Hypertrophy Lower', coach: 'Marcus C.', level: 'Intermediate', spots: 3 },
+        { time: '19:00', name: 'Athletic Performance', coach: 'James R.', level: 'Advanced', spots: 2 },
+        { time: '20:30', name: 'Mobility & Recovery', coach: 'Mia L.', level: 'All Levels', spots: 8 },
+      ],
+      thu: [
+        { time: '06:00', name: 'Upper Body Power', coach: 'Marcus C.', level: 'Intermediate', spots: 3 },
+        { time: '08:00', name: 'Cardio Kickbox', coach: 'Sarah K.', level: 'All Levels', spots: 7 },
+        { time: '10:00', name: 'Functional Movement', coach: 'Mia L.', level: 'Beginner', spots: 8 },
+        { time: '17:00', name: 'HIIT Extreme', coach: 'Sarah K.', level: 'Advanced', spots: 2 },
+        { time: '18:30', name: 'Olympic Technique', coach: 'James R.', level: 'Intermediate', spots: 4 },
+        { time: '20:00', name: 'Deep Stretch', coach: 'Mia L.', level: 'All Levels', spots: 10 },
+      ],
+      fri: [
+        { time: '05:30', name: 'Full Body Power', coach: 'Marcus C.', level: 'Advanced', spots: 2 },
+        { time: '07:00', name: 'MetCon Friday', coach: 'Sarah K.', level: 'All Levels', spots: 6 },
+        { time: '09:00', name: 'Strength Foundations', coach: 'James R.', level: 'Beginner', spots: 8 },
+        { time: '12:00', name: 'Lunch Express', coach: 'Sarah K.', level: 'All Levels', spots: 5 },
+        { time: '16:00', name: 'Team WOD', coach: 'All Coaches', level: 'All Levels', spots: 20 },
+        { time: '18:00', name: 'Bodyweight Mastery', coach: 'Mia L.', level: 'Intermediate', spots: 6 },
+      ],
+      sat: [
+        { time: '07:00', name: 'Weekend Warrior WOD', coach: 'Marcus C.', level: 'All Levels', spots: 12 },
+        { time: '09:00', name: 'Strength Circuit', coach: 'James R.', level: 'Intermediate', spots: 6 },
+        { time: '11:00', name: 'Community Workout', coach: 'All Coaches', level: 'All Levels', spots: 30 },
+        { time: '13:00', name: 'Yoga & Recovery', coach: 'Mia L.', level: 'All Levels', spots: 15 },
+      ],
+      sun: [
+        { time: '08:00', name: 'Active Recovery', coach: 'Mia L.', level: 'All Levels', spots: 10 },
+        { time: '10:00', name: 'Open Gym', coach: 'On Duty', level: 'All Levels', spots: 20 },
+        { time: '16:00', name: 'Sunday Stretch', coach: 'Mia L.', level: 'All Levels', spots: 12 },
+      ],
+    };
+
+    function getLevelColor(level) {
+      switch(level) {
+        case 'Advanced': return 'bg-red-500/20 text-red-400';
+        case 'Intermediate': return 'bg-forge-orange/20 text-forge-orange';
+        case 'Beginner': return 'bg-green-500/20 text-green-400';
+        default: return 'bg-white/10 text-forge-silver';
+      }
+    }
+
+    function showDay(btn, day) {
+      // Update active tab
+      document.querySelectorAll('.schedule-tab').forEach(t => {
+        t.classList.remove('bg-forge-orange', 'text-forge-black');
+        t.classList.add('bg-forge-gray', 'text-forge-silver');
+      });
+      btn.classList.remove('bg-forge-gray', 'text-forge-silver');
+      btn.classList.add('bg-forge-orange', 'text-forge-black');
+
+      // Update content
+      const container = document.getElementById('schedule-content');
+      const classes = scheduleData[day] || [];
+      container.innerHTML = classes.map(c => `
+        <div class="bg-forge-gray p-4 border border-white/5 hover:border-forge-orange/30 transition-all cursor-pointer group">
+          <div class="flex items-center justify-between mb-2">
+            <span class="font-heading text-lg font-bold text-white">${c.time}</span>
+            <span class="text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 ${getLevelColor(c.level)}">${c.level}</span>
+          </div>
+          <div class="text-sm font-semibold text-white mb-1 group-hover:text-forge-orange transition-colors">${c.name}</div>
+          <div class="flex items-center justify-between mt-3 pt-2 border-t border-white/5">
+            <span class="text-[10px] text-forge-silverDark">Coach: ${c.coach}</span>
+            <span class="text-[10px] font-semibold ${c.spots <= 3 ? 'text-red-400' : 'text-forge-silver'}">${c.spots} spots left</span>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // Initialize Monday schedule
+    showDay(document.querySelector('.schedule-tab'), 'mon');
+
+    // Form submission
+    function handleBooking(e) {
+      e.preventDefault();
+      const btn = document.getElementById('submitBtn');
+      const originalHTML = btn.innerHTML;
+      
+      btn.innerHTML = `
+        <svg class="animate-spin h-4 w-4 text-forge-black" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+        </svg>
+        <span>Processing...</span>
+      `;
+      btn.disabled = true;
+
+      setTimeout(() => {
+        btn.innerHTML = `
+          <span class="iconify" data-icon="lucide:check-circle" data-width="18"></span>
+          <span>Booking Confirmed!</span>
+        `;
+        btn.classList.remove('bg-forge-orange', 'hover:bg-forge-orangeLight');
+        btn.classList.add('bg-green-600');
+
+        showToast('success', 'Trial Class Booked!', "We'll contact you within 24 hours to confirm your session. Get ready to FORGE your best self.");
+
+        setTimeout(() => {
+          btn.innerHTML = originalHTML;
+          btn.disabled = false;
+          btn.classList.remove('bg-green-600');
+          btn.classList.add('bg-forge-orange', 'hover:bg-forge-orangeLight');
+          document.getElementById('bookingForm').reset();
+        }, 3000);
+      }, 1500);
+
+      return false;
+    }
+
+    // Toast system
+    function showToast(type, title, message) {
+      const container = document.getElementById('toastContainer');
+      const toast = document.createElement('div');
+      toast.className = 'toast max-w-sm w-full bg-forge-gray border border-white/10 p-4 shadow-2xl';
+      
+      const iconColor = type === 'success' ? 'text-green-400' : 'text-forge-orange';
+      const icon = type === 'success' ? 'lucide:check-circle' : 'lucide:info';
+      
+      toast.innerHTML = `
+        <div class="flex gap-3">
+          <span class="iconify ${iconColor} flex-shrink-0 mt-0.5" data-icon="${icon}" data-width="20"></span>
+          <div>
+            <div class="text-sm font-bold text-white">${title}</div>
+            <div class="text-xs text-forge-silver mt-1">${message}</div>
+          </div>
+          <button onclick="this.closest('.toast').remove()" class="ml-auto flex-shrink-0 text-forge-silverDark hover:text-white transition-colors">
+            <span class="iconify" data-icon="lucide:x" data-width="14"></span>
+          </button>
+        </div>
+      `;
+      
+      container.appendChild(toast);
+      
+      setTimeout(() => {
+        if (toast.parentNode) {
+          toast.classList.add('hide');
+          setTimeout(() => toast.remove(), 300);
+        }
+      }, 5000);
+    }
+
+    // Scroll-triggered animations
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+          observer.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll('.program-card, .coach-card, .story-card').forEach(el => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(20px)';
+      el.style.transition = 'opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1)';
+      observer.observe(el);
+    });
+  </script>
+
+</body>
+</html>
