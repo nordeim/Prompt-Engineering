@@ -1,0 +1,978 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TERREN — Sustainable Fashion</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        ivory: '#FAF7F2',
+        sand: '#E8DFD3',
+        wheat: '#D4C5B2',
+        earth: '#8C7B6B',
+        bark: '#5A4D42',
+        olive: '#5C6B4F',
+        forest: '#2D4A3E',
+        terracotta: '#C4644A',
+        clay: '#A85C3F',
+        cream: '#F5F0E8',
+      },
+      fontFamily: {
+        serif: ['Cormorant Garamond', 'Georgia', 'serif'],
+        sans: ['Inter', 'sans-serif'],
+      }
+    }
+  }
+}
+</script>
+<style>
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Inter', sans-serif; background: #FAF7F2; color: #5A4D42; }
+
+  /* Subtle paper texture overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.025;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  }
+
+  .font-serif { font-family: 'Cormorant Garamond', Georgia, serif; }
+
+  /* Manifesto line animation */
+  .manifesto-line {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .manifesto-line.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Reveal animations */
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+  .reveal-delay-4 { transition-delay: 0.4s; }
+  .reveal-delay-5 { transition-delay: 0.5s; }
+  .reveal-delay-6 { transition-delay: 0.6s; }
+
+  /* Hero parallax image */
+  .hero-image {
+    transition: transform 0.1s linear;
+  }
+
+  /* Material card hover */
+  .material-card:hover .material-img {
+    transform: scale(1.05);
+  }
+  .material-card:hover .material-label {
+    letter-spacing: 0.2em;
+  }
+
+  /* Product card */
+  .product-card:hover .product-img {
+    transform: scale(1.04);
+  }
+  .product-card:hover .product-name {
+    color: #5C6B4F;
+  }
+
+  /* Scenario tab */
+  .scenario-tab.active {
+    color: #2D4A3E;
+    border-bottom-color: #2D4A3E;
+  }
+
+  /* Scroll indicator */
+  @keyframes scrollBounce {
+    0%, 100% { transform: translateY(0); opacity: 0.6; }
+    50% { transform: translateY(8px); opacity: 1; }
+  }
+  .scroll-indicator { animation: scrollBounce 2s ease-in-out infinite; }
+
+  /* Nav link underline */
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: #2D4A3E;
+    transition: width 0.3s ease;
+  }
+  .nav-link:hover::after {
+    width: 100%;
+  }
+
+  /* Toast notification */
+  .toast {
+    transform: translateY(20px);
+    opacity: 0;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .toast.show {
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  /* Horizontal rule styling */
+  .divider {
+    height: 1px;
+    background: linear-gradient(to right, transparent, #D4C5B2, transparent);
+  }
+
+  /* Process step connector */
+  .process-connector {
+    background: linear-gradient(to bottom, #5C6B4F, transparent);
+  }
+
+  /* Custom selection */
+  ::selection {
+    background: #5C6B4F;
+    color: #FAF7F2;
+  }
+</style>
+</head>
+<body class="antialiased">
+
+<!-- Toast Notification -->
+<div id="toast" class="toast fixed bottom-8 left-1/2 -translate-x-1/2 z-[100] bg-forest text-ivory px-6 py-3 rounded-full text-sm font-sans tracking-wide pointer-events-none">
+  Added to your wishlist ♡
+</div>
+
+<!-- Navigation -->
+<nav id="navbar" class="fixed top-5 left-1/2 -translate-x-1/2 z-50 transition-all duration-500">
+  <div class="flex items-center gap-1 bg-ivory/80 backdrop-blur-xl border border-wheat/60 rounded-full px-2 py-1.5 shadow-[0_8px_40px_-12px_rgba(92,107,79,0.1)]">
+    <!-- Logo -->
+    <a href="#hero" class="flex items-center gap-2 px-4 py-2">
+      <span class="font-serif text-xl font-semibold text-forest tracking-wider">TERREN</span>
+    </a>
+    <!-- Desktop Links -->
+    <div class="hidden md:flex items-center gap-0.5">
+      <a href="#philosophy" class="nav-link relative text-xs font-medium text-bark/70 hover:text-forest px-4 py-2 tracking-wide transition-colors">PHILOSOPHY</a>
+      <a href="#collection" class="nav-link relative text-xs font-medium text-bark/70 hover:text-forest px-4 py-2 tracking-wide transition-colors">COLLECTION</a>
+      <a href="#sustainability" class="nav-link relative text-xs font-medium text-bark/70 hover:text-forest px-4 py-2 tracking-wide transition-colors">SUSTAINABILITY</a>
+      <a href="#community" class="nav-link relative text-xs font-medium text-bark/70 hover:text-forest px-4 py-2 tracking-wide transition-colors">COMMUNITY</a>
+    </div>
+    <!-- CTA -->
+    <a href="#collection" class="hidden md:flex items-center gap-2 bg-forest text-ivory text-xs font-medium px-5 py-2.5 rounded-full hover:bg-olive transition-all duration-300 tracking-wide">
+      SHOP
+      <span class="iconify" data-icon="lucide:arrow-right" data-width="14"></span>
+    </a>
+    <!-- Mobile Menu Button -->
+    <button id="menuBtn" class="md:hidden flex items-center justify-center w-10 h-10 rounded-full hover:bg-sand/50 transition-colors">
+      <span class="iconify text-bark" data-icon="lucide:menu" data-width="20"></span>
+    </button>
+  </div>
+</nav>
+
+<!-- Mobile Menu -->
+<div id="mobileMenu" class="fixed inset-0 z-40 bg-ivory/98 backdrop-blur-xl flex flex-col items-center justify-center gap-8 opacity-0 pointer-events-none transition-opacity duration-500">
+  <button id="menuClose" class="absolute top-8 right-8 w-12 h-12 flex items-center justify-center rounded-full border border-wheat/60 hover:bg-sand/30 transition-colors">
+    <span class="iconify text-bark" data-icon="lucide:x" data-width="22"></span>
+  </button>
+  <a href="#philosophy" class="mobile-link font-serif text-4xl text-bark hover:text-forest transition-colors">Philosophy</a>
+  <a href="#collection" class="mobile-link font-serif text-4xl text-bark hover:text-forest transition-colors">Collection</a>
+  <a href="#sustainability" class="mobile-link font-serif text-4xl text-bark hover:text-forest transition-colors">Sustainability</a>
+  <a href="#community" class="mobile-link font-serif text-4xl text-bark hover:text-forest transition-colors">Community</a>
+  <a href="#collection" class="mt-4 bg-forest text-ivory text-sm font-medium px-8 py-3.5 rounded-full hover:bg-olive transition-all tracking-wide">SHOP COLLECTION</a>
+</div>
+
+<!-- ====== HERO SECTION ====== -->
+<section id="hero" class="relative min-h-screen flex items-center overflow-hidden">
+  <!-- Background Image -->
+  <div class="absolute inset-0">
+    <img src="https://picsum.photos/seed/terren-hero-forest/1920/1080.jpg" alt="Forest light" class="hero-image w-full h-full object-cover" />
+    <div class="absolute inset-0 bg-gradient-to-r from-ivory via-ivory/80 to-ivory/20"></div>
+    <div class="absolute inset-0 bg-gradient-to-t from-ivory via-transparent to-ivory/30"></div>
+  </div>
+
+  <!-- Content -->
+  <div class="relative z-10 w-full max-w-7xl mx-auto px-6 md:px-12 lg:px-20 pt-32 pb-20 md:pt-40 md:pb-28">
+    <!-- Tag -->
+    <div class="manifesto-line mb-8">
+      <span class="inline-flex items-center gap-2 text-[10px] font-sans font-medium uppercase tracking-[0.25em] text-olive border border-olive/30 rounded-full px-4 py-2 bg-ivory/50 backdrop-blur-sm">
+        <span class="w-1.5 h-1.5 bg-olive rounded-full"></span>
+        Sustainable Fashion since 2019
+      </span>
+    </div>
+
+    <!-- Manifesto -->
+    <h1 class="max-w-3xl">
+      <span class="manifesto-line block font-serif text-4xl md:text-6xl lg:text-7xl font-light text-bark leading-[1.1] tracking-tight">
+        We dress for
+      </span>
+      <span class="manifesto-line block font-serif text-4xl md:text-6xl lg:text-7xl font-light text-bark leading-[1.1] tracking-tight mt-1">
+        the earth we
+      </span>
+      <span class="manifesto-line block font-serif text-4xl md:text-6xl lg:text-7xl font-light leading-[1.1] tracking-tight mt-1">
+        <span class="text-forest italic">wish to inhabit.</span>
+      </span>
+    </h1>
+
+    <!-- Subtext -->
+    <div class="manifesto-line mt-10 max-w-lg">
+      <p class="text-base md:text-lg text-earth font-light leading-relaxed">
+        TERREN creates garments from nature, for nature. Every thread traced, every fiber respected. Slow fashion for a living planet.
+      </p>
+    </div>
+
+    <!-- CTA Buttons -->
+    <div class="manifesto-line mt-10 flex flex-wrap items-center gap-4">
+      <a href="#collection" class="group flex items-center gap-3 bg-forest text-ivory text-sm font-medium px-8 py-4 rounded-full hover:bg-olive hover:-translate-y-0.5 transition-all duration-300 shadow-[0_10px_25px_-5px_rgba(45,74,62,0.3)]">
+        Explore Collection
+        <span class="iconify group-hover:translate-x-1 transition-transform" data-icon="lucide:arrow-right" data-width="16"></span>
+      </a>
+      <a href="#philosophy" class="group flex items-center gap-3 text-sm font-medium text-bark border border-wheat px-8 py-4 rounded-full hover:border-olive hover:text-forest hover:-translate-y-0.5 transition-all duration-300">
+        Our Philosophy
+        <span class="iconify group-hover:translate-x-1 transition-transform" data-icon="lucide:chevron-down" data-width="16"></span>
+      </a>
+    </div>
+
+    <!-- Scroll Indicator -->
+    <div class="manifesto-line mt-20 hidden md:flex items-center gap-3 text-earth/50">
+      <div class="scroll-indicator">
+        <span class="iconify" data-icon="lucide:mouse" data-width="18"></span>
+      </div>
+      <span class="text-[10px] uppercase tracking-[0.2em] font-medium">Scroll to discover</span>
+    </div>
+  </div>
+</section>
+
+<!-- ====== PHILOSOPHY SECTION ====== -->
+<section id="philosophy" class="py-24 md:py-32 lg:py-40">
+  <div class="max-w-7xl mx-auto px-6 md:px-12 lg:px-20">
+
+    <!-- Section Header -->
+    <div class="reveal text-center mb-20 md:mb-28">
+      <span class="inline-block text-[10px] font-medium uppercase tracking-[0.3em] text-olive mb-6">Our Philosophy</span>
+      <h2 class="font-serif text-3xl md:text-5xl lg:text-6xl font-light text-bark leading-[1.15] tracking-tight max-w-3xl mx-auto">
+        Fashion that honors <br><span class="italic text-forest">the hands that make it</span>
+      </h2>
+    </div>
+
+    <!-- Three Pillars -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
+
+      <!-- Pillar 1 -->
+      <div class="reveal reveal-delay-1 group text-center md:text-left">
+        <div class="w-16 h-16 rounded-2xl bg-sand/40 border border-wheat/50 flex items-center justify-center mb-8 mx-auto md:mx-0 group-hover:bg-olive/10 group-hover:border-olive/20 transition-all duration-500">
+          <span class="iconify text-olive" data-icon="lucide:leaf" data-width="28"></span>
+        </div>
+        <h3 class="font-serif text-2xl font-medium text-bark mb-4">Material Honesty</h3>
+        <p class="text-earth font-light leading-[1.8] text-[15px]">
+          We source only certified organic fibers, responsibly harvested linen, and regenerative plant-dyed textiles. Every fabric tells the truth of its origin.
+        </p>
+        <div class="mt-6 flex items-center gap-2 text-olive text-xs font-medium tracking-wide group-hover:gap-3 transition-all">
+          <span>Learn more</span>
+          <span class="iconify" data-icon="lucide:arrow-right" data-width="14"></span>
+        </div>
+      </div>
+
+      <!-- Pillar 2 -->
+      <div class="reveal reveal-delay-2 group text-center md:text-left">
+        <div class="w-16 h-16 rounded-2xl bg-sand/40 border border-wheat/50 flex items-center justify-center mb-8 mx-auto md:mx-0 group-hover:bg-olive/10 group-hover:border-olive/20 transition-all duration-500">
+          <span class="iconify text-olive" data-icon="lucide:hand-heart" data-width="28"></span>
+        </div>
+        <h3 class="font-serif text-2xl font-medium text-bark mb-4">Artisan Craft</h3>
+        <p class="text-earth font-light leading-[1.8] text-[15px]">
+          Each garment passes through the hands of skilled artisans — from pattern cutting to hand-finished seams. We preserve traditions that machines cannot replicate.
+        </p>
+        <div class="mt-6 flex items-center gap-2 text-olive text-xs font-medium tracking-wide group-hover:gap-3 transition-all">
+          <span>Learn more</span>
+          <span class="iconify" data-icon="lucide:arrow-right" data-width="14"></span>
+        </div>
+      </div>
+
+      <!-- Pillar 3 -->
+      <div class="reveal reveal-delay-3 group text-center md:text-left">
+        <div class="w-16 h-16 rounded-2xl bg-sand/40 border border-wheat/50 flex items-center justify-center mb-8 mx-auto md:mx-0 group-hover:bg-olive/10 group-hover:border-olive/20 transition-all duration-500">
+          <span class="iconify text-olive" data-icon="lucide:recycle" data-width="28"></span>
+        </div>
+        <h3 class="font-serif text-2xl font-medium text-bark mb-4">Full Circle</h3>
+        <p class="text-earth font-light leading-[1.8] text-[15px]">
+          From seed to soil — our garments are designed to return to the earth. Biodegradable fibers, zero-waste patterns, and a take-back program for every piece.
+        </p>
+        <div class="mt-6 flex items-center gap-2 text-olive text-xs font-medium tracking-wide group-hover:gap-3 transition-all">
+          <span>Learn more</span>
+          <span class="iconify" data-icon="lucide:arrow-right" data-width="14"></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Editorial Image Break -->
+    <div class="reveal mt-20 md:mt-28 relative">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+        <div class="aspect-[4/5] rounded-2xl overflow-hidden">
+          <img src="https://picsum.photos/seed/terren-linen-detail/800/1000.jpg" alt="Linen texture detail" class="w-full h-full object-cover hover:scale-105 transition-transform duration-[1.5s]" />
+        </div>
+        <div class="aspect-[4/5] rounded-2xl overflow-hidden">
+          <img src="https://picsum.photos/seed/terren-nature-cotton/800/1000.jpg" alt="Organic cotton in nature" class="w-full h-full object-cover hover:scale-105 transition-transform duration-[1.5s]" />
+        </div>
+      </div>
+      <!-- Overlay Quote -->
+      <div class="mt-12 md:mt-16 max-w-2xl mx-auto text-center">
+        <blockquote class="font-serif text-2xl md:text-3xl lg:text-4xl font-light text-bark/80 italic leading-snug">
+          "Nothing created by nature should be wasted by design."
+        </blockquote>
+        <p class="mt-6 text-[11px] uppercase tracking-[0.3em] text-earth/60 font-medium">— Eloise Renne, Founder</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== COLLECTION / PRODUCT SECTION ====== -->
+<section id="collection" class="py-24 md:py-32 lg:py-40 bg-cream">
+  <div class="max-w-7xl mx-auto px-6 md:px-12 lg:px-20">
+
+    <!-- Section Header -->
+    <div class="reveal text-center mb-12">
+      <span class="inline-block text-[10px] font-medium uppercase tracking-[0.3em] text-olive mb-6">The Collection</span>
+      <h2 class="font-serif text-3xl md:text-5xl lg:text-6xl font-light text-bark leading-[1.15] tracking-tight">
+        Dressed for <span class="italic text-forest">living</span>
+      </h2>
+      <p class="mt-6 text-earth font-light text-base md:text-lg max-w-xl mx-auto leading-relaxed">
+        Organized by the moments that matter — at home, on the move, under open sky.
+      </p>
+    </div>
+
+    <!-- Scenario Tabs -->
+    <div class="reveal flex justify-center gap-8 md:gap-12 mb-14 border-b border-wheat/50 pb-0">
+      <button class="scenario-tab active text-xs md:text-sm font-medium uppercase tracking-[0.15em] text-bark/40 border-b-2 border-transparent pb-4 transition-all duration-300 hover:text-bark" data-tab="home">
+        <span class="iconify inline mr-1.5" data-icon="lucide:home" data-width="14"></span>Home
+      </button>
+      <button class="scenario-tab text-xs md:text-sm font-medium uppercase tracking-[0.15em] text-bark/40 border-b-2 border-transparent pb-4 transition-all duration-300 hover:text-bark" data-tab="commute">
+        <span class="iconify inline mr-1.5" data-icon="lucide:briefcase" data-width="14"></span>Commuting
+      </button>
+      <button class="scenario-tab text-xs md:text-sm font-medium uppercase tracking-[0.15em] text-bark/40 border-b-2 border-transparent pb-4 transition-all duration-300 hover:text-bark" data-tab="outdoor">
+        <span class="iconify inline mr-1.5" data-icon="lucide:mountain" data-width="14"></span>Outdoor
+      </button>
+    </div>
+
+    <!-- Product Grids -->
+    <!-- HOME -->
+    <div id="tab-home" class="tab-content grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+      <div class="product-card group cursor-pointer">
+        <div class="aspect-[3/4] rounded-2xl overflow-hidden bg-sand/30 mb-4">
+          <img src="https://picsum.photos/seed/terren-home1/600/800.jpg" alt="Relaxed Linen Set" class="product-img w-full h-full object-cover transition-transform duration-700" />
+        </div>
+        <p class="text-[10px] uppercase tracking-[0.2em] text-olive font-medium mb-1">Organic Linen</p>
+        <h4 class="product-name font-serif text-lg text-bark transition-colors duration-300">Relaxed Morning Set</h4>
+        <p class="text-sm text-earth mt-1 font-light">€128</p>
+        <button onclick="showToast()" class="mt-3 text-[10px] uppercase tracking-[0.15em] text-olive font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center gap-1">
+          <span class="iconify" data-icon="lucide:heart" data-width="12"></span> Wishlist
+        </button>
+      </div>
+      <div class="product-card group cursor-pointer">
+        <div class="aspect-[3/4] rounded-2xl overflow-hidden bg-sand/30 mb-4">
+          <img src="https://picsum.photos/seed/terren-home2/600/800.jpg" alt="Cotton Wrap" class="product-img w-full h-full object-cover transition-transform duration-700" />
+        </div>
+        <p class="text-[10px] uppercase tracking-[0.2em] text-olive font-medium mb-1">Organic Cotton</p>
+        <h4 class="product-name font-serif text-lg text-bark transition-colors duration-300">Soft Wrap Cardigan</h4>
+        <p class="text-sm text-earth mt-1 font-light">€145</p>
+        <button onclick="showToast()" class="mt-3 text-[10px] uppercase tracking-[0.15em] text-olive font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center gap-1">
+          <span class="iconify" data-icon="lucide:heart" data-width="12"></span> Wishlist
+        </button>
+      </div>
+      <div class="product-card group cursor-pointer">
+        <div class="aspect-[3/4] rounded-2xl overflow-hidden bg-sand/30 mb-4">
+          <img src="https://picsum.photos/seed/terren-home3/600/800.jpg" alt="Wide Trouser" class="product-img w-full h-full object-cover transition-transform duration-700" />
+        </div>
+        <p class="text-[10px] uppercase tracking-[0.2em] text-olive font-medium mb-1">Hemp Blend</p>
+        <h4 class="product-name font-serif text-lg text-bark transition-colors duration-300">Wide Rest Trouser</h4>
+        <p class="text-sm text-earth mt-1 font-light">€98</p>
+        <button onclick="showToast()" class="mt-3 text-[10px] uppercase tracking-[0.15em] text-olive font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center gap-1">
+          <span class="iconify" data-icon="lucide:heart" data-width="12"></span> Wishlist
+        </button>
+      </div>
+      <div class="product-card group cursor-pointer">
+        <div class="aspect-[3/4] rounded-2xl overflow-hidden bg-sand/30 mb-4">
+          <img src="https://picsum.photos/seed/terren-home4/600/800.jpg" alt="Slip Dress" class="product-img w-full h-full object-cover transition-transform duration-700" />
+        </div>
+        <p class="text-[10px] uppercase tracking-[0.2em] text-olive font-medium mb-1">Tencel™</p>
+        <h4 class="product-name font-serif text-lg text-bark transition-colors duration-300">Home Slip Dress</h4>
+        <p class="text-sm text-earth mt-1 font-light">€112</p>
+        <button onclick="showToast()" class="mt-3 text-[10px] uppercase tracking-[0.15em] text-olive font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center gap-1">
+          <span class="iconify" data-icon="lucide:heart" data-width="12"></span> Wishlist
+        </button>
+      </div>
+    </div>
+
+    <!-- COMMUTING -->
+    <div id="tab-commute" class="tab-content hidden grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+      <div class="product-card group cursor-pointer">
+        <div class="aspect-[3/4] rounded-2xl overflow-hidden bg-sand/30 mb-4">
+          <img src="https://picsum.photos/seed/terren-commute1/600/800.jpg" alt="Tailored Blazer" class="product-img w-full h-full object-cover transition-transform duration-700" />
+        </div>
+        <p class="text-[10px] uppercase tracking-[0.2em] text-olive font-medium mb-1">Organic Wool</p>
+        <h4 class="product-name font-serif text-lg text-bark transition-colors duration-300">Minimal Tailored Blazer</h4>
+        <p class="text-sm text-earth mt-1 font-light">€215</p>
+        <button onclick="showToast()" class="mt-3 text-[10px] uppercase tracking-[0.15em] text-olive font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center gap-1">
+          <span class="iconify" data-icon="lucide:heart" data-width="12"></span> Wishlist
+        </button>
+      </div>
+      <div class="product-card group cursor-pointer">
+        <div class="aspect-[3/4] rounded-2xl overflow-hidden bg-sand/30 mb-4">
+          <img src="https://picsum.photos/seed/terren-commute2/600/800.jpg" alt="Straight Trouser" class="product-img w-full h-full object-cover transition-transform duration-700" />
+        </div>
+        <p class="text-[10px] uppercase tracking-[0.2em] text-olive font-medium mb-1">Organic Cotton</p>
+        <h4 class="product-name font-serif text-lg text-bark transition-colors duration-300">Straight Leg Trouser</h4>
+        <p class="text-sm text-earth mt-1 font-light">€118</p>
+        <button onclick="showToast()" class="mt-3 text-[10px] uppercase tracking-[0.15em] text-olive font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center gap-1">
+          <span class="iconify" data-icon="lucide:heart" data-width="12"></span> Wishlist
+        </button>
+      </div>
+      <div class="product-card group cursor-pointer">
+        <div class="aspect-[3/4] rounded-2xl overflow-hidden bg-sand/30 mb-4">
+          <img src="https://picsum.photos/seed/terren-commute3/600/800.jpg" alt="Shirt" class="product-img w-full h-full object-cover transition-transform duration-700" />
+        </div>
+        <p class="text-[10px] uppercase tracking-[0.2em] text-olive font-medium mb-1">Linen</p>
+        <h4 class="product-name font-serif text-lg text-bark transition-colors duration-300">Oversized Work Shirt</h4>
+        <p class="text-sm text-earth mt-1 font-light">€95</p>
+        <button onclick="showToast()" class="mt-3 text-[10px] uppercase tracking-[0.15em] text-olive font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center gap-1">
+          <span class="iconify" data-icon="lucide:heart" data-width="12"></span> Wishlist
+        </button>
+      </div>
+      <div class="product-card group cursor-pointer">
+        <div class="aspect-[3/4] rounded-2xl overflow-hidden bg-sand/30 mb-4">
+          <img src="https://picsum.photos/seed/terren-commute4/600/800.jpg" alt="Tote Bag" class="product-img w-full h-full object-cover transition-transform duration-700" />
+        </div>
+        <p class="text-[10px] uppercase tracking-[0.2em] text-olive font-medium mb-1">Recycled Canvas</p>
+        <h4 class="product-name font-serif text-lg text-bark transition-colors duration-300">Everyday Tote</h4>
+        <p class="text-sm text-earth mt-1 font-light">€68</p>
+        <button onclick="showToast()" class="mt-3 text-[10px] uppercase tracking-[0.15em] text-olive font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center gap-1">
+          <span class="iconify" data-icon="lucide:heart" data-width="12"></span> Wishlist
+        </button>
+      </div>
+    </div>
+
+    <!-- OUTDOOR -->
+    <div id="tab-outdoor" class="tab-content hidden grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+      <div class="product-card group cursor-pointer">
+        <div class="aspect-[3/4] rounded-2xl overflow-hidden bg-sand/30 mb-4">
+          <img src="https://picsum.photos/seed/terren-outdoor1/600/800.jpg" alt="Field Jacket" class="product-img w-full h-full object-cover transition-transform duration-700" />
+        </div>
+        <p class="text-[10px] uppercase tracking-[0.2em] text-olive font-medium mb-1">Waxed Organic Cotton</p>
+        <h4 class="product-name font-serif text-lg text-bark transition-colors duration-300">Field Jacket</h4>
+        <p class="text-sm text-earth mt-1 font-light">€248</p>
+        <button onclick="showToast()" class="mt-3 text-[10px] uppercase tracking-[0.15em] text-olive font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center gap-1">
+          <span class="iconify" data-icon="lucide:heart" data-width="12"></span> Wishlist
+        </button>
+      </div>
+      <div class="product-card group cursor-pointer">
+        <div class="aspect-[3/4] rounded-2xl overflow-hidden bg-sand/30 mb-4">
+          <img src="https://picsum.photos/seed/terren-outdoor2/600/800.jpg" alt="Cargo Trouser" class="product-img w-full h-full object-cover transition-transform duration-700" />
+        </div>
+        <p class="text-[10px] uppercase tracking-[0.2em] text-olive font-medium mb-1">Hemp Canvas</p>
+        <h4 class="product-name font-serif text-lg text-bark transition-colors duration-300">Utility Cargo Trouser</h4>
+        <p class="text-sm text-earth mt-1 font-light">€135</p>
+        <button onclick="showToast()" class="mt-3 text-[10px] uppercase tracking-[0.15em] text-olive font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center gap-1">
+          <span class="iconify" data-icon="lucide:heart" data-width="12"></span> Wishlist
+        </button>
+      </div>
+      <div class="product-card group cursor-pointer">
+        <div class="aspect-[3/4] rounded-2xl overflow-hidden bg-sand/30 mb-4">
+          <img src="https://picsum.photos/seed/terren-outdoor3/600/800.jpg" alt="Merino Layer" class="product-img w-full h-full object-cover transition-transform duration-700" />
+        </div>
+        <p class="text-[10px] uppercase tracking-[0.2em] text-olive font-medium mb-1">Organic Merino</p>
+        <h4 class="product-name font-serif text-lg text-bark transition-colors duration-300">Base Layer Knit</h4>
+        <p class="text-sm text-earth mt-1 font-light">€105</p>
+        <button onclick="showToast()" class="mt-3 text-[10px] uppercase tracking-[0.15em] text-olive font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center gap-1">
+          <span class="iconify" data-icon="lucide:heart" data-width="12"></span> Wishlist
+        </button>
+      </div>
+      <div class="product-card group cursor-pointer">
+        <div class="aspect-[3/4] rounded-2xl overflow-hidden bg-sand/30 mb-4">
+          <img src="https://picsum.photos/seed/terren-outdoor4/600/800.jpg" alt="Bucket Hat" class="product-img w-full h-full object-cover transition-transform duration-700" />
+        </div>
+        <p class="text-[10px] uppercase tracking-[0.2em] text-olive font-medium mb-1">Organic Linen</p>
+        <h4 class="product-name font-serif text-lg text-bark transition-colors duration-300">Sun Bucket Hat</h4>
+        <p class="text-sm text-earth mt-1 font-light">€42</p>
+        <button onclick="showToast()" class="mt-3 text-[10px] uppercase tracking-[0.15em] text-olive font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center gap-1">
+          <span class="iconify" data-icon="lucide:heart" data-width="12"></span> Wishlist
+        </button>
+      </div>
+    </div>
+
+    <!-- View All CTA -->
+    <div class="reveal text-center mt-14">
+      <a href="#" class="group inline-flex items-center gap-3 text-sm font-medium text-forest border-b border-forest/30 pb-1 hover:border-forest transition-all duration-300">
+        View all pieces
+        <span class="iconify group-hover:translate-x-1 transition-transform" data-icon="lucide:arrow-right" data-width="16"></span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ====== SUSTAINABILITY SECTION ====== -->
+<section id="sustainability" class="py-24 md:py-32 lg:py-40">
+  <div class="max-w-7xl mx-auto px-6 md:px-12 lg:px-20">
+
+    <!-- Section Header -->
+    <div class="reveal mb-20 md:mb-28">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+        <div>
+          <span class="inline-block text-[10px] font-medium uppercase tracking-[0.3em] text-olive mb-6">Sustainability</span>
+          <h2 class="font-serif text-3xl md:text-5xl lg:text-6xl font-light text-bark leading-[1.15] tracking-tight">
+            Transparency is <br><span class="italic text-forest">not a feature.</span><br>It's our foundation.
+          </h2>
+        </div>
+        <div>
+          <p class="text-earth font-light text-base md:text-lg leading-[1.85]">
+            We believe you deserve to know exactly where your clothing comes from. Every TERREN garment comes with a traceability code that reveals its complete journey — from the field where the fiber grew to the hands that stitched it together.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Materials Showcase -->
+    <div class="reveal mb-20">
+      <p class="text-[10px] font-medium uppercase tracking-[0.3em] text-olive mb-10">Our Materials</p>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+        <div class="material-card group cursor-pointer rounded-2xl overflow-hidden relative aspect-square">
+          <img src="https://picsum.photos/seed/terren-linen-texture/600/600.jpg" alt="Organic Linen" class="material-img w-full h-full object-cover transition-transform duration-700" />
+          <div class="absolute inset-0 bg-gradient-to-t from-bark/70 via-bark/20 to-transparent"></div>
+          <div class="absolute bottom-0 left-0 right-0 p-5">
+            <p class="material-label text-ivory text-xs font-medium uppercase tracking-[0.15em] transition-all duration-500">Organic Linen</p>
+            <p class="text-ivory/70 text-[11px] mt-1 font-light">Certified European Flax®</p>
+          </div>
+        </div>
+        <div class="material-card group cursor-pointer rounded-2xl overflow-hidden relative aspect-square">
+          <img src="https://picsum.photos/seed/terren-cotton-raw/600/600.jpg" alt="Organic Cotton" class="material-img w-full h-full object-cover transition-transform duration-700" />
+          <div class="absolute inset-0 bg-gradient-to-t from-bark/70 via-bark/20 to-transparent"></div>
+          <div class="absolute bottom-0 left-0 right-0 p-5">
+            <p class="material-label text-ivory text-xs font-medium uppercase tracking-[0.15em] transition-all duration-500">Organic Cotton</p>
+            <p class="text-ivory/70 text-[11px] mt-1 font-light">GOTS Certified</p>
+          </div>
+        </div>
+        <div class="material-card group cursor-pointer rounded-2xl overflow-hidden relative aspect-square">
+          <img src="https://picsum.photos/seed/terren-hemp-fiber/600/600.jpg" alt="Hemp" class="material-img w-full h-full object-cover transition-transform duration-700" />
+          <div class="absolute inset-0 bg-gradient-to-t from-bark/70 via-bark/20 to-transparent"></div>
+          <div class="absolute bottom-0 left-0 right-0 p-5">
+            <p class="material-label text-ivory text-xs font-medium uppercase tracking-[0.15em] transition-all duration-500">Hemp</p>
+            <p class="text-ivory/70 text-[11px] mt-1 font-light">Naturally Pest-Free</p>
+          </div>
+        </div>
+        <div class="material-card group cursor-pointer rounded-2xl overflow-hidden relative aspect-square">
+          <img src="https://picsum.photos/seed/terren-tencel-wood/600/600.jpg" alt="Tencel" class="material-img w-full h-full object-cover transition-transform duration-700" />
+          <div class="absolute inset-0 bg-gradient-to-t from-bark/70 via-bark/20 to-transparent"></div>
+          <div class="absolute bottom-0 left-0 right-0 p-5">
+            <p class="material-label text-ivory text-xs font-medium uppercase tracking-[0.15em] transition-all duration-500">Tencel™ Lyocell</p>
+            <p class="text-ivory/70 text-[11px] mt-1 font-light">Closed-Loop Process</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Production Process -->
+    <div class="reveal">
+      <p class="text-[10px] font-medium uppercase tracking-[0.3em] text-olive mb-10">Transparent Production</p>
+      <div class="grid grid-cols-1 md:grid-cols-5 gap-0 border border-wheat/50 rounded-2xl overflow-hidden bg-cream/50">
+        <div class="p-8 md:p-10 border-b md:border-b-0 md:border-r border-wheat/50 text-center group hover:bg-sand/20 transition-colors duration-500">
+          <div class="w-12 h-12 rounded-full bg-forest/10 flex items-center justify-center mx-auto mb-5">
+            <span class="font-serif text-lg text-forest font-semibold">01</span>
+          </div>
+          <span class="iconify text-olive mb-3 mx-auto" data-icon="lucide:sprout" data-width="24"></span>
+          <h4 class="font-serif text-lg text-bark mb-2">Seed & Soil</h4>
+          <p class="text-earth text-xs font-light leading-relaxed">Certified organic farms in Portugal & France</p>
+        </div>
+        <div class="p-8 md:p-10 border-b md:border-b-0 md:border-r border-wheat/50 text-center group hover:bg-sand/20 transition-colors duration-500">
+          <div class="w-12 h-12 rounded-full bg-forest/10 flex items-center justify-center mx-auto mb-5">
+            <span class="font-serif text-lg text-forest font-semibold">02</span>
+          </div>
+          <span class="iconify text-olive mb-3 mx-auto" data-icon="lucide:palette" data-width="24"></span>
+          <h4 class="font-serif text-lg text-bark mb-2">Fiber & Dye</h4>
+          <p class="text-earth text-xs font-light leading-relaxed">Plant-based dyes, zero chemical processing</p>
+        </div>
+        <div class="p-8 md:p-10 border-b md:border-b-0 md:border-r border-wheat/50 text-center group hover:bg-sand/20 transition-colors duration-500">
+          <div class="w-12 h-12 rounded-full bg-forest/10 flex items-center justify-center mx-auto mb-5">
+            <span class="font-serif text-lg text-forest font-semibold">03</span>
+          </div>
+          <span class="iconify text-olive mb-3 mx-auto" data-icon="lucide:scissors" data-width="24"></span>
+          <h4 class="font-serif text-lg text-bark mb-2">Cut & Sew</h4>
+          <p class="text-earth text-xs font-light leading-relaxed">Fair-wage ateliers, hand-finished details</p>
+        </div>
+        <div class="p-8 md:p-10 border-b md:border-b-0 md:border-r border-wheat/50 text-center group hover:bg-sand/20 transition-colors duration-500">
+          <div class="w-12 h-12 rounded-full bg-forest/10 flex items-center justify-center mx-auto mb-5">
+            <span class="font-serif text-lg text-forest font-semibold">04</span>
+          </div>
+          <span class="iconify text-olive mb-3 mx-auto" data-icon="lucide:package" data-width="24"></span>
+          <h4 class="font-serif text-lg text-bark mb-2">Pack & Ship</h4>
+          <p class="text-earth text-xs font-light leading-relaxed">Plastic-free, carbon-neutral delivery</p>
+        </div>
+        <div class="p-8 md:p-10 text-center group hover:bg-sand/20 transition-colors duration-500">
+          <div class="w-12 h-12 rounded-full bg-forest/10 flex items-center justify-center mx-auto mb-5">
+            <span class="font-serif text-lg text-forest font-semibold">05</span>
+          </div>
+          <span class="iconify text-olive mb-3 mx-auto" data-icon="lucide:heart-handshake" data-width="24"></span>
+          <h4 class="font-serif text-lg text-bark mb-2">Wear & Return</h4>
+          <p class="text-earth text-xs font-light leading-relaxed">Take-back program for composting</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Impact Stats -->
+    <div class="reveal mt-16 grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
+      <div class="text-center py-8 border-t border-wheat/50">
+        <p class="font-serif text-4xl md:text-5xl font-light text-forest">0%</p>
+        <p class="text-[11px] uppercase tracking-[0.15em] text-earth mt-3 font-medium">Synthetic Fibers</p>
+      </div>
+      <div class="text-center py-8 border-t border-wheat/50">
+        <p class="font-serif text-4xl md:text-5xl font-light text-forest">83%</p>
+        <p class="text-[11px] uppercase tracking-[0.15em] text-earth mt-3 font-medium">Reduced Water Usage</p>
+      </div>
+      <div class="text-center py-8 border-t border-wheat/50">
+        <p class="font-serif text-4xl md:text-5xl font-light text-forest">47</p>
+        <p class="text-[11px] uppercase tracking-[0.15em] text-earth mt-3 font-medium">Artisan Partners</p>
+      </div>
+      <div class="text-center py-8 border-t border-wheat/50">
+        <p class="font-serif text-4xl md:text-5xl font-light text-forest">100%</p>
+        <p class="text-[11px] uppercase tracking-[0.15em] text-earth mt-3 font-medium">Biodegradable</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== EDITORIAL BREAK ====== -->
+<section class="relative h-[60vh] md:h-[80vh] overflow-hidden">
+  <img src="https://picsum.photos/seed/terren-seaside-walk/1920/1080.jpg" alt="Walking by the sea" class="w-full h-full object-cover" />
+  <div class="absolute inset-0 bg-bark/30"></div>
+  <div class="absolute inset-0 flex items-center justify-center text-center px-6">
+    <div>
+      <p class="text-ivory/70 text-[10px] uppercase tracking-[0.3em] font-medium mb-6">Lookbook AW25</p>
+      <h2 class="font-serif text-4xl md:text-6xl lg:text-7xl font-light text-ivory leading-[1.1] tracking-tight italic max-w-3xl">
+        Between the tide <br>& the turning leaf
+      </h2>
+      <a href="#" class="group inline-flex items-center gap-3 mt-10 bg-ivory/15 backdrop-blur-sm text-ivory text-sm font-medium px-8 py-4 rounded-full border border-ivory/25 hover:bg-ivory/25 hover:-translate-y-0.5 transition-all duration-300">
+        View Lookbook
+        <span class="iconify group-hover:translate-x-1 transition-transform" data-icon="lucide:arrow-right" data-width="16"></span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ====== COMMUNITY SECTION ====== -->
+<section id="community" class="py-24 md:py-32 lg:py-40 bg-cream">
+  <div class="max-w-7xl mx-auto px-6 md:px-12 lg:px-20">
+
+    <!-- Section Header -->
+    <div class="reveal text-center mb-16 md:mb-20">
+      <span class="inline-block text-[10px] font-medium uppercase tracking-[0.3em] text-olive mb-6">Community</span>
+      <h2 class="font-serif text-3xl md:text-5xl lg:text-6xl font-light text-bark leading-[1.15] tracking-tight">
+        Worn by <span class="italic text-forest">real people</span>
+      </h2>
+      <p class="mt-6 text-earth font-light text-base md:text-lg max-w-xl mx-auto leading-relaxed">
+        No models, no studios. Our community shares how TERREN fits into everyday life — in gardens, on bicycles, at kitchen tables.
+      </p>
+    </div>
+
+    <!-- Community Grid (Magazine Layout) -->
+    <div class="reveal grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+
+      <!-- Story 1 -->
+      <div class="group cursor-pointer">
+        <div class="aspect-[3/4] rounded-2xl overflow-hidden mb-5">
+          <img src="https://picsum.photos/seed/terren-community1/600/800.jpg" alt="Community member" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-[1.2s]" />
+        </div>
+        <div class="flex items-center gap-3 mb-3">
+          <div class="w-8 h-8 rounded-full bg-sand overflow-hidden">
+            <img src="https://picsum.photos/seed/avatar-maea/100/100.jpg" alt="" class="w-full h-full object-cover" />
+          </div>
+          <div>
+            <p class="text-sm font-medium text-bark">Mae A.</p>
+            <p class="text-[11px] text-earth">Kyoto, Japan</p>
+          </div>
+        </div>
+        <p class="text-earth text-sm font-light leading-relaxed italic">
+          "I wore the Morning Set every day during our mountain retreat. It moved with me — cooking, reading, walking through cedar paths."
+        </p>
+        <p class="text-[10px] uppercase tracking-[0.15em] text-olive font-medium mt-3">#RelaxedMorningSet</p>
+      </div>
+
+      <!-- Story 2 -->
+      <div class="group cursor-pointer">
+        <div class="aspect-[3/4] rounded-2xl overflow-hidden mb-5">
+          <img src="https://picsum.photos/seed/terren-community2/600/800.jpg" alt="Community member" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-[1.2s]" />
+        </div>
+        <div class="flex items-center gap-3 mb-3">
+          <div class="w-8 h-8 rounded-full bg-sand overflow-hidden">
+            <img src="https://picsum.photos/seed/avatar-leo/100/100.jpg" alt="" class="w-full h-full object-cover" />
+          </div>
+          <div>
+            <p class="text-sm font-medium text-bark">Leo M.</p>
+            <p class="text-[11px] text-earth">Lisbon, Portugal</p>
+          </div>
+        </div>
+        <p class="text-earth text-sm font-light leading-relaxed italic">
+          "The Field Jacket survived rain, wind, and a week of camping. It only gets better with wear — like good leather or old wood."
+        </p>
+        <p class="text-[10px] uppercase tracking-[0.15em] text-olive font-medium mt-3">#FieldJacket</p>
+      </div>
+
+      <!-- Story 3 -->
+      <div class="group cursor-pointer">
+        <div class="aspect-[3/4] rounded-2xl overflow-hidden mb-5">
+          <img src="https://picsum.photos/seed/terren-community3/600/800.jpg" alt="Community member" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-[1.2s]" />
+        </div>
+        <div class="flex items-center gap-3 mb-3">
+          <div class="w-8 h-8 rounded-full bg-sand overflow-hidden">
+            <img src="https://picsum.photos/seed/avatar-suki/100/100.jpg" alt="" class="w-full h-full object-cover" />
+          </div>
+          <div>
+            <p class="text-sm font-medium text-bark">Suki L.</p>
+            <p class="text-[11px] text-earth">Cornwall, UK</p>
+          </div>
+        </div>
+        <p class="text-earth text-sm font-light leading-relaxed italic">
+          "Finally, clothes that respect my values without sacrificing beauty. The linen softens with every wash — it becomes yours."
+        </p>
+        <p class="text-[10px] uppercase tracking-[0.15em] text-olive font-medium mt-3">#SoftWrapCardigan</p>
+      </div>
+    </div>
+
+    <!-- Join CTA -->
+    <div class="reveal text-center mt-16">
+      <p class="text-earth text-sm font-light mb-6">Share your TERREN moments with</p>
+      <a href="#" class="inline-flex items-center gap-2 text-sm font-medium text-forest border-b border-forest/30 pb-1 hover:border-forest transition-all duration-300">
+        <span class="iconify" data-icon="mdi:instagram" data-width="18"></span>
+        @terren.community
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ====== NEWSLETTER SECTION ====== -->
+<section class="py-20 md:py-28">
+  <div class="max-w-7xl mx-auto px-6 md:px-12 lg:px-20">
+    <div class="reveal bg-forest rounded-3xl p-10 md:p-16 lg:p-20 text-center relative overflow-hidden">
+      <!-- Texture overlay -->
+      <div class="absolute inset-0 opacity-10">
+        <img src="https://picsum.photos/seed/terren-newsletter-bg/1200/600.jpg" alt="" class="w-full h-full object-cover" />
+      </div>
+      <div class="relative z-10">
+        <span class="inline-block text-[10px] font-medium uppercase tracking-[0.3em] text-ivory/50 mb-6">Stay Grounded</span>
+        <h2 class="font-serif text-3xl md:text-4xl lg:text-5xl font-light text-ivory leading-[1.2] tracking-tight mb-4">
+          Letters from the earth
+        </h2>
+        <p class="text-ivory/60 font-light text-sm md:text-base max-w-md mx-auto mb-10 leading-relaxed">
+          Slow dispatches — new collections, material stories, and the quiet moments that inspire us. No spam, ever.
+        </p>
+        <!-- Newsletter Form -->
+        <form id="newsletterForm" class="flex flex-col sm:flex-row items-center gap-3 max-w-md mx-auto">
+          <input type="email" id="emailInput" required placeholder="your@email.com" class="w-full flex-1 px-5 py-3.5 rounded-full bg-ivory/10 border border-ivory/20 text-ivory placeholder-ivory/40 text-sm focus:outline-none focus:border-ivory/50 focus:bg-ivory/15 transition-all" />
+          <button type="submit" class="w-full sm:w-auto bg-ivory text-forest text-sm font-medium px-7 py-3.5 rounded-full hover:bg-wheat hover:-translate-y-0.5 transition-all duration-300 whitespace-nowrap">
+            Subscribe
+          </button>
+        </form>
+        <p id="formMessage" class="text-ivory/50 text-xs mt-4 hidden">✓ Welcome to the TERREN community.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== FOOTER ====== -->
+<footer class="py-16 md:py-20 border-t border-wheat/50">
+  <div class="max-w-7xl mx-auto px-6 md:px-12 lg:px-20">
+    <div class="grid grid-cols-2 md:grid-cols-5 gap-10 md:gap-12">
+
+      <!-- Brand -->
+      <div class="col-span-2 md:col-span-2">
+        <p class="font-serif text-2xl font-semibold text-forest tracking-wider mb-4">TERREN</p>
+        <p class="text-earth text-sm font-light leading-relaxed max-w-xs">
+          Fashion from the earth,<br>for the earth. Designed with care,<br>made with respect.
+        </p>
+        <div class="flex items-center gap-4 mt-6">
+          <a href="#" class="w-9 h-9 rounded-full border border-wheat/50 flex items-center justify-center text-earth hover:text-forest hover:border-olive/50 transition-all duration-300">
+            <span class="iconify" data-icon="mdi:instagram" data-width="16"></span>
+          </a>
+          <a href="#" class="w-9 h-9 rounded-full border border-wheat/50 flex items-center justify-center text-earth hover:text-forest hover:border-olive/50 transition-all duration-300">
+            <span class="iconify" data-icon="mdi:pinterest" data-width="16"></span>
+          </a>
+          <a href="#" class="w-9 h-9 rounded-full border border-wheat/50 flex items-center justify-center text-earth hover:text-forest hover:border-olive/50 transition-all duration-300">
+            <span class="iconify" data-icon="simple-icons:tiktok" data-width="14"></span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Shop -->
+      <div>
+        <p class="text-[10px] uppercase tracking-[0.2em] text-olive font-medium mb-5">Shop</p>
+        <ul class="space-y-3">
+          <li><a href="#" class="text-sm text-earth font-light hover:text-forest transition-colors">New Arrivals</a></li>
+          <li><a href="#" class="text-sm text-earth font-light hover:text-forest transition-colors">Home</a></li>
+          <li><a href="#" class="text-sm text-earth font-light hover:text-forest transition-colors">Commuting</a></li>
+          <li><a href="#" class="text-sm text-earth font-light hover:text-forest transition-colors">Outdoor</a></li>
+          <li><a href="#" class="text-sm text-earth font-light hover:text-forest transition-colors">Accessories</a></li>
+        </ul>
+      </div>
+
+      <!-- About -->
+      <div>
+        <p class="text-[10px] uppercase tracking-[0.2em] text-olive font-medium mb-5">About</p>
+        <ul class="space-y-3">
+          <li><a href="#" class="text-sm text-earth font-light hover:text-forest transition-colors">Our Story</a></li>
+          <li><a href="#" class="text-sm text-earth font-light hover:text-forest transition-colors">Materials</a></li>
+          <li><a href="#" class="text-sm text-earth font-light hover:text-forest transition-colors">Production</a></li>
+          <li><a href="#" class="text-sm text-earth font-light hover:text-forest transition-colors">Journal</a></li>
+          <li><a href="#" class="text-sm text-earth font-light hover:text-forest transition-colors">Careers</a></li>
+        </ul>
+      </div>
+
+      <!-- Help -->
+      <div>
+        <p class="text-[10px] uppercase tracking-[0.2em] text-olive font-medium mb-5">Help</p>
+        <ul class="space-y-3">
+          <li><a href="#" class="text-sm text-earth font-light hover:text-forest transition-colors">Size Guide</a></li>
+          <li><a href="#" class="text-sm text-earth font-light hover:text-forest transition-colors">Shipping</a></li>
+          <li><a href="#" class="text-sm text-earth font-light hover:text-forest transition-colors">Returns</a></li>
+          <li><a href="#" class="text-sm text-earth font-light hover:text-forest transition-colors">Garment Care</a></li>
+          <li><a href="#" class="text-sm text-earth font-light hover:text-forest transition-colors">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Bottom Bar -->
+    <div class="divider mt-14 mb-8"></div>
+    <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+      <p class="text-[11px] text-earth/50 font-light">© 2025 TERREN. All rights reserved.</p>
+      <div class="flex items-center gap-6">
+        <a href="#" class="text-[11px] text-earth/50 font-light hover:text-olive transition-colors">Privacy</a>
+        <a href="#" class="text-[11px] text-earth/50 font-light hover:text-olive transition-colors">Terms</a>
+        <a href="#" class="text-[11px] text-earth/50 font-light hover:text-olive transition-colors">Accessibility</a>
+      </div>
+      <div class="flex items-center gap-2 text-earth/40">
+        <span class="iconify" data-icon="lucide:globe" data-width="12"></span>
+        <select class="bg-transparent text-[11px] font-light outline-none cursor-pointer text-earth/50">
+          <option>EN</option>
+          <option>FR</option>
+          <option>DE</option>
+          <option>PT</option>
+        </select>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ====== JAVASCRIPT ====== -->
+<script>
+// ---- Intersection Observer for reveal animations ----
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+document.querySelectorAll('.reveal, .manifesto-line').forEach(el => observer.observe(el));
+
+// ---- Mobile Menu ----
+const menuBtn = document.getElementById('menuBtn');
+const menuClose = document.getElementById('menuClose');
+const mobileMenu = document.getElementById('mobileMenu');
+
+menuBtn.addEventListener('click', () => {
+  mobileMenu.classList.remove('opacity-0', 'pointer-events-none');
+  mobileMenu.classList.add('opacity-100', 'pointer-events-auto');
+});
+
+menuClose.addEventListener('click', () => {
+  mobileMenu.classList.add('opacity-0', 'pointer-events-none');
+  mobileMenu.classList.remove('opacity-100', 'pointer-events-auto');
+});
+
+document.querySelectorAll('.mobile-link').forEach(link => {
+  link.addEventListener('click', () => {
+    mobileMenu.classList.add('opacity-0', 'pointer-events-none');
+    mobileMenu.classList.remove('opacity-100', 'pointer-events-auto');
+  });
+});
+
+// ---- Scenario Tabs ----
+const tabs = document.querySelectorAll('.scenario-tab');
+const contents = document.querySelectorAll('.tab-content');
+
+tabs.forEach(tab => {
+  tab.addEventListener('click', () => {
+    const target = tab.dataset.tab;
+
+    tabs.forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+
+    contents.forEach(c => {
+      c.classList.add('hidden');
+      c.classList.remove('grid');
+    });
+
+    const targetContent = document.getElementById('tab-' + target);
+    targetContent.classList.remove('hidden');
+    targetContent.classList.add('grid');
+  });
+});
+
+// ---- Newsletter Form ----
+const form = document.getElementById('newsletterForm');
+const emailInput = document.getElementById('emailInput');
+const formMessage = document.getElementById('formMessage');
+
+form.addEventListener('submit', (e) => {
+  e.preventDefault();
+  if (emailInput.value) {
+    formMessage.classList.remove('hidden');
+    emailInput.value = '';
+    setTimeout(() => formMessage.classList.add('hidden'), 4000);
+  }
+});
+
+// ---- Toast Notification ----
+function showToast() {
+  const toast = document.getElementById('toast');
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 2500);
+}
+
+// ---- Navbar scroll effect ----
+let lastScroll = 0;
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => {
+  const currentScroll = window.scrollY;
+  if (currentScroll > 100) {
+    navbar.style.top = currentScroll > lastScroll ? '-100px' : '20px';
+  } else {
+    navbar.style.top = '20px';
+  }
+  lastScroll = currentScroll;
+}, { passive: true });
+
+// ---- Subtle hero parallax ----
+const heroImage = document.querySelector('.hero-image');
+window.addEventListener('scroll', () => {
+  if (heroImage && window.scrollY < window.innerHeight) {
+    heroImage.style.transform = `scale(${1 + window.scrollY * 0.0002}) translateY(${window.scrollY * 0.15}px)`;
+  }
+}, { passive: true });
+</script>
+
+</body>
+</html>
