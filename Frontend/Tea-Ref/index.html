@@ -1,0 +1,1272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CHA YUAN — Premium Tea House</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Noto+Serif:wght@400;500;600&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        tea: {
+                            50: '#f4f7f1',
+                            100: '#e6ede0',
+                            200: '#cddbc2',
+                            300: '#a8c290',
+                            400: '#7da35e',
+                            500: '#5c8A4d',
+                            600: '#4a7040',
+                            700: '#3b5a34',
+                            800: '#31482c',
+                            900: '#2a3d26',
+                            950: '#141f12',
+                        },
+                        ivory: {
+                            50: '#FDFBF7',
+                            100: '#FAF6EE',
+                            200: '#F5F0E8',
+                            300: '#EDE5D8',
+                            400: '#E0D4C3',
+                            500: '#D1C1AA',
+                        },
+                        terra: {
+                            300: '#D99068',
+                            400: '#C4724B',
+                            500: '#B5613F',
+                            600: '#A04E32',
+                            700: '#86402B',
+                        },
+                        bark: {
+                            700: '#4A3728',
+                            800: '#3D2B1F',
+                            900: '#2A1D14',
+                        },
+                        gold: {
+                            300: '#D4B96A',
+                            400: '#C5A55A',
+                            500: '#B8944D',
+                            600: '#A07E3C',
+                        }
+                    },
+                    fontFamily: {
+                        'display': ['"Playfair Display"', 'serif'],
+                        'body': ['"Inter"', 'sans-serif'],
+                        'serif': ['"Noto Serif"', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Inter', sans-serif; }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes slideInLeft {
+            from { opacity: 0; transform: translateX(-40px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes leafFloat {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-12px) rotate(5deg); }
+        }
+        @keyframes steamRise {
+            0% { opacity: 0; transform: translateY(0) scaleX(1); }
+            50% { opacity: 0.6; transform: translateY(-20px) scaleX(1.2); }
+            100% { opacity: 0; transform: translateY(-40px) scaleX(0.8); }
+        }
+        @keyframes pourTea {
+            from { height: 0%; }
+            to { height: 70%; }
+        }
+
+        .animate-fadeInUp { animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        .animate-fadeIn { animation: fadeIn 1s ease forwards; }
+        .delay-100 { animation-delay: 100ms; }
+        .delay-200 { animation-delay: 200ms; }
+        .delay-300 { animation-delay: 300ms; }
+        .delay-400 { animation-delay: 400ms; }
+        .delay-500 { animation-delay: 500ms; }
+        .delay-600 { animation-delay: 600ms; }
+
+        .leaf-float { animation: leafFloat 4s ease-in-out infinite; }
+        .steam { animation: steamRise 2.5s ease-in-out infinite; }
+        .steam-delayed { animation: steamRise 2.5s ease-in-out infinite 0.8s; }
+        .steam-delayed-2 { animation: steamRise 2.5s ease-in-out infinite 1.6s; }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(25px);
+            transition: all 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .paper-texture {
+            background-color: #FAF6EE;
+            background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+        }
+
+        .tea-card:hover .tea-card-img {
+            transform: scale(1.08);
+        }
+        .tea-card:hover .tea-card-overlay {
+            opacity: 1;
+        }
+
+        .product-tab.active {
+            color: #3D2B1F;
+            border-bottom-color: #C5A55A;
+        }
+
+        .season-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 20px 40px -15px rgba(61,43,31,0.15);
+        }
+
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #FAF6EE; }
+        ::-webkit-scrollbar-thumb { background: #C5A55A; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #B8944D; }
+
+        .gold-line {
+            background: linear-gradient(to right, transparent, #C5A55A, transparent);
+        }
+
+        .hero-overlay {
+            background: linear-gradient(to right, rgba(42,29,20,0.85) 0%, rgba(42,29,20,0.6) 40%, rgba(42,29,20,0.2) 70%, transparent 100%);
+        }
+        .hero-overlay-mobile {
+            background: linear-gradient(to top, rgba(42,29,20,0.9) 0%, rgba(42,29,20,0.5) 50%, rgba(42,29,20,0.3) 100%);
+        }
+    </style>
+</head>
+<body class="bg-ivory-100 text-bark-800">
+
+    <!-- Navigation -->
+    <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-500">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Logo -->
+                <a href="#" class="flex items-center gap-3 group">
+                    <div class="w-10 h-10 rounded-full bg-tea-500 flex items-center justify-center group-hover:bg-tea-600 transition-colors">
+                        <span class="iconify text-ivory-100 text-lg" data-icon="lucide:leaf"></span>
+                    </div>
+                    <div>
+                        <span class="font-display text-xl font-semibold tracking-wide text-bark-800">茶源</span>
+                        <span class="font-display text-xs block tracking-[0.25em] text-gold-500 -mt-0.5">CHA YUAN</span>
+                    </div>
+                </a>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center gap-10">
+                    <a href="#philosophy" class="text-sm font-medium text-bark-700 hover:text-gold-500 transition-colors tracking-wide">Philosophy</a>
+                    <a href="#collection" class="text-sm font-medium text-bark-700 hover:text-gold-500 transition-colors tracking-wide">Collection</a>
+                    <a href="#culture" class="text-sm font-medium text-bark-700 hover:text-gold-500 transition-colors tracking-wide">Tea Culture</a>
+                    <a href="#subscribe" class="text-sm font-medium text-bark-700 hover:text-gold-500 transition-colors tracking-wide">Subscribe</a>
+                    <a href="#shop" class="relative inline-flex items-center gap-2 bg-bark-800 text-ivory-100 px-6 py-2.5 rounded-full text-sm font-medium tracking-wide hover:bg-bark-900 transition-all active:scale-[0.97]">
+                        <span class="iconify text-gold-400" data-icon="lucide:shopping-bag"></span>
+                        Shop
+                    </a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button id="mobileMenuBtn" class="md:hidden w-10 h-10 flex items-center justify-center rounded-full hover:bg-ivory-300 transition-colors">
+                    <span class="iconify text-xl text-bark-800" data-icon="lucide:menu" id="menuIcon"></span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="md:hidden hidden bg-ivory-50/95 backdrop-blur-xl border-t border-ivory-300">
+            <div class="px-6 py-6 space-y-4">
+                <a href="#philosophy" class="block text-base font-medium text-bark-700 py-2 hover:text-gold-500 transition-colors mobile-link">Philosophy</a>
+                <a href="#collection" class="block text-base font-medium text-bark-700 py-2 hover:text-gold-500 transition-colors mobile-link">Collection</a>
+                <a href="#culture" class="block text-base font-medium text-bark-700 py-2 hover:text-gold-500 transition-colors mobile-link">Tea Culture</a>
+                <a href="#subscribe" class="block text-base font-medium text-bark-700 py-2 hover:text-gold-500 transition-colors mobile-link">Subscribe</a>
+                <a href="#shop" class="inline-flex items-center gap-2 bg-bark-800 text-ivory-100 px-6 py-3 rounded-full text-sm font-medium mt-2 mobile-link">
+                    <span class="iconify text-gold-400" data-icon="lucide:shopping-bag"></span>
+                    Visit Shop
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="hero" class="relative min-h-screen flex items-end overflow-hidden">
+        <!-- Background Image -->
+        <div class="absolute inset-0">
+            <img src="https://picsum.photos/seed/teagarden-misty/1920/1080.jpg" alt="Tea Garden" class="w-full h-full object-cover">
+            <div class="hero-overlay absolute inset-0 hidden md:block"></div>
+            <div class="hero-overlay-mobile absolute inset-0 md:hidden"></div>
+        </div>
+
+        <!-- Floating Tea Leaves Decoration -->
+        <div class="absolute top-32 right-16 opacity-20 hidden lg:block">
+            <span class="iconify text-tea-300 text-6xl leaf-float" data-icon="lucide:leaf"></span>
+        </div>
+        <div class="absolute top-48 right-48 opacity-10 hidden lg:block">
+            <span class="iconify text-tea-200 text-4xl leaf-float" style="animation-delay: 1s;" data-icon="lucide:leaf"></span>
+        </div>
+
+        <!-- Hero Content -->
+        <div class="relative z-10 w-full max-w-7xl mx-auto px-6 lg:px-8 pb-20 md:pb-28 pt-32">
+            <div class="max-w-2xl">
+                <div class="animate-fadeInUp opacity-0" style="animation-delay: 200ms;">
+                    <span class="inline-flex items-center gap-2 text-gold-400 text-xs tracking-[0.3em] uppercase font-medium mb-6">
+                        <span class="w-8 h-px bg-gold-400"></span>
+                        Since 1892
+                    </span>
+                </div>
+                <h1 class="animate-fadeInUp opacity-0 font-display text-4xl md:text-6xl lg:text-7xl font-semibold text-ivory-50 leading-[1.1] tracking-tight mb-6" style="animation-delay: 400ms;">
+                    Where Ancient<br>
+                    <span class="text-gold-400 italic">Tea Wisdom</span><br>
+                    Meets Modern Life
+                </h1>
+                <p class="animate-fadeInUp opacity-0 text-ivory-300 text-base md:text-lg leading-relaxed mb-10 max-w-lg" style="animation-delay: 600ms;">
+                    From the misty peaks of Yunnan to your cup — we curate the finest single-origin teas, honoring centuries of tradition while embracing the rhythm of contemporary living.
+                </p>
+                <div class="animate-fadeInUp opacity-0 flex flex-wrap gap-4" style="animation-delay: 800ms;">
+                    <a href="#collection" class="inline-flex items-center gap-2 bg-gold-500 text-bark-900 px-8 py-3.5 rounded-full text-sm font-semibold tracking-wide hover:bg-gold-400 transition-all active:scale-[0.97]">
+                        Explore Our Teas
+                        <span class="iconify" data-icon="lucide:arrow-right"></span>
+                    </a>
+                    <a href="#culture" class="inline-flex items-center gap-2 bg-white/10 backdrop-blur text-ivory-100 px-8 py-3.5 rounded-full text-sm font-medium tracking-wide border border-white/20 hover:bg-white/20 transition-all active:scale-[0.97]">
+                        Tea Ceremony
+                    </a>
+                </div>
+            </div>
+
+            <!-- Scroll Indicator -->
+            <div class="animate-fadeIn opacity-0 absolute bottom-8 right-8 hidden md:flex flex-col items-center gap-2" style="animation-delay: 1.2s;">
+                <span class="text-ivory-400 text-[10px] tracking-[0.2em] uppercase rotate-90 mb-8">Scroll</span>
+                <div class="w-px h-16 bg-gradient-to-b from-gold-400 to-transparent"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Philosophy Section -->
+    <section id="philosophy" class="paper-texture py-24 md:py-32 relative overflow-hidden">
+        <!-- Decorative -->
+        <div class="absolute top-0 left-0 right-0 h-px gold-line opacity-40"></div>
+        <div class="absolute -top-20 -right-20 w-80 h-80 bg-tea-200/20 rounded-full blur-[80px]"></div>
+
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="reveal grid md:grid-cols-2 gap-16 lg:gap-24 items-center">
+                <!-- Image Side -->
+                <div class="relative">
+                    <div class="relative rounded-3xl overflow-hidden shadow-xl">
+                        <img src="https://picsum.photos/seed/tea-ceremony-zen/800/1000.jpg" alt="Tea Ceremony" class="w-full aspect-[4/5] object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-bark-900/30 to-transparent"></div>
+                    </div>
+                    <!-- Floating Badge -->
+                    <div class="absolute -bottom-6 -right-4 md:-right-8 bg-ivory-50 rounded-2xl p-5 shadow-lg border border-ivory-300">
+                        <div class="text-center">
+                            <span class="font-display text-3xl font-bold text-gold-500">130+</span>
+                            <p class="text-xs text-bark-700 mt-1 tracking-wide">Years of Heritage</p>
+                        </div>
+                    </div>
+                    <!-- Steam Effect -->
+                    <div class="absolute top-4 left-1/2 -translate-x-1/2 flex gap-4">
+                        <div class="w-1 h-8 bg-gradient-to-t from-transparent to-white/40 rounded-full steam"></div>
+                        <div class="w-1 h-6 bg-gradient-to-t from-transparent to-white/30 rounded-full steam-delayed"></div>
+                        <div class="w-1 h-7 bg-gradient-to-t from-transparent to-white/35 rounded-full steam-delayed-2"></div>
+                    </div>
+                </div>
+
+                <!-- Text Side -->
+                <div>
+                    <span class="inline-flex items-center gap-2 text-gold-500 text-xs tracking-[0.3em] uppercase font-medium mb-4">
+                        <span class="w-6 h-px bg-gold-500"></span>
+                        Our Philosophy
+                    </span>
+                    <h2 class="font-display text-3xl md:text-4xl font-semibold text-bark-800 leading-tight mb-6">
+                        Rooted in Tradition,<br>
+                        <span class="text-tea-600 italic">Steeped in Mindfulness</span>
+                    </h2>
+                    <p class="text-bark-700/80 text-base leading-relaxed mb-6">
+                        At Cha Yuan, we believe tea is more than a beverage — it is a meditation, a bridge between past and present. Each leaf is hand-selected from heritage gardens where terroir speaks through flavor.
+                    </p>
+                    <p class="text-bark-700/80 text-base leading-relaxed mb-8">
+                        Our master tea artisans, following traditions passed through five generations, ensure that every batch carries the soul of its origin — from the rolling hills of Fujian to the ancient forests of Yunnan.
+                    </p>
+
+                    <!-- Values -->
+                    <div class="grid grid-cols-2 gap-6">
+                        <div class="flex items-start gap-3">
+                            <div class="w-10 h-10 rounded-xl bg-tea-100 flex items-center justify-center flex-shrink-0 mt-0.5">
+                                <span class="iconify text-tea-600" data-icon="lucide:mountain"></span>
+                            </div>
+                            <div>
+                                <h4 class="font-display text-sm font-semibold text-bark-800">Single Origin</h4>
+                                <p class="text-xs text-bark-700/70 mt-1 leading-relaxed">Sourced from one garden, one season</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <div class="w-10 h-10 rounded-xl bg-terra-300/20 flex items-center justify-center flex-shrink-0 mt-0.5">
+                                <span class="iconify text-terra-500" data-icon="lucide:hand-heart"></span>
+                            </div>
+                            <div>
+                                <h4 class="font-display text-sm font-semibold text-bark-800">Hand Crafted</h4>
+                                <p class="text-xs text-bark-700/70 mt-1 leading-relaxed">Traditional processing methods</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <div class="w-10 h-10 rounded-xl bg-gold-300/20 flex items-center justify-center flex-shrink-0 mt-0.5">
+                                <span class="iconify text-gold-600" data-icon="lucide:leaf"></span>
+                            </div>
+                            <div>
+                                <h4 class="font-display text-sm font-semibold text-bark-800">Organic</h4>
+                                <p class="text-xs text-bark-700/70 mt-1 leading-relaxed">Certified organic cultivation</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <div class="w-10 h-10 rounded-xl bg-tea-100 flex items-center justify-center flex-shrink-0 mt-0.5">
+                                <span class="iconify text-tea-600" data-icon="lucide:globe"></span>
+                            </div>
+                            <div>
+                                <h4 class="font-display text-sm font-semibold text-bark-800">Sustainable</h4>
+                                <p class="text-xs text-bark-700/70 mt-1 leading-relaxed">Eco-conscious from farm to cup</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Product Collection Section -->
+    <section id="collection" class="bg-ivory-50 py-24 md:py-32 relative">
+        <div class="absolute top-0 left-0 right-0 h-px gold-line opacity-30"></div>
+
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <!-- Section Header -->
+            <div class="reveal text-center mb-16">
+                <span class="inline-flex items-center gap-2 text-gold-500 text-xs tracking-[0.3em] uppercase font-medium mb-4">
+                    <span class="w-6 h-px bg-gold-500"></span>
+                    Our Collection
+                    <span class="w-6 h-px bg-gold-500"></span>
+                </span>
+                <h2 class="font-display text-3xl md:text-5xl font-semibold text-bark-800 mb-4">
+                    Curated by <span class="text-tea-600 italic">Nature</span>
+                </h2>
+                <p class="text-bark-700/70 max-w-2xl mx-auto leading-relaxed">
+                    Explore our selection of premium teas, each telling the story of its terroir, season, and the artisan hands that crafted it.
+                </p>
+            </div>
+
+            <!-- Tabs -->
+            <div class="reveal flex flex-wrap justify-center gap-2 mb-12 border-b border-ivory-400 pb-0">
+                <button class="product-tab active px-6 py-3 text-sm font-medium tracking-wide border-b-2 border-transparent transition-all text-bark-700/60 hover:text-bark-800" data-tab="by-origin">By Origin</button>
+                <button class="product-tab px-6 py-3 text-sm font-medium tracking-wide border-b-2 border-transparent transition-all text-bark-700/60 hover:text-bark-800" data-tab="by-ferment">Fermentation</button>
+                <button class="product-tab px-6 py-3 text-sm font-medium tracking-wide border-b-2 border-transparent transition-all text-bark-700/60 hover:text-bark-800" data-tab="by-season">By Season</button>
+            </div>
+
+            <!-- Tab Content: By Origin -->
+            <div id="tab-by-origin" class="tab-content">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <!-- Product Card 1 -->
+                    <div class="tea-card group relative rounded-2xl overflow-hidden cursor-pointer bg-white border border-ivory-300 hover:border-gold-400 transition-all hover:shadow-lg">
+                        <div class="aspect-[3/4] overflow-hidden">
+                            <img src="https://picsum.photos/seed/yunnan-puerh-tea/600/800.jpg" alt="Yunnan Pu'erh" class="tea-card-img w-full h-full object-cover transition-transform duration-500">
+                        </div>
+                        <div class="p-5">
+                            <div class="flex items-center gap-2 mb-2">
+                                <span class="w-2 h-2 rounded-full bg-bark-800"></span>
+                                <span class="text-[10px] tracking-[0.2em] uppercase text-bark-700/60 font-medium">Dark · Post-Fermented</span>
+                            </div>
+                            <h3 class="font-display text-lg font-semibold text-bark-800 mb-1">Yunnan Pu'erh</h3>
+                            <p class="text-sm text-bark-700/70 leading-relaxed mb-3">Earthy depth from ancient tea trees, 2019 vintage</p>
+                            <div class="flex items-center justify-between">
+                                <span class="font-display text-lg font-semibold text-gold-600">$48</span>
+                                <span class="text-xs text-bark-700/50">50g · Loose Leaf</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Product Card 2 -->
+                    <div class="tea-card group relative rounded-2xl overflow-hidden cursor-pointer bg-white border border-ivory-300 hover:border-gold-400 transition-all hover:shadow-lg">
+                        <div class="aspect-[3/4] overflow-hidden">
+                            <img src="https://picsum.photos/seed/longjing-green/600/800.jpg" alt="Longjing Dragon Well" class="tea-card-img w-full h-full object-cover transition-transform duration-500">
+                        </div>
+                        <div class="p-5">
+                            <div class="flex items-center gap-2 mb-2">
+                                <span class="w-2 h-2 rounded-full bg-tea-500"></span>
+                                <span class="text-[10px] tracking-[0.2em] uppercase text-bark-700/60 font-medium">Green · Unoxidized</span>
+                            </div>
+                            <h3 class="font-display text-lg font-semibold text-bark-800 mb-1">Longjing Dragon Well</h3>
+                            <p class="text-sm text-bark-700/70 leading-relaxed mb-3">Pan-fired sweetness from Hangzhou's West Lake</p>
+                            <div class="flex items-center justify-between">
+                                <span class="font-display text-lg font-semibold text-gold-600">$62</span>
+                                <span class="text-xs text-bark-700/50">40g · Loose Leaf</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Product Card 3 -->
+                    <div class="tea-card group relative rounded-2xl overflow-hidden cursor-pointer bg-white border border-ivory-300 hover:border-gold-400 transition-all hover:shadow-lg">
+                        <div class="aspect-[3/4] overflow-hidden">
+                            <img src="https://picsum.photos/seed/oolong-wuyi/600/800.jpg" alt="Wuyi Oolong" class="tea-card-img w-full h-full object-cover transition-transform duration-500">
+                        </div>
+                        <div class="p-5">
+                            <div class="flex items-center gap-2 mb-2">
+                                <span class="w-2 h-2 rounded-full bg-terra-400"></span>
+                                <span class="text-[10px] tracking-[0.2em] uppercase text-bark-700/60 font-medium">Oolong · Semi-Oxidized</span>
+                            </div>
+                            <h3 class="font-display text-lg font-semibold text-bark-800 mb-1">Wuyi Rock Oolong</h3>
+                            <p class="text-sm text-bark-700/70 leading-relaxed mb-3">Mineral complexity from Fujian's cliff gardens</p>
+                            <div class="flex items-center justify-between">
+                                <span class="font-display text-lg font-semibold text-gold-600">$55</span>
+                                <span class="text-xs text-bark-700/50">45g · Loose Leaf</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Product Card 4 -->
+                    <div class="tea-card group relative rounded-2xl overflow-hidden cursor-pointer bg-white border border-ivory-300 hover:border-gold-400 transition-all hover:shadow-lg">
+                        <div class="aspect-[3/4] overflow-hidden">
+                            <img src="https://picsum.photos/seed/darjeeling-first/600/800.jpg" alt="Darjeeling First Flush" class="tea-card-img w-full h-full object-cover transition-transform duration-500">
+                        </div>
+                        <div class="p-5">
+                            <div class="flex items-center gap-2 mb-2">
+                                <span class="w-2 h-2 rounded-full bg-terra-300"></span>
+                                <span class="text-[10px] tracking-[0.2em] uppercase text-bark-700/60 font-medium">Black · Fully Oxidized</span>
+                            </div>
+                            <h3 class="font-display text-lg font-semibold text-bark-800 mb-1">Darjeeling First Flush</h3>
+                            <p class="text-sm text-bark-700/70 leading-relaxed mb-3">Muscatel floral notes from Himalayan slopes</p>
+                            <div class="flex items-center justify-between">
+                                <span class="font-display text-lg font-semibold text-gold-600">$42</span>
+                                <span class="text-xs text-bark-700/50">50g · Loose Leaf</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab Content: By Fermentation -->
+            <div id="tab-by-ferment" class="tab-content hidden">
+                <div class="grid grid-cols-1 md:grid-cols-5 gap-6">
+                    <div class="reveal text-center group cursor-pointer">
+                        <div class="relative rounded-2xl overflow-hidden mb-4 aspect-[3/4] bg-gradient-to-b from-tea-200 to-tea-400 flex items-end justify-center">
+                            <div class="p-6 text-white">
+                                <span class="font-display text-2xl font-bold">White</span>
+                                <p class="text-xs opacity-80 mt-1">Delicate · 0% Oxidation</p>
+                            </div>
+                        </div>
+                        <h4 class="font-display font-semibold text-bark-800">Silver Needle</h4>
+                        <p class="text-sm text-gold-500 font-medium mt-1">$58 / 30g</p>
+                    </div>
+                    <div class="reveal text-center group cursor-pointer" style="transition-delay:100ms">
+                        <div class="relative rounded-2xl overflow-hidden mb-4 aspect-[3/4] bg-gradient-to-b from-tea-300 to-tea-500 flex items-end justify-center">
+                            <div class="p-6 text-white">
+                                <span class="font-display text-2xl font-bold">Green</span>
+                                <p class="text-xs opacity-80 mt-1">Fresh · 0-5% Oxidation</p>
+                            </div>
+                        </div>
+                        <h4 class="font-display font-semibold text-bark-800">Dragon Well</h4>
+                        <p class="text-sm text-gold-500 font-medium mt-1">$62 / 40g</p>
+                    </div>
+                    <div class="reveal text-center group cursor-pointer" style="transition-delay:200ms">
+                        <div class="relative rounded-2xl overflow-hidden mb-4 aspect-[3/4] bg-gradient-to-b from-terra-300 to-terra-500 flex items-end justify-center">
+                            <div class="p-6 text-white">
+                                <span class="font-display text-2xl font-bold">Oolong</span>
+                                <p class="text-xs opacity-80 mt-1">Complex · 15-70%</p>
+                            </div>
+                        </div>
+                        <h4 class="font-display font-semibold text-bark-800">Tie Guan Yin</h4>
+                        <p class="text-sm text-gold-500 font-medium mt-1">$45 / 50g</p>
+                    </div>
+                    <div class="reveal text-center group cursor-pointer" style="transition-delay:300ms">
+                        <div class="relative rounded-2xl overflow-hidden mb-4 aspect-[3/4] bg-gradient-to-b from-terra-400 to-bark-700 flex items-end justify-center">
+                            <div class="p-6 text-white">
+                                <span class="font-display text-2xl font-bold">Black</span>
+                                <p class="text-xs opacity-80 mt-1">Rich · 100% Oxidation</p>
+                            </div>
+                        </div>
+                        <h4 class="font-display font-semibold text-bark-800">Lapsang Souchong</h4>
+                        <p class="text-sm text-gold-500 font-medium mt-1">$38 / 50g</p>
+                    </div>
+                    <div class="reveal text-center group cursor-pointer" style="transition-delay:400ms">
+                        <div class="relative rounded-2xl overflow-hidden mb-4 aspect-[3/4] bg-gradient-to-b from-bark-700 to-bark-900 flex items-end justify-center">
+                            <div class="p-6 text-white">
+                                <span class="font-display text-2xl font-bold">Pu'erh</span>
+                                <p class="text-xs opacity-80 mt-1">Deep · Post-Fermented</p>
+                            </div>
+                        </div>
+                        <h4 class="font-display font-semibold text-bark-800">Raw Pu'erh 2018</h4>
+                        <p class="text-sm text-gold-500 font-medium mt-1">$72 / 50g</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab Content: By Season -->
+            <div id="tab-by-season" class="tab-content hidden">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <!-- Spring -->
+                    <div class="season-card group bg-white rounded-2xl p-6 border border-ivory-300 transition-all cursor-pointer">
+                        <div class="w-14 h-14 rounded-xl bg-tea-100 flex items-center justify-center mb-4 group-hover:bg-tea-200 transition-colors">
+                            <span class="iconify text-2xl text-tea-600" data-icon="lucide:sprout"></span>
+                        </div>
+                        <h3 class="font-display text-xl font-semibold text-bark-800 mb-1">Spring</h3>
+                        <p class="text-xs text-tea-600 font-medium tracking-wide mb-3">March — May</p>
+                        <p class="text-sm text-bark-700/70 leading-relaxed mb-4">First flush, delicate and vibrant. The most prized harvest of the year.</p>
+                        <div class="space-y-2">
+                            <div class="flex justify-between text-sm">
+                                <span class="text-bark-700/80">Dragon Well</span>
+                                <span class="text-gold-500 font-medium">$62</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span class="text-bark-700/80">Bai Hao Yin Zhen</span>
+                                <span class="text-gold-500 font-medium">$58</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span class="text-bark-700/80">Shincha</span>
+                                <span class="text-gold-500 font-medium">$54</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Summer -->
+                    <div class="season-card group bg-white rounded-2xl p-6 border border-ivory-300 transition-all cursor-pointer">
+                        <div class="w-14 h-14 rounded-xl bg-gold-300/20 flex items-center justify-center mb-4 group-hover:bg-gold-300/30 transition-colors">
+                            <span class="iconify text-2xl text-gold-600" data-icon="lucide:sun"></span>
+                        </div>
+                        <h3 class="font-display text-xl font-semibold text-bark-800 mb-1">Summer</h3>
+                        <p class="text-xs text-gold-500 font-medium tracking-wide mb-3">June — August</p>
+                        <p class="text-sm text-bark-700/70 leading-relaxed mb-4">Full-bodied and robust. Warm weather brings deeper flavor profiles.</p>
+                        <div class="space-y-2">
+                            <div class="flex justify-between text-sm">
+                                <span class="text-bark-700/80">Darjeeling 2nd</span>
+                                <span class="text-gold-500 font-medium">$38</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span class="text-bark-700/80">Assam BOP</span>
+                                <span class="text-gold-500 font-medium">$28</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span class="text-bark-700/80">Oriental Beauty</span>
+                                <span class="text-gold-500 font-medium">$66</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Autumn -->
+                    <div class="season-card group bg-white rounded-2xl p-6 border border-ivory-300 transition-all cursor-pointer">
+                        <div class="w-14 h-14 rounded-xl bg-terra-300/20 flex items-center justify-center mb-4 group-hover:bg-terra-300/30 transition-colors">
+                            <span class="iconify text-2xl text-terra-500" data-icon="lucide:leaf"></span>
+                        </div>
+                        <h3 class="font-display text-xl font-semibold text-bark-800 mb-1">Autumn</h3>
+                        <p class="text-xs text-terra-500 font-medium tracking-wide mb-3">September — November</p>
+                        <p class="text-sm text-bark-700/70 leading-relaxed mb-4">Rich and aromatic. Cool nights concentrate complex flavors in the leaf.</p>
+                        <div class="space-y-2">
+                            <div class="flex justify-between text-sm">
+                                <span class="text-bark-700/80">Tie Guan Yin</span>
+                                <span class="text-gold-500 font-medium">$45</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span class="text-bark-700/80">Wuyi Rock</span>
+                                <span class="text-gold-500 font-medium">$55</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span class="text-bark-700/80">Dian Hong</span>
+                                <span class="text-gold-500 font-medium">$35</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Winter -->
+                    <div class="season-card group bg-white rounded-2xl p-6 border border-ivory-300 transition-all cursor-pointer">
+                        <div class="w-14 h-14 rounded-xl bg-bark-700/10 flex items-center justify-center mb-4 group-hover:bg-bark-700/20 transition-colors">
+                            <span class="iconify text-2xl text-bark-700" data-icon="lucide:snowflake"></span>
+                        </div>
+                        <h3 class="font-display text-xl font-semibold text-bark-800 mb-1">Winter</h3>
+                        <p class="text-xs text-bark-700/60 font-medium tracking-wide mb-3">December — February</p>
+                        <p class="text-sm text-bark-700/70 leading-relaxed mb-4">Warming and grounding. Aged teas and roasted oolongs for cozy moments.</p>
+                        <div class="space-y-2">
+                            <div class="flex justify-between text-sm">
+                                <span class="text-bark-700/80">Ripe Pu'erh</span>
+                                <span class="text-gold-500 font-medium">$48</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span class="text-bark-700/80">Hojicha</span>
+                                <span class="text-gold-500 font-medium">$24</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span class="text-bark-700/80">Chai Masala</span>
+                                <span class="text-gold-500 font-medium">$22</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- View All -->
+            <div class="text-center mt-12 reveal">
+                <a href="#shop" class="inline-flex items-center gap-2 text-gold-500 font-medium hover:text-gold-600 transition-colors group">
+                    View Full Collection
+                    <span class="iconify transition-transform group-hover:translate-x-1" data-icon="lucide:arrow-right"></span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tea Culture Section -->
+    <section id="culture" class="bg-bark-800 py-24 md:py-32 relative overflow-hidden">
+        <!-- Decorative -->
+        <div class="absolute top-0 left-0 right-0 h-px gold-line opacity-50"></div>
+        <div class="absolute -bottom-40 -left-40 w-96 h-96 bg-tea-900/30 rounded-full blur-[100px]"></div>
+        <div class="absolute -top-20 -right-20 w-72 h-72 bg-gold-500/5 rounded-full blur-[80px]"></div>
+
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <!-- Section Header -->
+            <div class="reveal text-center mb-20">
+                <span class="inline-flex items-center gap-2 text-gold-400 text-xs tracking-[0.3em] uppercase font-medium mb-4">
+                    <span class="w-6 h-px bg-gold-400"></span>
+                    Tea Culture
+                    <span class="w-6 h-px bg-gold-400"></span>
+                </span>
+                <h2 class="font-display text-3xl md:text-5xl font-semibold text-ivory-100 mb-4">
+                    The Art of <span class="text-gold-400 italic">Slow Tea</span>
+                </h2>
+                <p class="text-ivory-400/70 max-w-2xl mx-auto leading-relaxed">
+                    Discover the rituals, wisdom, and meditative practices that transform a simple cup into a moment of profound presence.
+                </p>
+            </div>
+
+            <!-- Culture Grid -->
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Brewing Guide -->
+                <div class="reveal group relative rounded-2xl overflow-hidden cursor-pointer">
+                    <div class="aspect-[3/4] overflow-hidden">
+                        <img src="https://picsum.photos/seed/tea-brewing-pour/600/800.jpg" alt="Brewing Guide" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                    </div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-bark-900/90 via-bark-900/40 to-transparent"></div>
+                    <div class="absolute bottom-0 left-0 right-0 p-6">
+                        <div class="w-12 h-12 rounded-xl bg-gold-500/20 backdrop-blur flex items-center justify-center mb-4">
+                            <span class="iconify text-gold-400 text-xl" data-icon="lucide:flame"></span>
+                        </div>
+                        <h3 class="font-display text-xl font-semibold text-ivory-100 mb-2">Brewing Methods</h3>
+                        <p class="text-ivory-300/80 text-sm leading-relaxed mb-4">Master the gongfu cha style, learn water temperatures, and discover the perfect steeping times for each tea type.</p>
+                        <span class="inline-flex items-center gap-1 text-gold-400 text-sm font-medium group-hover:gap-2 transition-all">
+                            Learn More <span class="iconify" data-icon="lucide:arrow-right"></span>
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Tasting Guide -->
+                <div class="reveal group relative rounded-2xl overflow-hidden cursor-pointer" style="transition-delay: 150ms">
+                    <div class="aspect-[3/4] overflow-hidden">
+                        <img src="https://picsum.photos/seed/tea-tasting-ceremony/600/800.jpg" alt="Tasting Guide" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                    </div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-bark-900/90 via-bark-900/40 to-transparent"></div>
+                    <div class="absolute bottom-0 left-0 right-0 p-6">
+                        <div class="w-12 h-12 rounded-xl bg-tea-500/20 backdrop-blur flex items-center justify-center mb-4">
+                            <span class="iconify text-tea-400 text-xl" data-icon="lucide:eye"></span>
+                        </div>
+                        <h3 class="font-display text-xl font-semibold text-ivory-100 mb-2">Tasting Notes</h3>
+                        <p class="text-ivory-300/80 text-sm leading-relaxed mb-4">Develop your palate with our sensory guide — from visual appreciation to the lingering aftertaste (hui gan).</p>
+                        <span class="inline-flex items-center gap-1 text-gold-400 text-sm font-medium group-hover:gap-2 transition-all">
+                            Learn More <span class="iconify" data-icon="lucide:arrow-right"></span>
+                        </span>
+                    </div>
+                </div>
+
+                <!-- History -->
+                <div class="reveal group relative rounded-2xl overflow-hidden cursor-pointer" style="transition-delay: 300ms">
+                    <div class="aspect-[3/4] overflow-hidden">
+                        <img src="https://picsum.photos/seed/tea-history-ancient/600/800.jpg" alt="Tea History" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                    </div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-bark-900/90 via-bark-900/40 to-transparent"></div>
+                    <div class="absolute bottom-0 left-0 right-0 p-6">
+                        <div class="w-12 h-12 rounded-xl bg-terra-400/20 backdrop-blur flex items-center justify-center mb-4">
+                            <span class="iconify text-terra-300 text-xl" data-icon="lucide:book-open"></span>
+                        </div>
+                        <h3 class="font-display text-xl font-semibold text-ivory-100 mb-2">History & Lore</h3>
+                        <p class="text-ivory-300/80 text-sm leading-relaxed mb-4">Journey through 5,000 years of tea — from Shennong's legendary discovery to the Silk Road tea trade.</p>
+                        <span class="inline-flex items-center gap-1 text-gold-400 text-sm font-medium group-hover:gap-2 transition-all">
+                            Learn More <span class="iconify" data-icon="lucide:arrow-right"></span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Guide Strip -->
+            <div class="reveal mt-16 grid grid-cols-2 md:grid-cols-4 gap-6">
+                <div class="text-center p-6 rounded-xl border border-white/10 bg-white/5">
+                    <span class="font-display text-3xl font-bold text-gold-400">80°C</span>
+                    <p class="text-ivory-400/70 text-sm mt-2">Green Tea</p>
+                </div>
+                <div class="text-center p-6 rounded-xl border border-white/10 bg-white/5">
+                    <span class="font-display text-3xl font-bold text-gold-400">95°C</span>
+                    <p class="text-ivory-400/70 text-sm mt-2">Oolong Tea</p>
+                </div>
+                <div class="text-center p-6 rounded-xl border border-white/10 bg-white/5">
+                    <span class="font-display text-3xl font-bold text-gold-400">100°C</span>
+                    <p class="text-ivory-400/70 text-sm mt-2">Black & Pu'erh</p>
+                </div>
+                <div class="text-center p-6 rounded-xl border border-white/10 bg-white/5">
+                    <span class="font-display text-3xl font-bold text-gold-400">75°C</span>
+                    <p class="text-ivory-400/70 text-sm mt-2">White Tea</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Macro Texture Feature -->
+    <section class="paper-texture py-24 md:py-32 relative overflow-hidden">
+        <div class="absolute top-0 left-0 right-0 h-px gold-line opacity-30"></div>
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="reveal grid md:grid-cols-2 gap-12 lg:gap-20 items-center">
+                <!-- Text -->
+                <div class="order-2 md:order-1">
+                    <span class="inline-flex items-center gap-2 text-gold-500 text-xs tracking-[0.3em] uppercase font-medium mb-4">
+                        <span class="w-6 h-px bg-gold-500"></span>
+                        The Leaf
+                    </span>
+                    <h2 class="font-display text-3xl md:text-4xl font-semibold text-bark-800 leading-tight mb-6">
+                        Every Leaf Tells a<br><span class="text-tea-600 italic">Story of Terroir</span>
+                    </h2>
+                    <p class="text-bark-700/80 text-base leading-relaxed mb-6">
+                        The shape, color, and texture of a tea leaf reveal its journey — from the soil it grew in to the hands that processed it. Our master blenders examine each batch under natural light, reading the leaf like a map of its origin.
+                    </p>
+                    <p class="text-bark-700/80 text-base leading-relaxed mb-8">
+                        The tight roll of a Tie Guan Yin, the silver down of a Silver Needle, the deep amber of aged Pu'erh — these are nature's signatures, authentic and unmistakable.
+                    </p>
+                    <a href="#collection" class="inline-flex items-center gap-2 bg-tea-600 text-white px-8 py-3.5 rounded-full text-sm font-semibold tracking-wide hover:bg-tea-700 transition-all active:scale-[0.97]">
+                        Explore Single Origins
+                        <span class="iconify" data-icon="lucide:arrow-right"></span>
+                    </a>
+                </div>
+                <!-- Macro Image -->
+                <div class="order-1 md:order-2 relative">
+                    <div class="rounded-3xl overflow-hidden shadow-xl">
+                        <img src="https://picsum.photos/seed/tea-leaf-macro-close/800/900.jpg" alt="Tea Leaf Macro" class="w-full aspect-[4/5] object-cover">
+                    </div>
+                    <!-- Floating Label -->
+                    <div class="absolute top-6 right-6 bg-white/90 backdrop-blur rounded-xl px-4 py-3 shadow-lg">
+                        <p class="text-[10px] tracking-[0.2em] uppercase text-gold-500 font-medium">Origin</p>
+                        <p class="font-display text-sm font-semibold text-bark-800">Fujian, China</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Subscription Section -->
+    <section id="subscribe" class="relative py-24 md:py-32 overflow-hidden">
+        <!-- Background -->
+        <div class="absolute inset-0">
+            <img src="https://picsum.photos/seed/tea-box-subscription/1920/1080.jpg" alt="Tea Box" class="w-full h-full object-cover">
+            <div class="absolute inset-0 bg-bark-900/85"></div>
+        </div>
+
+        <div class="relative z-10 max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="reveal grid lg:grid-cols-2 gap-16 items-center">
+                <!-- Text -->
+                <div>
+                    <span class="inline-flex items-center gap-2 text-gold-400 text-xs tracking-[0.3em] uppercase font-medium mb-4">
+                        <span class="w-6 h-px bg-gold-400"></span>
+                        Monthly Curation
+                    </span>
+                    <h2 class="font-display text-3xl md:text-5xl font-semibold text-ivory-100 leading-tight mb-6">
+                        A Journey Through<br><span class="text-gold-400 italic">Tea, Delivered</span>
+                    </h2>
+                    <p class="text-ivory-300/80 text-base leading-relaxed mb-8">
+                        Each month, our tea masters curate a selection of seasonal, rare, and single-origin teas — accompanied by tasting notes, brewing guides, and the story behind each leaf. Experience the world's finest teas without leaving home.
+                    </p>
+
+                    <!-- What's Inside -->
+                    <div class="space-y-4 mb-10">
+                        <div class="flex items-start gap-4">
+                            <div class="w-8 h-8 rounded-lg bg-gold-500/20 flex items-center justify-center flex-shrink-0 mt-0.5">
+                                <span class="iconify text-gold-400 text-sm" data-icon="lucide:package"></span>
+                            </div>
+                            <div>
+                                <h4 class="font-display text-sm font-semibold text-ivory-100">3-4 Curated Teas</h4>
+                                <p class="text-sm text-ivory-400/70 mt-0.5">Seasonal selections, enough for 30+ cups</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div class="w-8 h-8 rounded-lg bg-gold-500/20 flex items-center justify-center flex-shrink-0 mt-0.5">
+                                <span class="iconify text-gold-400 text-sm" data-icon="lucide:book-open"></span>
+                            </div>
+                            <div>
+                                <h4 class="font-display text-sm font-semibold text-ivory-100">Tasting Journal</h4>
+                                <p class="text-sm text-ivory-400/70 mt-0.5">Detailed notes, origin stories, brewing tips</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div class="w-8 h-8 rounded-lg bg-gold-500/20 flex items-center justify-center flex-shrink-0 mt-0.5">
+                                <span class="iconify text-gold-400 text-sm" data-icon="lucide:gift"></span>
+                            </div>
+                            <div>
+                                <h4 class="font-display text-sm font-semibold text-ivory-100">Surprise Element</h4>
+                                <p class="text-sm text-ivory-400/70 mt-0.5">Teaware, snacks, or rare limited editions</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pricing Cards -->
+                <div class="space-y-5">
+                    <!-- Starter -->
+                    <div class="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/10 hover:border-gold-400/40 transition-all cursor-pointer group">
+                        <div class="flex items-center justify-between mb-4">
+                            <div>
+                                <h3 class="font-display text-lg font-semibold text-ivory-100">Discovery Box</h3>
+                                <p class="text-sm text-ivory-400/70 mt-0.5">3 teas · Perfect for beginners</p>
+                            </div>
+                            <div class="text-right">
+                                <span class="font-display text-2xl font-bold text-gold-400">$29</span>
+                                <span class="text-ivory-400/60 text-sm">/mo</span>
+                            </div>
+                        </div>
+                        <button class="w-full py-2.5 rounded-xl border border-gold-400/40 text-gold-400 text-sm font-medium hover:bg-gold-400/10 transition-all" onclick="handleSubscribe('discovery')">
+                            Start Discovery
+                        </button>
+                    </div>
+
+                    <!-- Popular -->
+                    <div class="bg-gold-500/10 backdrop-blur-lg rounded-2xl p-6 border border-gold-400/50 relative cursor-pointer group">
+                        <div class="absolute -top-3 right-6 bg-gold-500 text-bark-900 text-[10px] font-bold tracking-[0.2em] uppercase px-4 py-1 rounded-full">Popular</div>
+                        <div class="flex items-center justify-between mb-4">
+                            <div>
+                                <h3 class="font-display text-lg font-semibold text-ivory-100">Connoisseur Box</h3>
+                                <p class="text-sm text-ivory-400/70 mt-0.5">4 teas · Rare & seasonal selections</p>
+                            </div>
+                            <div class="text-right">
+                                <span class="font-display text-2xl font-bold text-gold-400">$49</span>
+                                <span class="text-ivory-400/60 text-sm">/mo</span>
+                            </div>
+                        </div>
+                        <button class="w-full py-2.5 rounded-xl bg-gold-500 text-bark-900 text-sm font-semibold hover:bg-gold-400 transition-all active:scale-[0.98]" onclick="handleSubscribe('connoisseur')">
+                            Subscribe Now
+                        </button>
+                    </div>
+
+                    <!-- Premium -->
+                    <div class="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/10 hover:border-gold-400/40 transition-all cursor-pointer group">
+                        <div class="flex items-center justify-between mb-4">
+                            <div>
+                                <h3 class="font-display text-lg font-semibold text-ivory-100">Master's Reserve</h3>
+                                <p class="text-sm text-ivory-400/70 mt-0.5">5 teas · Aged & limited edition</p>
+                            </div>
+                            <div class="text-right">
+                                <span class="font-display text-2xl font-bold text-gold-400">$79</span>
+                                <span class="text-ivory-400/60 text-sm">/mo</span>
+                            </div>
+                        </div>
+                        <button class="w-full py-2.5 rounded-xl border border-gold-400/40 text-gold-400 text-sm font-medium hover:bg-gold-400/10 transition-all" onclick="handleSubscribe('master')">
+                            Join the Reserve
+                        </button>
+                    </div>
+
+                    <p class="text-center text-ivory-500/60 text-xs mt-4">Free shipping worldwide · Cancel anytime · Gift options available</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="paper-texture py-24 md:py-32 relative">
+        <div class="absolute top-0 left-0 right-0 h-px gold-line opacity-30"></div>
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="reveal text-center mb-16">
+                <span class="inline-flex items-center gap-2 text-gold-500 text-xs tracking-[0.3em] uppercase font-medium mb-4">
+                    <span class="w-6 h-px bg-gold-500"></span>
+                    Testimonials
+                    <span class="w-6 h-px bg-gold-500"></span>
+                </span>
+                <h2 class="font-display text-3xl md:text-4xl font-semibold text-bark-800">
+                    From Our <span class="text-tea-600 italic">Community</span>
+                </h2>
+            </div>
+
+            <div class="reveal grid md:grid-cols-3 gap-8">
+                <div class="bg-white rounded-2xl p-8 border border-ivory-300 hover:border-gold-300 transition-all">
+                    <div class="flex items-center gap-1 mb-4">
+                        <span class="iconify text-gold-400" data-icon="lucide:star"></span>
+                        <span class="iconify text-gold-400" data-icon="lucide:star"></span>
+                        <span class="iconify text-gold-400" data-icon="lucide:star"></span>
+                        <span class="iconify text-gold-400" data-icon="lucide:star"></span>
+                        <span class="iconify text-gold-400" data-icon="lucide:star"></span>
+                    </div>
+                    <p class="text-bark-700/80 text-sm leading-relaxed mb-6 italic font-serif">
+                        "The Connoisseur Box has become my monthly ritual. Every selection is a revelation — I've discovered teas I never knew existed. The tasting notes are poetry."
+                    </p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-full bg-tea-100 flex items-center justify-center">
+                            <span class="font-display text-sm font-semibold text-tea-700">SL</span>
+                        </div>
+                        <div>
+                            <p class="text-sm font-semibold text-bark-800">Sophia Lin</p>
+                            <p class="text-xs text-bark-700/50">Tea Enthusiast, Vancouver</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-2xl p-8 border border-ivory-300 hover:border-gold-300 transition-all">
+                    <div class="flex items-center gap-1 mb-4">
+                        <span class="iconify text-gold-400" data-icon="lucide:star"></span>
+                        <span class="iconify text-gold-400" data-icon="lucide:star"></span>
+                        <span class="iconify text-gold-400" data-icon="lucide:star"></span>
+                        <span class="iconify text-gold-400" data-icon="lucide:star"></span>
+                        <span class="iconify text-gold-400" data-icon="lucide:star"></span>
+                    </div>
+                    <p class="text-bark-700/80 text-sm leading-relaxed mb-6 italic font-serif">
+                        "As a chef, I appreciate the nuance and quality. Their Wuyi Rock Oolong is the finest I've tasted outside of China. Exceptional sourcing and care in every package."
+                    </p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-full bg-terra-300/20 flex items-center justify-center">
+                            <span class="font-display text-sm font-semibold text-terra-600">MK</span>
+                        </div>
+                        <div>
+                            <p class="text-sm font-semibold text-bark-800">Marcus Kim</p>
+                            <p class="text-xs text-bark-700/50">Executive Chef, London</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-2xl p-8 border border-ivory-300 hover:border-gold-300 transition-all">
+                    <div class="flex items-center gap-1 mb-4">
+                        <span class="iconify text-gold-400" data-icon="lucide:star"></span>
+                        <span class="iconify text-gold-400" data-icon="lucide:star"></span>
+                        <span class="iconify text-gold-400" data-icon="lucide:star"></span>
+                        <span class="iconify text-gold-400" data-icon="lucide:star"></span>
+                        <span class="iconify text-gold-400" data-icon="lucide:star"></span>
+                    </div>
+                    <p class="text-bark-700/80 text-sm leading-relaxed mb-6 italic font-serif">
+                        "I gifted the Discovery Box to my mother — she now calls it her 'monthly meditation.' The presentation is beautiful, the teas are transformative. We're both hooked."
+                    </p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-full bg-gold-300/20 flex items-center justify-center">
+                            <span class="font-display text-sm font-semibold text-gold-600">EW</span>
+                        </div>
+                        <div>
+                            <p class="text-sm font-semibold text-bark-800">Emma Wright</p>
+                            <p class="text-xs text-bark-700/50">Writer, Portland</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Shop / CTA Section -->
+    <section id="shop" class="bg-tea-600 py-24 md:py-32 relative overflow-hidden">
+        <div class="absolute inset-0 opacity-10">
+            <div class="absolute top-10 left-10 text-tea-200">
+                <span class="iconify text-8xl opacity-20" data-icon="lucide:leaf"></span>
+            </div>
+            <div class="absolute bottom-10 right-10 text-tea-200">
+                <span class="iconify text-6xl opacity-15 rotate-45" data-icon="lucide:leaf"></span>
+            </div>
+            <div class="absolute top-1/2 left-1/3 text-tea-200">
+                <span class="iconify text-4xl opacity-10 -rotate-12" data-icon="lucide:leaf"></span>
+            </div>
+        </div>
+
+        <div class="relative z-10 max-w-4xl mx-auto px-6 lg:px-8 text-center">
+            <div class="reveal">
+                <span class="inline-flex items-center gap-2 text-tea-100 text-xs tracking-[0.3em] uppercase font-medium mb-4">
+                    <span class="w-6 h-px bg-tea-100"></span>
+                    Online Store
+                    <span class="w-6 h-px bg-tea-100"></span>
+                </span>
+                <h2 class="font-display text-3xl md:text-5xl font-semibold text-white mb-6">
+                    Begin Your <span class="text-gold-300 italic">Tea Journey</span>
+                </h2>
+                <p class="text-tea-100/80 text-lg leading-relaxed mb-10 max-w-2xl mx-auto">
+                    Visit our online store to explore the complete collection. From everyday brews to rare reserves — find the tea that speaks to your soul.
+                </p>
+                <div class="flex flex-wrap justify-center gap-4">
+                    <a href="#" class="inline-flex items-center gap-3 bg-white text-bark-800 px-10 py-4 rounded-full text-sm font-semibold tracking-wide hover:bg-ivory-100 transition-all active:scale-[0.97] shadow-lg">
+                        <span class="iconify text-gold-500" data-icon="lucide:shopping-bag"></span>
+                        Visit Our Store
+                    </a>
+                    <a href="#subscribe" class="inline-flex items-center gap-3 bg-transparent text-white px-10 py-4 rounded-full text-sm font-medium tracking-wide border border-white/30 hover:bg-white/10 transition-all active:scale-[0.97]">
+                        <span class="iconify text-tea-100" data-icon="lucide:gift"></span>
+                        Gift a Subscription
+                    </a>
+                </div>
+
+                <!-- Trust Badges -->
+                <div class="flex flex-wrap justify-center gap-8 mt-14 text-tea-100/70">
+                    <div class="flex items-center gap-2">
+                        <span class="iconify" data-icon="lucide:truck"></span>
+                        <span class="text-sm">Free Shipping $50+</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span class="iconify" data-icon="lucide:shield-check"></span>
+                        <span class="text-sm">100% Organic</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span class="iconify" data-icon="lucide:leaf"></span>
+                        <span class="text-sm">Sustainably Sourced</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span class="iconify" data-icon="lucide:heart-handshake"></span>
+                        <span class="text-sm">Fair Trade</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter Strip -->
+    <section class="bg-ivory-200 py-16 relative">
+        <div class="absolute top-0 left-0 right-0 h-px gold-line opacity-30"></div>
+        <div class="max-w-4xl mx-auto px-6 lg:px-8 text-center reveal">
+            <h3 class="font-display text-2xl md:text-3xl font-semibold text-bark-800 mb-3">
+                Join the <span class="text-gold-500 italic">Inner Circle</span>
+            </h3>
+            <p class="text-bark-700/70 mb-8">Receive tea wisdom, exclusive offers, and first access to seasonal releases.</p>
+            <form id="newsletterForm" class="flex flex-col sm:flex-row gap-3 max-w-lg mx-auto" onsubmit="handleNewsletter(event)">
+                <input type="email" required placeholder="Your email address" class="flex-1 px-5 py-3.5 rounded-xl border border-ivory-400 bg-white text-bark-800 text-sm placeholder:text-bark-700/40 focus:outline-none focus:border-gold-400 focus:ring-2 focus:ring-gold-400/20 transition-all">
+                <button type="submit" class="px-8 py-3.5 rounded-xl bg-bark-800 text-ivory-100 text-sm font-semibold tracking-wide hover:bg-bark-900 transition-all active:scale-[0.97]">
+                    Subscribe
+                </button>
+            </form>
+            <div id="newsletterMsg" class="mt-4 text-sm hidden"></div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-bark-900 text-ivory-400 pt-20 pb-10 relative">
+        <div class="absolute top-0 left-0 right-0 h-px gold-line opacity-40"></div>
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
+                <!-- Brand -->
+                <div class="md:col-span-1">
+                    <div class="flex items-center gap-3 mb-5">
+                        <div class="w-10 h-10 rounded-full bg-tea-500 flex items-center justify-center">
+                            <span class="iconify text-ivory-100 text-lg" data-icon="lucide:leaf"></span>
+                        </div>
+                        <div>
+                            <span class="font-display text-xl font-semibold text-ivory-100">茶源</span>
+                            <span class="font-display text-xs block tracking-[0.25em] text-gold-400 -mt-0.5">CHA YUAN</span>
+                        </div>
+                    </div>
+                    <p class="text-sm text-ivory-500 leading-relaxed mb-6">
+                        Where ancient tea wisdom meets modern life. Curating the world's finest teas since 1892.
+                    </p>
+                    <div class="flex items-center gap-4">
+                        <a href="#" class="w-9 h-9 rounded-full border border-ivory-700 flex items-center justify-center hover:border-gold-400 hover:text-gold-400 transition-all">
+                            <span class="iconify text-sm" data-icon="lucide:instagram"></span>
+                        </a>
+                        <a href="#" class="w-9 h-9 rounded-full border border-ivory-700 flex items-center justify-center hover:border-gold-400 hover:text-gold-400 transition-all">
+                            <span class="iconify text-sm" data-icon="lucide:facebook"></span>
+                        </a>
+                        <a href="#" class="w-9 h-9 rounded-full border border-ivory-700 flex items-center justify-center hover:border-gold-400 hover:text-gold-400 transition-all">
+                            <span class="iconify text-sm" data-icon="lucide:youtube"></span>
+                        </a>
+                        <a href="#" class="w-9 h-9 rounded-full border border-ivory-700 flex items-center justify-center hover:border-gold-400 hover:text-gold-400 transition-all">
+                            <span class="iconify text-sm" data-icon="lucide:twitter"></span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Quick Links -->
+                <div>
+                    <h4 class="font-display text-sm font-semibold text-ivory-100 tracking-wide uppercase mb-5">Shop</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-sm text-ivory-500 hover:text-gold-400 transition-colors">All Teas</a></li>
+                        <li><a href="#" class="text-sm text-ivory-500 hover:text-gold-400 transition-colors">Teaware</a></li>
+                        <li><a href="#" class="text-sm text-ivory-500 hover:text-gold-400 transition-colors">Gift Sets</a></li>
+                        <li><a href="#" class="text-sm text-ivory-500 hover:text-gold-400 transition-colors">Subscriptions</a></li>
+                        <li><a href="#" class="text-sm text-ivory-500 hover:text-gold-400 transition-colors">New Arrivals</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-display text-sm font-semibold text-ivory-100 tracking-wide uppercase mb-5">Learn</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-sm text-ivory-500 hover:text-gold-400 transition-colors">Brewing Guides</a></li>
+                        <li><a href="#" class="text-sm text-ivory-500 hover:text-gold-400 transition-colors">Tea Types 101</a></li>
+                        <li><a href="#" class="text-sm text-ivory-500 hover:text-gold-400 transition-colors">Tea Ceremony</a></li>
+                        <li><a href="#" class="text-sm text-ivory-500 hover:text-gold-400 transition-colors">Blog</a></li>
+                        <li><a href="#" class="text-sm text-ivory-500 hover:text-gold-400 transition-colors">Origin Stories</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-display text-sm font-semibold text-ivory-100 tracking-wide uppercase mb-5">Company</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-sm text-ivory-500 hover:text-gold-400 transition-colors">Our Story</a></li>
+                        <li><a href="#" class="text-sm text-ivory-500 hover:text-gold-400 transition-colors">Sustainability</a></li>
+                        <li><a href="#" class="text-sm text-ivory-500 hover:text-gold-400 transition-colors">Partner Gardens</a></li>
+                        <li><a href="#" class="text-sm text-ivory-500 hover:text-gold-400 transition-colors">Contact Us</a></li>
+                        <li><a href="#" class="text-sm text-ivory-500 hover:text-gold-400 transition-colors">Wholesale</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Divider -->
+            <div class="h-px bg-ivory-800 mb-8"></div>
+
+            <!-- Bottom Bar -->
+            <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+                <p class="text-xs text-ivory-600">© 2024 Cha Yuan Tea House. All rights reserved.</p>
+                <div class="flex items-center gap-6">
+                    <a href="#" class="text-xs text-ivory-600 hover:text-gold-400 transition-colors">Privacy</a>
+                    <a href="#" class="text-xs text-ivory-600 hover:text-gold-400 transition-colors">Terms</a>
+                    <a href="#" class="text-xs text-ivory-600 hover:text-gold-400 transition-colors">Shipping</a>
+                    <a href="#" class="text-xs text-ivory-600 hover:text-gold-400 transition-colors">Returns</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed bottom-6 right-6 z-[100] transform translate-y-20 opacity-0 transition-all duration-500 pointer-events-none">
+        <div class="bg-bark-800 text-ivory-100 px-6 py-4 rounded-xl shadow-xl flex items-center gap-3 max-w-sm">
+            <span class="iconify text-gold-400 text-xl flex-shrink-0" id="toastIcon" data-icon="lucide:check-circle"></span>
+            <p class="text-sm" id="toastMsg">Action completed</p>
+        </div>
+    </div>
+
+    <!-- Back to Top -->
+    <button id="backToTop" class="fixed bottom-6 left-6 z-50 w-12 h-12 rounded-full bg-bark-800 text-ivory-100 flex items-center justify-center shadow-lg hover:bg-bark-900 transition-all active:scale-[0.95] opacity-0 pointer-events-none" onclick="window.scrollTo({top:0, behavior:'smooth'})">
+        <span class="iconify" data-icon="lucide:chevron-up"></span>
+    </button>
+
+    <script>
+        // ====== Navbar scroll behavior ======
+        const navbar = document.getElementById('navbar');
+        let lastScroll = 0;
+
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.pageYOffset;
+
+            if (currentScroll > 80) {
+                navbar.classList.add('bg-ivory-50/95', 'backdrop-blur-xl', 'shadow-sm');
+            } else {
+                navbar.classList.remove('bg-ivory-50/95', 'backdrop-blur-xl', 'shadow-sm');
+            }
+
+            // Back to top button
+            const backToTop = document.getElementById('backToTop');
+            if (currentScroll > 600) {
+                backToTop.classList.remove('opacity-0', 'pointer-events-none');
+                backToTop.classList.add('opacity-100');
+            } else {
+                backToTop.classList.add('opacity-0', 'pointer-events-none');
+                backToTop.classList.remove('opacity-100');
+            }
+
+            lastScroll = currentScroll;
+        });
+
+        // ====== Mobile menu ======
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const menuIcon = document.getElementById('menuIcon');
+        let menuOpen = false;
+
+        mobileMenuBtn.addEventListener('click', () => {
+            menuOpen = !menuOpen;
+            mobileMenu.classList.toggle('hidden');
+            menuIcon.setAttribute('data-icon', menuOpen ? 'lucide:x' : 'lucide:menu');
+        });
+
+        document.querySelectorAll('.mobile-link').forEach(link => {
+            link.addEventListener('click', () => {
+                menuOpen = false;
+                mobileMenu.classList.add('hidden');
+                menuIcon.setAttribute('data-icon', 'lucide:menu');
+            });
+        });
+
+        // ====== Product Tabs ======
+        const tabs = document.querySelectorAll('.product-tab');
+        const tabContents = document.querySelectorAll('.tab-content');
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Remove active from all
+                tabs.forEach(t => t.classList.remove('active'));
+                tabContents.forEach(c => c.classList.add('hidden'));
+
+                // Add active to clicked
+                tab.classList.add('active');
+                const target = tab.getAttribute('data-tab');
+                document.getElementById('tab-' + target).classList.remove('hidden');
+            });
+        });
+
+        // ====== Scroll Reveal ======
+        const revealElements = document.querySelectorAll('.reveal');
+
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        });
+
+        revealElements.forEach(el => revealObserver.observe(el));
+
+        // ====== Toast notification ======
+        function showToast(message, icon = 'lucide:check-circle') {
+            const toast = document.getElementById('toast');
+            const toastMsg = document.getElementById('toastMsg');
+            const toastIcon = document.getElementById('toastIcon');
+
+            toastMsg.textContent = message;
+            toastIcon.setAttribute('data-icon', icon);
+
+            toast.classList.remove('translate-y-20', 'opacity-0', 'pointer-events-none');
+            toast.classList.add('translate-y-0', 'opacity-100');
+
+            setTimeout(() => {
+                toast.classList.add('translate-y-20', 'opacity-0', 'pointer-events-none');
+                toast.classList.remove('translate-y-0', 'opacity-100');
+            }, 3500);
+        }
+
+        // ====== Subscription handler ======
+        function handleSubscribe(plan) {
+            const names = {
+                'discovery': 'Discovery Box — $29/mo',
+                'connoisseur': 'Connoisseur Box — $49/mo',
+                'master': 'Master\'s Reserve — $79/mo'
+            };
+            showToast(`Selected: ${names[plan]}. Redirecting to checkout...`, 'lucide:package');
+        }
+
+        // ====== Newsletter handler ======
+        function handleNewsletter(e) {
+            e.preventDefault();
+            const form = e.target;
+            const email = form.querySelector('input[type="email"]').value;
+            const msgDiv = document.getElementById('newsletterMsg');
+
+            msgDiv.classList.remove('hidden');
+            msgDiv.classList.add('text-tea-600');
+            msgDiv.textContent = `Welcome to the Inner Circle! We'll send tea wisdom to ${email}.`;
+
+            form.reset();
+
+            showToast('Successfully subscribed to our newsletter!', 'lucide:mail');
+
+            setTimeout(() => {
+                msgDiv.classList.add('hidden');
+            }, 5000);
+        }
+    </script>
+</body>
+</html>
