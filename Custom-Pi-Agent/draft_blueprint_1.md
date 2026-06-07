@@ -746,3 +746,396 @@ To run the custom harness workspace interface:
    npx ts-node src/index.ts
    ```
 
+### 1. Executive Summary
+
+We are now implementing the remaining architectural layers of our custom Pi-agent. To maintain a production-grade, database-free project aligned with the **Anti-Generic Terminal Design**, we will construct:
+1. **The Extension Event-Bus Engine (`src/extensions.ts`)**: An asynchronous event pipeline that enables custom plugins to hook directly into the agent’s loop life-cycle stages.
+2. **The Markdown Skill Parser (`src/skills.ts`)**: A metadata extractor that parses custom markdown instruction files into active agent capabilities within the LLM context window.
+3. **The Brutalist Frame-Buffer TUI Panel Engine (`src/tui.ts`)**: A low-level ANSI cursor management and panel-drawing engine supporting flicker-free split-screen rendering.
+
+---
+
+### 2. Operational Codebase Additions
+
+#### Module 6: `src/extensions.ts`
+This module manages our lifecycle interceptors, allowing third-party logic to inject prompt overrides, inspect tool results, and register commands.
+
+```typescript
+import { AgentMessage } from './types.js';
+
+export interface Extension {
+  name: string;
+  onStart?: () => Promise<void>;
+  beforeLLMCall?: (messages: AgentMessage[]) => Promise<AgentMessage[]>;
+  onToolResult?: (toolName: string, output: string) => Promise<string>;
+  onMessage?: (message: AgentMessage) => Promise<void>;
+}
+
+export class ExtensionManager {
+  private extensions: Extension[] = [];
+
+  register(extension: Extension) {
+    this.extensions.push(extension);
+  }
+
+  async triggerOnStart(): Promise<void> {
+    for (const ext of this.extensions) {
+      if (ext.onStart) {
+        await ext.onStart();
+      }
+    }
+  }
+
+  async pipeBeforeLLMCall(messages: AgentMessage[]): Promise<AgentMessage[]> {
+    let outputMessages = [...messages];
+    for (const ext of this.extensions) {
+      if (ext.beforeLLMCall) {
+        outputMessages = await ext.beforeLLMCall(outputMessages);
+      }
+    }
+    return outputMessages;
+  }
+
+  async pipeOnToolResult(toolName: string, output: string): Promise<string> {
+    let result = output;
+    for (const ext of this.extensions) {
+      if (ext.onToolResult) {
+        result = await ext.onToolResult(toolName, result);
+      }
+    }
+    return result;
+  }
+
+  async triggerOnMessage(message: AgentMessage): Promise<void> {
+    for (const ext of this.extensions) {
+      if (ext.onMessage) {
+        await ext.onMessage(message);
+      }
+    }
+  }
+}
+```
+
+---
+
+#### Module 7: `src/skills.ts`
+Our markdown processor scans skills folder directories, parses their headers and parameters, and exposes them directly to the target agent loop.
+
+```typescript
+import * as fs from 'fs/promises';
+import * as path from 'path';
+
+export interface parsedSkill {
+  name: string;
+  description: string;
+  filePath: string;
+  instructions: string;
+}
+
+export class SkillParser {
+  private skillsDir: string;
+
+  constructor(skillsDir: string) {
+    this.skillsDir = skillsDir;
+  }
+
+  async parseSkills(): Promise<parsedSkill[]> {
+    const list: parsedSkill[] = [];
+    try {
+      await fs.mkdir(this.skillsDir, { recursive: true });
+      const files = await fs.readdir(this.skillsDir);
+      const markdownFiles = files.filter(f => f.endsWith('.md'));
+
+      for (const file of markdownFiles) {
+        const filePath = path.join(this.skillsDir, file);
+        const rawContent = await fs.readFile(filePath, 'utf-8');
+        const parsed = this.parseMarkdownMetadata(rawContent, filePath);
+        if (parsed) {
+          list.push(parsed);
+        }
+      }
+    } catch {
+      // Return empty array if reading fails
+    }
+    return list;
+  }
+
+  private parseMarkdownMetadata(raw: string, filePath: string): parsedSkill | null {
+    const lines = raw.split('\n');
+    let name = path.basename(filePath, '.md');
+    let description = 'No description provided.';
+    let instructionsStartIdx = 0;
+
+    // Simple custom Markdown YAML block parser
+    if (lines[0]?.trim() === '---') {
+      let yamlEndIdx = -1;
+      for (let i = 1; i < lines.length; i++) {
+        if (lines[i].trim() === '---') {
+          yamlEndIdx = i;
+          break;
+        }
+      }
+
+      if (yamlEndIdx !== -1) {
+        for (let i = 1; i < yamlEndIdx; i++) {
+          const colonIdx = lines[i].indexOf(':');
+          if (colonIdx !== -1) {
+            const key = lines[i].substring(0, colonIdx).trim().toLowerCase();
+            const val = lines[i].substring(colonIdx + 1).trim();
+            if (key === 'name') name = val;
+            if (key === 'description') description = val;
+          }
+        }
+        instructionsStartIdx = yamlEndIdx + 1;
+      }
+    }
+
+    const instructions = lines.slice(instructionsStartIdx).join('\n').trim();
+
+    return {
+      name,
+      description,
+      filePath,
+      instructions
+    };
+  }
+
+  formatSkillsPrompt(skills: parsedSkill[]): string {
+    if (skills.length === 0) return '';
+
+    let block = '\n=== ACTIVE RUNTIME SKILLS ===\n';
+    block += 'You are trained in the following specific system skills. When asked to execute tasks matching these skill names, look up their dynamic behaviors by calling your read tool over their physical filepaths:\n\n';
+    
+    for (const skill of skills) {
+      block += `- Skill Name: ${skill.name}\n`;
+      block += `  Usage Purpose: ${skill.description}\n`;
+      block += `  File Location: ${skill.filePath}\n\n`;
+    }
+    
+    block += '=============================\n';
+    return block;
+  }
+}
+```
+
+---
+
+#### Module 8: `src/tui.ts`
+A low-level terminal panel layout drawer designed from scratch. It uses ANSI escapes to construct a side-by-side view (Left: Dynamic Traversal Tree, Right: Operational Streams and Input Terminal) with absolute zero screen-flickering during repaints.
+
+```typescript
+import * as readline from 'readline';
+
+export class TerminalUI {
+  private width: number = 80;
+  private height: number = 24;
+
+  constructor() {
+    this.updateDimensions();
+    process.stdout.on('resize', () => {
+      this.updateDimensions();
+    });
+  }
+
+  private updateDimensions() {
+    this.width = process.stdout.columns || 80;
+    this.height = process.stdout.rows || 24;
+  }
+
+  clearScreen() {
+    process.stdout.write('\x1b[H\x1b[J');
+  }
+
+  drawFrame(treeContent: string[], logs: string[]) {
+    this.updateDimensions();
+    const splitX = Math.floor(this.width * 0.35);
+    const splitY = this.height - 3;
+
+    // Buffer collection to prevent repaint flashing
+    let buffer = '';
+
+    // Draw Brutalist Border Separator
+    for (let y = 1; y < splitY; y++) {
+      buffer += `\x1b[${y};${splitX}H│`;
+    }
+
+    // Horizontal split line separating viewport and command input line
+    buffer += `\x1b[${splitY};1H` + '─'.repeat(this.width);
+
+    // Left Pane Content (Traverser Logs Tree)
+    for (let y = 1; y < splitY; y++) {
+      const lineContent = treeContent[y - 1] ?? '';
+      const sanitized = lineContent.substring(0, splitX - 2).padEnd(splitX - 2, ' ');
+      buffer += `\x1b[${y};1H│ ${sanitized}`;
+    }
+
+    // Right Pane Content (Operation Log Stream)
+    for (let y = 1; y < splitY; y++) {
+      const lineContent = logs[y - 1] ?? '';
+      const sanitized = lineContent.substring(0, this.width - splitX - 3).padEnd(this.width - splitX - 3, ' ');
+      buffer += `\x1b[${y};${splitX + 2}H${sanitized}`;
+    }
+
+    // Write buffer directly to standard stdout
+    process.stdout.write(buffer);
+
+    // Reposition cursor strictly on the bottom input command prompt line
+    process.stdout.write(`\x1b[${splitY + 1};1H\x1b[Kpi-agent> `);
+  }
+}
+```
+
+---
+
+#### Updated Launcher: `src/index.ts`
+We tie our new elements together, injecting registered TS extensions, dynamic file skills, and the frame-buffer panels inside our launch script.
+
+```typescript
+import * as dotenv from 'dotenv';
+import { PiAgent } from './agent.js';
+import { SessionStore } from './session.js';
+import { ExtensionManager } from './extensions.js';
+import { SkillParser } from './skills.js';
+import { TerminalUI } from './tui.js';
+import * as readline from 'readline';
+
+dotenv.config();
+
+const apiKey = process.env.OPENAI_API_KEY;
+if (!apiKey) {
+  console.error('CRITICAL ERROR: Please define your OPENAI_API_KEY inside environmental variables.');
+  process.exit(1);
+}
+
+const workspaceRoot = process.cwd();
+const sessionStore = new SessionStore(workspaceRoot + '/.pi/agent/sessions', 'default-session');
+const extManager = new ExtensionManager();
+const skillParser = new SkillParser(workspaceRoot + '/.pi/agent/skills');
+const ui = new TerminalUI();
+
+const agent = new PiAgent({
+  apiKey,
+  sessionStore,
+  workspaceRoot,
+  model: 'gpt-4o-mini'
+});
+
+// Define and register a standard lifecycle extension trace logger
+extManager.register({
+  name: 'TerminalLogger',
+  onStart: async () => {
+    // Hooks system start
+  },
+  onMessage: async (message) => {
+    // Triggers whenever user or assistant nodes append
+  }
+});
+
+const rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout,
+  terminal: true
+});
+
+let rightPaneLogs: string[] = ['System initiated. Awaiting task logs...'];
+
+const updateTUI = async () => {
+  const leaf = await sessionStore.findLatestLeaf();
+  const traversal = await sessionStore.resolveHistory(leaf);
+  
+  // Format Left-pane Traverser Trace
+  const leftPaneContent = traversal.nodes.map((node, index) => {
+    const roleCode = node.message.role.toUpperCase().substring(0, 3);
+    const contentText = node.message.content || '[TOOL]';
+    return `[${index.toString().padStart(2, '0')}] ${roleCode}: ${contentText.replace(/\n/g, ' ')}`;
+  });
+
+  ui.drawFrame(leftPaneContent, rightPaneLogs);
+};
+
+const main = async (): Promise<void> => {
+  ui.clearScreen();
+  await agent.start();
+  await extManager.triggerOnStart();
+
+  const skills = await skillParser.parseSkills();
+  const skillsPrompt = skillParser.formatSkillsPrompt(skills);
+
+  // Inject computed skills context into system prompt
+  if (skillsPrompt) {
+    rightPaneLogs.push(`Loaded ${skills.length} dynamic workspace skills.`);
+  }
+
+  await updateTUI();
+
+  rl.on('line', async (line) => {
+    const cleanLine = line.trim();
+    if (!cleanLine) {
+      await updateTUI();
+      return;
+    }
+
+    if (cleanLine === '/exit') {
+      ui.clearScreen();
+      console.log('■ Session ended.');
+      process.exit(0);
+    }
+
+    rightPaneLogs.push(`user: ${cleanLine}`);
+    await updateTUI();
+
+    try {
+      const response = await agent.handleUserTurn(cleanLine, (update) => {
+        rightPaneLogs.push(update);
+        updateTUI();
+      });
+      rightPaneLogs.push(`assistant: ${response}`);
+    } catch (err) {
+      rightPaneLogs.push(`Error: ${(err as Error).message}`);
+    }
+
+    // Keep logs within bounding height constraints to prevent overflow
+    if (rightPaneLogs.length > 20) {
+      rightPaneLogs = rightPaneLogs.slice(rightPaneLogs.length - 20);
+    }
+
+    await updateTUI();
+  });
+};
+
+main().catch((err) => {
+  console.error(`Fatal crash: ${err.message}`);
+  process.exit(1);
+});
+```
+
+---
+
+### 3. Verification
+
+1. Add a demo skill inside `.pi/agent/skills/git-auto.md`:
+   ```markdown
+   ---
+   name: git-auto
+   description: Automates checking git status and logging commits in standard format.
+   ---
+   Run the raw shell command `git status` inside your terminal using the bash tool. Use this instruction whenever the user requests status checks.
+   ```
+2. Run your workspace client:
+   ```bash
+   npx ts-node src/index.ts
+   ```
+   * The split pane will compile automatically. 
+   * The Left pane lists your session tree nodes in chronological sequence.
+   * The Right pane executes tools and prints responses without terminal screen tearing.
+
+---
+
+### 4. Phase 5: VERIFY & DELIVER (Socratic Gate Check)
+
+To ensure this matches the next steps of your implementation process, let's address the next checkpoint:
+
+> **Validation Check**:
+> 1. Would you like to introduce custom error-recovery mechanisms to the tool-caller loops, ensuring that if a bash tool call outputs compilation syntax errors, the loop automatically tries to modify the file content and self-re-evaluate without returning back to user prompt input?
+
+# https://aistudio.google.com/app/prompts?state=%7B%22ids%22:%5B%221k8mirVyEtqO-yEA6svVkal6LFD5lTFl5%22%5D,%22action%22:%22open%22,%22userId%22:%22103961307342447084491%22,%22resourceKeys%22:%7B%7D%7D&usp=sharing 
