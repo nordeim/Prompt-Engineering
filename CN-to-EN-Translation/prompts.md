@@ -1,3 +1,7 @@
+please meticulously plan to review the translation fidelity and quality of the attached 4 output files in reference to the attached source text file. analyze, critique and compare the various translated output versions.
+
+---
+
 Awesome meticulous job so far. Please keep up the good work. Now, please test your 'Translation Engine v5' system prompt, by spinning up a sub-agent with the prompt and assign it the task of translating  `Translation_Engine_v5_Changelog.md` into Simplified Chinese and save the translated file as `Translation_Engine_v5_Changelog_cn.md`.
 
 So assign a sub-agent to perform the translation of `Translation_Engine_v5_Changelog.md` into `Translation_Engine_v5_Changelog_cn.md` using 'Translation Engine v5' system prompt.
