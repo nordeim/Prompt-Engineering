@@ -155,7 +155,3 @@ The prompt attempts to resolve a deadlock where the LLM is told "always translat
 The **Translation Engine v7.0** system prompt is a masterpiece of deterministic constraint engineering. It effectively overrides the typical "helpful, conversational" fine-tuning of modern LLMs, violently forcing them into the role of a meticulous, zero-trust parser. 
 
 It succeeds wildly at structural preservation and tone matching. The only flaw identified in the translation output (the untranslated code comments) was actually proof of the prompt's rigid success, while the single actual error (the "落地" artifact) reveals a tiny gap in the Phase 6 audit checks that can be easily remedied with a targeted leakage rule.
-
----
-
-https://drive.google.com/file/d/1KRqpV14AOdaA-uE79A_tzQJyuEO2TOiT/view?usp=sharing, https://drive.google.com/file/d/1WzgApHaetV0uzOTn63viQxueRtV6lh5u/view?usp=sharing, https://aistudio.google.com/app/prompts?state=%7B%22ids%22:%5B%221_JuAtcyjhaQcmqFeptcEtnhsMj0wSexC%22%5D,%22action%22:%22open%22,%22userId%22:%22103961307342447084491%22,%22resourceKeys%22:%7B%7D%7D&usp=sharing, https://drive.google.com/file/d/1kvOLfnK4o03R215AZMSqEgdZoosJcxKx/view?usp=sharing 
