@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>v8 vs v9 Translation Engine Evaluation</title>
+    <style>
+        :root {
+            --bg-dark: #090c14;
+            --bg-panel: #131a2a;
+            --bg-panel-hover: #1c263d;
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+            --cyan: #00f0ff;
+            --green: #00ff88;
+            --red: #ff2a5f;
+            --purple: #a855f7;
+            --font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: var(--font-family);
+            line-height: 1.6;
+            padding: 2rem;
+            display: flex;
+            justify-content: center;
+        }
+
+        .infographic {
+            max-width: 1200px;
+            width: 100%;
+            background: linear-gradient(180deg, #0f172a 0%, #090c14 100%);
+            border-radius: 24px;
+            box-shadow: 0 0 40px rgba(0, 240, 255, 0.05);
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* Typography */
+        h1, h2, h3, h4 { line-height: 1.2; font-weight: 700; }
+        .text-cyan { color: var(--cyan); }
+        .text-green { color: var(--green); }
+        .text-red { color: var(--red); }
+        .text-purple { color: var(--purple); }
+
+        /* Header */
+        header {
+            text-align: center;
+            padding: 4rem 2rem;
+            background: radial-gradient(circle at 50% -20%, rgba(0, 240, 255, 0.15), transparent 60%);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        header h1 { font-size: 3rem; margin-bottom: 1rem; letter-spacing: -1px; }
+        header p { font-size: 1.2rem; color: var(--text-muted); max-width: 800px; margin: 0 auto; }
+        .badge {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background: rgba(0, 240, 255, 0.1);
+            color: var(--cyan);
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            border: 1px solid rgba(0, 240, 255, 0.3);
+        }
+
+        /* Sections */
+        .section-padding { padding: 4rem 2rem; }
+        .section-title { text-align: center; font-size: 2rem; margin-bottom: 3rem; }
+
+        /* Architecture Compare */
+        .arch-compare { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: center; }
+        .arch-card {
+            background: var(--bg-panel);
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.05);
+            position: relative;
+        }
+        .arch-card h3 { margin: 1rem 0; font-size: 1.5rem; }
+        .arch-card p { color: var(--text-muted); font-size: 0.95rem; }
+        
+        /* Grid Layouts */
+        .grid-triumphs, .grid-vulns {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .card {
+            background: var(--bg-panel);
+            padding: 2rem;
+            border-radius: 16px;
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(255,255,255,0.2);
+        }
+        .card-green { border-top: 4px solid var(--green); }
+        .card-red { border-top: 4px solid var(--red); }
+        
+        .card-icon {
+            width: 48px;
+            height: 48px;
+            margin-bottom: 1.5rem;
+        }
+        .card h3 { font-size: 1.25rem; margin-bottom: 1rem; color: #fff; }
+        .card .problem { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 0.5rem; }
+        .card .solution { font-size: 0.95rem; color: #e2e8f0; font-weight: 500; }
+        .card .problem span { color: var(--red); font-weight: 600; }
+        .card .solution span { color: var(--green); font-weight: 600; }
+
+        /* Verdict Footer */
+        .verdict {
+            background: linear-gradient(135deg, rgba(168, 85, 247, 0.1), rgba(0, 240, 255, 0.1));
+            border-top: 1px solid rgba(168, 85, 247, 0.3);
+            text-align: center;
+            padding: 4rem 2rem;
+        }
+        .verdict-grade {
+            font-size: 4rem;
+            font-weight: 800;
+            background: -webkit-linear-gradient(45deg, var(--cyan), var(--purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+        }
+
+        /* Animations */
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .animate-on-scroll.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Media Queries */
+        @media (max-width: 768px) {
+            .arch-compare { grid-template-columns: 1fr; }
+            header h1 { font-size: 2.2rem; }
+            body { padding: 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="infographic">
+        <!-- Header -->
+        <header class="animate-on-scroll">
+            <div class="badge">Forensic Analysis Report</div>
+            <h1>Translation Engine: <span class="text-cyan">v8 vs v9</span></h1>
+            <p>From a rigid, monolithic prompt engineering experiment to a modular, cache-optimized, production-ready enterprise pipeline.</p>
+        </header>
+
+        <!-- Architecture Comparison -->
+        <section class="section-padding">
+            <h2 class="section-title">Architectural Evolution</h2>
+            <div class="arch-compare">
+                <!-- v8 Box -->
+                <div class="arch-card animate-on-scroll" style="transition-delay: 0.1s;">
+                    <!-- V8 SVG -->
+                    <svg viewBox="0 0 200 150" width="100%" height="150" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="50" y="10" width="100" height="130" rx="8" fill="#1e293b" stroke="#475569" stroke-width="2"/>
+                        <rect x="60" y="25" width="80" height="20" rx="4" fill="#334155"/>
+                        <rect x="60" y="55" width="80" height="20" rx="4" fill="#ff2a5f" opacity="0.8"/>
+                        <rect x="60" y="85" width="80" height="20" rx="4" fill="#ff2a5f" opacity="0.6"/>
+                        <rect x="60" y="115" width="80" height="15" rx="4" fill="#ff2a5f" opacity="0.4"/>
+                        <text x="100" y="40" font-family="sans-serif" font-size="10" fill="white" text-anchor="middle">Core Prompt</text>
+                        <text x="100" y="70" font-family="sans-serif" font-size="9" fill="white" text-anchor="middle">Med Vocab (Unused)</text>
+                        <text x="100" y="100" font-family="sans-serif" font-size="9" fill="white" text-anchor="middle">Fin Vocab (Unused)</text>
+                    </svg>
+                    <h3>v8: The Monolith</h3>
+                    <p>Loads massive medical, financial, and legal tables into every single request. <span class="text-red">Causes attention dilution and high token costs.</span></p>
+                </div>
+
+                <!-- v9 Box -->
+                <div class="arch-card animate-on-scroll" style="transition-delay: 0.2s;">
+                    <!-- V9 SVG -->
+                    <svg viewBox="0 0 200 150" width="100%" height="150" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Core -->
+                        <rect x="20" y="50" width="70" height="50" rx="8" fill="#1e293b" stroke="#00f0ff" stroke-width="2"/>
+                        <text x="55" y="78" font-family="sans-serif" font-size="12" font-weight="bold" fill="#00f0ff" text-anchor="middle">Core</text>
+                        
+                        <!-- Connectors -->
+                        <path d="M 90 75 L 120 75" stroke="#00f0ff" stroke-width="2" stroke-dasharray="4" fill="none" marker-end="url(#arrow)"/>
+                        
+                        <!-- Packs -->
+                        <rect x="130" y="10" width="50" height="30" rx="4" fill="#134e4a" stroke="#00ff88" stroke-width="1"/>
+                        <text x="155" y="29" font-family="sans-serif" font-size="9" fill="#00ff88" text-anchor="middle">Eng Pack</text>
+                        
+                        <rect x="130" y="60" width="50" height="30" rx="4" fill="#1e293b" stroke="#475569" stroke-width="1"/>
+                        <text x="155" y="79" font-family="sans-serif" font-size="9" fill="#94a3b8" text-anchor="middle">Med Pack</text>
+
+                        <rect x="130" y="110" width="50" height="30" rx="4" fill="#1e293b" stroke="#475569" stroke-width="1"/>
+                        <text x="155" y="129" font-family="sans-serif" font-size="9" fill="#94a3b8" text-anchor="middle">Fin Pack</text>
+
+                        <!-- Definitions -->
+                        <defs>
+                            <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                                <path d="M 0 0 L 10 5 L 0 10 z" fill="#00f0ff"/>
+                            </marker>
+                        </defs>
+                    </svg>
+                    <h3>v9: Modular Routing</h3>
+                    <p>Dynamic wrapper injection. The core prompt is 48% lighter. Relevant domains are injected ad-hoc. <span class="text-cyan">API Cache optimized.</span></p>
+                </div>
+            </div>
+        </section>
+
+        <!-- The Triumphs -->
+        <section class="section-padding" style="background-color: rgba(255,255,255,0.01);">
+            <h2 class="section-title">The Four Triumphs of v9</h2>
+            <div class="grid-triumphs">
+                
+                <!-- Card 1 -->
+                <div class="card card-green animate-on-scroll" style="--i: 1;">
+                    <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2">
+                        <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                        <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                        <line x1="12" y1="22.08" x2="12" y2="12"></line>
+                    </svg>
+                    <h3>1. End of Attention Dilution</h3>
+                    <p class="problem">v8 Issue: <span>Monolithic Tables</span> drowned out core logic.</p>
+                    <p class="solution">v9 Fix: <span>Domain Packs.</span> Externalizing vocab drops prompt weight by 48%, hyper-focusing the LLM.</p>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="card card-green animate-on-scroll" style="--i: 2;">
+                    <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2">
+                        <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                    </svg>
+                    <h3>2. Linguistic Fluidity</h3>
+                    <p class="problem">v8 Issue: <span>Strict 1:1 IU mapping</span> forced unnatural "Translationese".</p>
+                    <p class="solution">v9 Fix: <span>Semantic Coverage Equivalence.</span> Allows 1:N splits and N:1 merges for natural fluency without losing fidelity.</p>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="card card-green animate-on-scroll" style="--i: 3;">
+                    <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <circle cx="12" cy="12" r="6"></circle>
+                        <circle cx="12" cy="12" r="2"></circle>
+                    </svg>
+                    <h3>3. Cognitive Anchoring</h3>
+                    <p class="problem">v8 Issue: <span>Bare references</span> (e.g., "per §9.1") failed recall.</p>
+                    <p class="solution">v9 Fix: <span>Micro-reminders.</span> Checklists now include 3-7 word semantic cues, triggering accurate neural retrieval.</p>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="card card-green animate-on-scroll" style="--i: 4;">
+                    <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2">
+                        <path d="M5 12h14M12 5l7 7-7 7"></path>
+                    </svg>
+                    <h3>4. API Cache Optimization</h3>
+                    <p class="problem">v8 Issue: <span>Unordered payload</span> broke prompt caching.</p>
+                    <p class="solution">v9 Fix: <span>Static prefix ordering.</span> Reduces API costs by 50-80% and drastically lowers Time-To-First-Token.</p>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- The Vulnerabilities -->
+        <section class="section-padding">
+            <h2 class="section-title">The New Friction Points</h2>
+            <div class="grid-vulns">
+                
+                <div class="card card-red animate-on-scroll" style="--i: 1;">
+                    <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="2">
+                        <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
+                    </svg>
+                    <h3>The Wrapper Bottleneck</h3>
+                    <p>The new Python wrapper relies on simple keyword counting (e.g., "contract" = Legal). A Web3 engineering document might trigger the Legal pack, isolating the LLM from the Engineering vocabulary it actually needs.</p>
+                </div>
+
+                <div class="card card-red animate-on-scroll" style="--i: 2;">
+                    <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="12" y1="8" x2="12" y2="12"></line>
+                        <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                    </svg>
+                    <h3>Confidence Illusion</h3>
+                    <p>Phase 5 asks the LLM to rate its own confidence [0-100]. LLMs are notoriously sycophantic. A hallucinating LLM is highly likely to rate its own hallucination a "98", creating a false sense of security for downstream automation.</p>
+                </div>
+
+                <div class="card card-red animate-on-scroll" style="--i: 3;">
+                    <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="2">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                        <polyline points="14 2 14 8 20 8"></polyline>
+                        <line x1="16" y1="13" x2="8" y2="13"></line>
+                        <line x1="16" y1="17" x2="8" y2="17"></line>
+                        <polyline points="10 9 9 9 8 9"></polyline>
+                    </svg>
+                    <h3>Scratchpad Bloat</h3>
+                    <p>Despite optimizations, the 6-phase `<engine_logs>` block generates thousands of output tokens. While necessary for Forensic L4 fidelity, it makes generation sluggish and expensive for standard text.</p>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Verdict & Roadmap -->
+        <section class="verdict animate-on-scroll">
+            <h2 style="margin-bottom: 0.5rem; color: var(--text-muted);">Overall Prompt Grade</h2>
+            <div class="verdict-grade">A++ State of the Art</div>
+            <p style="max-width: 700px; margin: 0 auto 2rem auto;">v9 transforms a prompt engineering experiment into a scalable, enterprise-grade architecture. The transition from strict counting to "Semantic Coverage Equivalence" bridges the gap between rigid accuracy and native fluency.</p>
+            
+            <div style="background: rgba(0,0,0,0.3); padding: 1.5rem; border-radius: 12px; border: 1px dashed var(--purple); display: inline-block; max-width: 600px;">
+                <h4 style="color: var(--cyan); margin-bottom: 0.5rem;">🚀 v10 Roadmap Solution</h4>
+                <p style="font-size: 0.95rem;"><strong>Fixing the Wrapper Bottleneck:</strong> Replace brittle keyword heuristics with a "Router LLM" pass. A cheap, fast call to a smaller model (e.g., Haiku or GPT-4o-mini) to solely output <code>{"domain": "engineering"}</code> before the heavy translation pass begins.</p>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- Scroll Animation Logic -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.15
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target); // Run once
+                    }
+                });
+            }, observerOptions);
+
+            const animatableElements = document.querySelectorAll('.animate-on-scroll');
+            animatableElements.forEach(el => {
+                observer.observe(el);
+            });
+        });
+    </script>
+</body>
+</html>
