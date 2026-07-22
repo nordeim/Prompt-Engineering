@@ -1419,13 +1419,13 @@ TRIGGER: patent, claims, prosecution, prior art, 专利, 权利要求, 现有技
 ```python
 #!/usr/bin/env python3
 """
-Translation Engine v9.0 — Minimal Wrapper
+Translation Engine v10.0 — Minimal Wrapper
 Implements: scratchpad stripping (§3.2), mode-flag injection (§3.4),
 few-shot injection (§3.5), domain pack injection (§14.4),
 and domain pre-classification (§14.4 two-stage protocol).
 
 Usage:
-    python TE9_wrapper_minimal.py --domain=engineering --scratchpad=full < input.md > output.md
+    python TE10_wrapper_minimal.py --domain=engineering --scratchpad=full < input.md > output.md
 
 Requires: openai>=1.0 (or any OpenAI-compatible SDK)
 """
