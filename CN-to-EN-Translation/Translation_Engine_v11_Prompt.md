@@ -879,7 +879,7 @@ TRIGGER: <domain register keywords>
 - **Migration:** No wrapper changes needed. Wrapper keyword heuristic unchanged.
 ```
 
-## File 2 of 9: `TE9_Pack_Engineering.md`
+## File 2 of 9: `TE10_Pack_Engineering.md`
 
 ```markdown
 --- DOMAIN PACK: Engineering (v9) ---
@@ -940,7 +940,7 @@ TRIGGER: engineering, technical, software, architecture, API, deploy, framework,
 
 ---
 
-## File 3 of 9: `TE9_Pack_Legal.md`
+## File 3 of 9: `TE10_Pack_Legal.md`
 
 ```markdown
 --- DOMAIN PACK: Legal (v9) ---
@@ -1001,7 +1001,7 @@ TRIGGER: legal, forensic, contract, litigation, arbitration, liability, indemnif
 
 ---
 
-## File 4 of 9: `TE9_Pack_Medical.md`
+## File 4 of 9: `TE10_Pack_Medical.md`
 
 ```markdown
 --- DOMAIN PACK: Medical (v9) ---
@@ -1049,7 +1049,7 @@ TRIGGER: medical, clinical, patient, dosage, contraindicated, adverse event, tri
 
 ---
 
-## File 5 of 9: `TE9_Pack_Financial.md`
+## File 5 of 9: `TE10_Pack_Financial.md`
 
 ```markdown
 --- DOMAIN PACK: Financial (v9) ---
@@ -1098,7 +1098,7 @@ TRIGGER: financial, securities, disclosure, revenue, EPS, forward-looking, 营�
 
 ---
 
-## File 6 of 9: `TE9_FewShots.md`
+## File 6 of 9: `TE10_FewShots.md`
 
 ```markdown
 # Translation Engine v9.0 — Few-Shot Calibration Examples
@@ -1313,7 +1313,7 @@ This chapter introduces how to implement context engineering for Agents, includi
 
 ---
 
-## File 8 of 9: `TE9_DomainPack_Authoring_Guide.md`
+## File 8 of 9: `TE10_DomainPack_Authoring_Guide.md`
 
 ```markdown
 # Domain Pack Authoring Guide (Translation Engine v9.0)
