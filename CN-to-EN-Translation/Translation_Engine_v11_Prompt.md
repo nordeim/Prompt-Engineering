@@ -1560,12 +1560,13 @@ def should_segment(payload: str) -> bool:
 
 
 def segment_payload(payload: str, max_words: int = SEGMENT_WORD_THRESHOLD) -> list[str]:
-    """Segment payload at section/paragraph boundaries for Draft-Lock.
-    Splits at H1/H2 headings and horizontal rules first; if a single section
-    still exceeds max_words, falls back to paragraph (blank-line) boundaries.
-    Never splits below paragraph level — preserves prose coherence.
-    Returns at least [payload] (caller must handle max_words < full payload by
-    resizing max_words if hard ceiling required).
+    """Segment payload at section/paragraph/sentence boundaries for Draft-Lock.
+    Three-pass progressive fallback:
+      Pass 1: H1/H2 headings and horizontal rules (---)  — preserves structure
+      Pass 2: Paragraph boundaries (blank lines)           — preserves prose
+      Pass 3: Sentence boundaries (。！？.!?)              — last resort, grammar intact
+    Returns at least [payload] (a single sentence longer than max_words stays
+    oversized rather than being split mid-sentence).
     """
     if count_effective_words(payload) <= max_words:
         return [payload]
