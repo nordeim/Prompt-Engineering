@@ -745,7 +745,6 @@ TRIGGER: <domain register keywords>
 
 *Translation Quality Target: L4 Forensic Grade / L3 Strict Grade.*
 *Engine version: v10.0 — supersedes v9.0. See `TE10_Changelog.md` for v9→v10 mapping.*
-```
 
 ---
 
