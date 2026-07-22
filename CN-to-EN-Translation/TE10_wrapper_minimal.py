@@ -8,7 +8,7 @@ size-aware Draft-Lock tier signaling (§4.7), and payload
 segmentation at section/paragraph boundaries for oversized inputs.
 
 Usage:
-    python TE10_wrapper_minimal.py --domain=engineering --scratchpad=full < input.md > output.md
+    python TE9_wrapper_minimal.py --domain=engineering --scratchpad=full < input.md > output.md
 
 Requires: openai>=1.0 (or any OpenAI-compatible SDK)
 """
@@ -141,12 +141,13 @@ def should_segment(payload: str) -> bool:
 
 
 def segment_payload(payload: str, max_words: int = SEGMENT_WORD_THRESHOLD) -> list[str]:
-    """Segment payload at section/paragraph boundaries for Draft-Lock.
-    Splits at H1/H2 headings and horizontal rules first; if a single section
-    still exceeds max_words, falls back to paragraph (blank-line) boundaries.
-    Never splits below paragraph level — preserves prose coherence.
-    Returns at least [payload] (caller must handle max_words < full payload by
-    resizing max_words if hard ceiling required).
+    """Segment payload at section/paragraph/sentence boundaries for Draft-Lock.
+    Three-pass progressive fallback:
+      Pass 1: H1/H2 headings and horizontal rules (---)  — preserves structure
+      Pass 2: Paragraph boundaries (blank lines)           — preserves prose
+      Pass 3: Sentence boundaries (。！？.!?)              — last resort, grammar intact
+    Returns at least [payload] (a single sentence longer than max_words stays
+    oversized rather than being split mid-sentence).
     """
     if count_effective_words(payload) <= max_words:
         return [payload]
@@ -463,7 +464,21 @@ def translate(
         )
 
     raw = response.choices[0].message.content or ""
-    return strip_scratchpad(raw)
+    scratchpad, translated = strip_scratchpad(raw)
+
+    # Truncation safety: if the model hit its output token limit, the closing
+    # </engine_logs> tag is likely missing. In that case strip_scratchpad()
+    # returns the entire raw output as 'payload' (the regex didn't match),
+    # exposing garbled scratchpad fragments to the user. Replace with a
+    # clear notice instead.
+    if finish_reason == "length" and not scratchpad:
+        translated = (
+            "[NOTICE] Output truncated before closing </engine_logs>. "
+            "The scratchpad is incomplete. Please segment the payload or "
+            "use a model with a higher output limit."
+        )
+
+    return scratchpad, translated
 
 
 # ---------------------------------------------------------------------------
