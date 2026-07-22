@@ -1883,7 +1883,21 @@ def translate(
         )
 
     raw = response.choices[0].message.content or ""
-    return strip_scratchpad(raw)
+    scratchpad, translated = strip_scratchpad(raw)
+
+    # Truncation safety: if the model hit its output token limit, the closing
+    # </engine_logs> tag is likely missing. In that case strip_scratchpad()
+    # returns the entire raw output as 'payload' (the regex didn't match),
+    # exposing garbled scratchpad fragments to the user. Replace with a
+    # clear notice instead.
+    if finish_reason == "length" and not scratchpad:
+        translated = (
+            "[NOTICE] Output truncated before closing </engine_logs>. "
+            "The scratchpad is incomplete. Please segment the payload or "
+            "use a model with a higher output limit."
+        )
+
+    return scratchpad, translated
 
 
 # ---------------------------------------------------------------------------
