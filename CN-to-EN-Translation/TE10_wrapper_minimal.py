@@ -8,7 +8,7 @@ size-aware Draft-Lock tier signaling (§4.7), and payload
 segmentation at section/paragraph boundaries for oversized inputs.
 
 Usage:
-    python TE9_wrapper_minimal.py --domain=engineering --scratchpad=full < input.md > output.md
+    python TE10_wrapper_minimal.py --domain=engineering --scratchpad=full < input.md > output.md
 
 Requires: openai>=1.0 (or any OpenAI-compatible SDK)
 """
