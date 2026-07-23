@@ -1,34 +1,3 @@
-<engine_logs>
-## Phase 1: Topological Parsing
-- Structural elements: Headings (H2, H3), lists, bold text, blockquotes, inline code.
-- Immutable elements locked: [1], [2], [3], [4], [5], [6], [7], [8], [9], [10], Image placeholders, 🤯, 📌 emojis.
-- Markdown density: ~50 elements. Standard Quarantine vigilance applied.
-- Source HTML/structural elements: "Image" text placeholders preserved.
-- Estimated output tokens: ~2500. Draft-Lock tier: Full.
-
-## Phase 2: Semantic & Modal Deconstruction
-- IU count: ~120 IUs
-- Primary domain: engineering (AI, systems architecture, software development)
-- Domain pack active: Engineering
-- Source register: neutral-professional / informal-technical
-- Modal tags: None specific; mostly descriptive and analytical statements.
-
-## Phase 5: Audit Summary
-- Fact Check: PASS
-- Modality Check: PASS
-- Collocation Check: PASS (harness, agent, orchestrator, durable state, entropy control)
-- IU-Coverage Bookkeeping: PASS
-- Severity counts: Critical=0 Major=0 Minor=0
-- Overall confidence: 98
-
-## Phase 6: Self-Test Gate
-- Source-Script Leakage: PASS
-- Grammar Fluency: PASS
-- Anti-Enhancement Gate: PASS
-- Draft-Lock Integrity Gate: PASS
-- Result: PASS
-</engine_logs>
----
 Background
 Preliminary question: How did we get here today?
 
