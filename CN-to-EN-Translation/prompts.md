@@ -1,11 +1,2 @@
-please meticulously plan to review the translation fidelity and quality of the attached 4 output files in reference to the attached source text file. analyze, critique and compare the various translated output versions.
-
----
-
-Awesome meticulous job so far. Please keep up the good work. Now, please test your 'Translation Engine v5' system prompt, by spinning up a sub-agent with the prompt and assign it the task of translating  `Translation_Engine_v5_Changelog.md` into Simplified Chinese and save the translated file as `Translation_Engine_v5_Changelog_cn.md`.
-
-So assign a sub-agent to perform the translation of `Translation_Engine_v5_Changelog.md` into `Translation_Engine_v5_Changelog_cn.md` using 'Translation Engine v5' system prompt.
-
-Next, you will perform a meticulously evaluation of the quality of the translation output by the sub-agent.
-
----
+Meticulously translate the content of /home/project/my-pi-agent/source_input_to_translate.md into English and save as /home/project/my-pi-agent/translated_output.md 
+You will act as the API endpoint and generate the expected response, you should produce the translation following the TE10.1 protocol. 
