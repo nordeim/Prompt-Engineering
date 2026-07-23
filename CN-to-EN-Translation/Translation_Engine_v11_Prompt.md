@@ -1891,6 +1891,11 @@ def translate(
     # exposing garbled scratchpad fragments to the user. Replace with a
     # clear notice instead.
     if finish_reason == "length" and not scratchpad:
+        print(
+            "[WARNING] Output truncated before </engine_logs>; "
+            "emitting Notice Channel instead of garbled payload.",
+            file=sys.stderr,
+        )
         translated = (
             "[NOTICE] Output truncated before closing </engine_logs>. "
             "The scratchpad is incomplete. Please segment the payload or "
